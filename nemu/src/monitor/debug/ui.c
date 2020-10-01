@@ -124,7 +124,7 @@ static int cmd_x(char *args) {
   printf("%24s:", exp);
   while (num--) {
     char *p = addr;
-    printf(" %p", p);
+    printf(" %c", *p);
     addr++;
   }
   putchar('\n');
