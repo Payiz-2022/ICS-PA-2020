@@ -42,6 +42,16 @@ void reg_test() {
 }
 
 void isa_reg_display() {
+  printf("General Purpose Registers:\n");
+  for (int i = R_EAX; i <= R_EDI; i++) {
+    printf("%10s: %d\n", regsl[i], reg_l(i));
+  }
+  for (int i = R_AX; i <= R_DI; i++) {
+    printf("%10s: %d\n", regsw[i], reg_w(i));
+  }
+  for (int i = R_AL; i <= R_BH; i++) {
+    printf("%10s: %d\n", regsb[i], reg_b(i));
+  }
 }
 
 word_t isa_reg_str2val(const char *s, bool *success) {

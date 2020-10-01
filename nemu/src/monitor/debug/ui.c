@@ -88,6 +88,8 @@ static int cmd_help(char *args) {
 
 static int cmd_info(char *args) {
   char *subcmd = strtok(NULL, " ");
+
+  /* Show help information when subcommand is illegal */
   if (subcmd == NULL || strlen(subcmd) != 1) {
     for (int i = 0; i < NR_CMD; i ++) {
       if (strcmp("info", cmd_table[i].name) == 0) {
@@ -97,6 +99,8 @@ static int cmd_info(char *args) {
     }
     return 0;
   }
+
+  /* Deal with subcommand */
   switch(subcmd[0]) {
     case 'r':
       isa_reg_display();
