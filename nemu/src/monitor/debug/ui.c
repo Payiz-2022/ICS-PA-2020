@@ -121,8 +121,7 @@ static int cmd_x(char *args) {
   void *addr;
   sscanf(n, "%d", &num);
   sscanf(exp, "0x%p", &addr);
-  printf("%p\n", addr);
-  printf("%24s:", exp);
+  // printf("%24s:", exp);
   while (num--) {
     char *p = addr;
     printf(" %02x", *p);
