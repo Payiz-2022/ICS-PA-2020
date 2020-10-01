@@ -118,15 +118,14 @@ static int cmd_x(char *args) {
   char *n = strtok(NULL, " ");
   char *exp = strtok(NULL, " ");
   int num;
-  void *addr;
+  char *addr;
   sscanf(n, "%d", &num);
   sscanf(exp, "0x%p", &addr);
   printf("%24s:", exp);
-  addr = &cpu;
+  addr = (char*)(&cpu);
   while (num--) {
-    char *p = addr;
-    printf(" %02x", *p);
-    addr = ++p;
+    printf(" %02x", *addr);
+    addr++;
   }
   putchar('\n');
   return 0;
