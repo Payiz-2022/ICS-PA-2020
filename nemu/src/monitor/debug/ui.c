@@ -125,8 +125,8 @@ static int cmd_x(char *args) {
   addr = &cpu;
   while (num--) {
     char *p = addr;
-    printf(" %x", *p);
-    addr++;
+    printf(" %02x", *p);
+    addr = ++p;
   }
   putchar('\n');
   return 0;
