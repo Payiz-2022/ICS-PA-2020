@@ -47,15 +47,22 @@ static int cmd_si(char *args) {
   return 0;
 }
 
+static int cmd_info(char *args) {
+  char *subcmd = strtok(NULL, " ");
+  printf("SUBCMD: %s\n", subcmd);
+  return 0;
+}
+
 static struct {
   char *name;
   char *description;
   int (*handler) (char *);
 } cmd_table [] = {
-  {"help", "Display informations about all supported commands", cmd_help},
-  {"c", "Continue the execution of the program", cmd_c},
-  {"q", "Exit NEMU", cmd_q},
-  {"si", "Step one instruction exactly, argument N means step N times (or till program stops for another reason)", cmd_si},
+  {"help", "Display informations about all supported commands.", cmd_help},
+  {"c", "Continue the execution of the program.", cmd_c},
+  {"q", "Exit NEMU.", cmd_q},
+  {"si", "Step one instruction exactly, argument N means step N times (or till program stops for another reason).", cmd_si},
+  {"info", "Generic command for showing things about the program being debugged.", cmd_info}
 };
 
 #define NR_CMD (sizeof(cmd_table) / sizeof(cmd_table[0]))
