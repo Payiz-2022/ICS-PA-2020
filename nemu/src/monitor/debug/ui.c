@@ -40,8 +40,9 @@ static int cmd_q(char *args) {
 static int cmd_help(char *args);
 
 static int cmd_si(char *args) {
-  int num = 0;
-  sscanf(args, "%d", &num);
+  int num = 1;
+  if (args != NULL)
+    sscanf(args, "%d", &num);
   printf("Num: %d\n", num);
   return 0;
 }
