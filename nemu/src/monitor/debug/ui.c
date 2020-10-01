@@ -115,13 +115,14 @@ static int cmd_info(char *args) {
 }
 
 static int cmd_x(char *args) {
+  printf("Val: ");
   char *n = strtok(NULL, " ");
   char *exp = strtok(NULL, " ");
   int num;
   void *addr;
   sscanf(n, "%d", &num);
   sscanf(exp, "0x%p", &addr);
-  printf("Val: ");
+  
   while (num--) {
     char *p = addr;
     printf(" %02x", *p);
