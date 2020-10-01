@@ -40,8 +40,9 @@ static int cmd_q(char *args) {
 static int cmd_help(char *args);
 
 static int cmd_si(char *args) {
-  unsigned long int len = strlen(args);
-  printf("Size: %ld\n", len);
+  int num = 0;
+  sscanf(args, "%d", &num);
+  printf("Num: %d\n", num);
   return 0;
 }
 
