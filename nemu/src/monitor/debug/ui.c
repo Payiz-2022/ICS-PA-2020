@@ -122,10 +122,9 @@ static int cmd_x(char *args) {
   sscanf(n, "%d", &num);
   sscanf(exp, "0x%p", &addr);
   printf("%24s:", exp);
-  return 0;
   while (num--) {
     char *p = addr;
-    printf(" %02x", *p);
+    printf(" %p", p);
     addr++;
   }
   putchar('\n');
