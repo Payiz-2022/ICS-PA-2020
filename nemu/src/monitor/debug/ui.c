@@ -47,11 +47,7 @@ static int cmd_si(char *args) {
   return 0;
 }
 
-static int cmd_info(char *args) {
-  char *subcmd = strtok(NULL, " ");
-  printf("SUBCMD: %s\n", subcmd);
-  return 0;
-}
+static int cmd_info(char *args);
 
 static struct {
   char *name;
@@ -87,6 +83,21 @@ static int cmd_help(char *args) {
     }
     printf("Unknown command '%s'\n", arg);
   }
+  return 0;
+}
+
+static int cmd_info(char *args) {
+  char *subcmd = strtok(NULL, " ");
+  if (subcmd == NULL) {
+    for (int i = 0; i < NR_CMD; i ++) {
+      if (strcmp("info", cmd_table[i].name) == 0) {
+        printf("%s - %s\n", cmd_table[i].name, cmd_table[i].description);
+        return 0;
+      }
+    }
+    return 0;
+  }
+  printf("SUBCMD: %s\n", subcmd);
   return 0;
 }
 
