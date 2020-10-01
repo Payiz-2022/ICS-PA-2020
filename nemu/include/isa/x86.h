@@ -18,7 +18,7 @@
  */
 
 typedef struct {
-  struct {
+  union {
     uint32_t _32;
     uint16_t _16;
     uint8_t _8[2];
@@ -30,6 +30,7 @@ typedef struct {
    * in PA2 able to directly access these registers.
    */
   rtlreg_t eax, ecx, edx, ebx, esp, ebp, esi, edi;
+      
 
   vaddr_t pc;
 } x86_CPU_state;
