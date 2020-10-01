@@ -49,6 +49,8 @@ static int cmd_si(char *args) {
 
 static int cmd_info(char *args);
 
+static int cmd_x(char *args);
+
 static struct {
   char *name;
   char *description;
@@ -58,7 +60,8 @@ static struct {
   {"c", "Continue the execution of the program.", cmd_c},
   {"q", "Exit NEMU.", cmd_q},
   {"si", "Step one instruction exactly, argument N means step N times (or till program stops for another reason).", cmd_si},
-  {"info", "Generic command for showing things about the program being debugged.", cmd_info}
+  {"info", "Generic command for showing things about the program being debugged.", cmd_info},
+  {"x", "Read from the memory of the current target process.", cmd_x},
 };
 
 #define NR_CMD (sizeof(cmd_table) / sizeof(cmd_table[0]))
@@ -108,6 +111,23 @@ static int cmd_info(char *args) {
     case 'w':
       break;
   }
+  return 0;
+}
+
+static int cmd_x(char *args) {
+  char *n = strtok(NULL, " ");
+  char *exp = strtok(NULL, " ");
+  int num;
+  void *addr;
+  sscanf(n, "%d", &num);
+  sscanf(exp, "%p", &addr);
+  printf("%14s:", exp);
+  while (num--) {
+    char *p = addr;
+    printf(" %02x", *p);
+    addr++;
+  }
+  putchar('\n');
   return 0;
 }
 
