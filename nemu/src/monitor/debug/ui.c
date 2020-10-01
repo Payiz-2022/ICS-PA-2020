@@ -97,7 +97,7 @@ static int cmd_info(char *args) {
     }
     return 0;
   }
-  printf("SUBCMD: %s\n", subcmd);
+  printf("SUBCMD LEN: %lu\n", strlen(subcmd));
   return 0;
 }
 
