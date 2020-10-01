@@ -119,10 +119,9 @@ static int cmd_x(char *args) {
   char *exp = strtok(NULL, " ");
   int num;
   void *addr;
-  printf("%24s:", exp);
   sscanf(n, "%d", &num);
   sscanf(exp, "0x%p", &addr);
-  
+  printf("%s:", exp);
   while (num--) {
     char *p = addr;
     printf(" %02x", *p);
