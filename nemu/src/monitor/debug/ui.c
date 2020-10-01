@@ -88,7 +88,7 @@ static int cmd_help(char *args) {
 
 static int cmd_info(char *args) {
   char *subcmd = strtok(NULL, " ");
-  if (subcmd == NULL) {
+  if (subcmd == NULL || strlen(subcmd) != 1) {
     for (int i = 0; i < NR_CMD; i ++) {
       if (strcmp("info", cmd_table[i].name) == 0) {
         printf("%s - %s\n", cmd_table[i].name, cmd_table[i].description);
@@ -97,7 +97,13 @@ static int cmd_info(char *args) {
     }
     return 0;
   }
-  printf("SUBCMD LEN: %lu\n", strlen(subcmd));
+  switch(subcmd[0]) {
+    case 'r':
+      isa_reg_display();
+      break;
+    case 'w':
+      break;
+  }
   return 0;
 }
 
