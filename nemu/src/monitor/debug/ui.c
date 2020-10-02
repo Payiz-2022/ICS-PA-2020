@@ -37,8 +37,9 @@ static int cmd_c(char *args) {
     word_t ans = 0;
     sscanf(result, "%u", &ans);
     bool success = 0;
-    printf("Expression: %s, answer = %s\n", exp, result);
+    printf("Expression: %s, answer = %s, res = ", exp, result);
     word_t res = expr(exp, &success);
+    printf("%u\n", res);
     assert(!success || res == ans);
   }
   cpu_exec(-1);
