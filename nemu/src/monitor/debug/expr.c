@@ -70,7 +70,6 @@ static bool make_token(char *e) {
         Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s",
             i, rules[i].regex, position, substr_len, substr_len, substr_start);
 
-        position += substr_len;
 
         // Raise expectation when the unit exceeded the length limit
         assert(substr_len <= 32);
@@ -79,6 +78,8 @@ static bool make_token(char *e) {
         tokens[nr_token].type = rules[i].token_type;
         memcpy(tokens[nr_token].str, e + position, sizeof(char) * substr_len);
         nr_token++;
+
+        position += substr_len;
 
         switch (rules[i].token_type) {
           // default: TODO();
@@ -141,7 +142,6 @@ word_t evalExp(int start, int end) {
   } else if (start == end) {
     assert(tokens[start].type == TK_DEC);
     word_t val;
-    printf("String: %s\n", tokens[start].str);
     sscanf(tokens[start].str, "%u", &val);
     return val;
   } else if (checkParentheses(start, end) == true) {
@@ -173,7 +173,7 @@ word_t expr(char *e, bool *success) {
     *success = false;
     return 0;
   }
-  printf("Input string: %s\n", e);
+
   *success = true;
   return evalExp(0, nr_token - 1);
 }
