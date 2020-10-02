@@ -102,6 +102,7 @@ static bool make_token(char *e) {
 int checkParentheses(int start, int end) {
   int par_level = 0;
   assert(start <= end);
+
   for (int i = start; i <= end; i++) {
     if (tokens[i].type == '(') {
       par_level++;
@@ -113,8 +114,8 @@ int checkParentheses(int start, int end) {
       }
     }
   }
-  if (par_level != 0) printf("Level: %d, start: %d, end: %d\n", par_level, start, end);
   assert(par_level == 0);
+  if (tokens[start].type != '(' || tokens[end].type != ')') return false;
   return true;
 }
 
