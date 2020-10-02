@@ -38,9 +38,7 @@ static int cmd_c(char *args) {
     sscanf(result, "%u", &ans);
     bool success = 0;
     word_t res = expr(exp, &success);
-    if (!success) puts("Parse failed");
-    else if (res != ans) printf("Not matched, ans: %u; res: %u\n", ans, res);
-    else puts("Success");
+    assert(success && res == ans);
   }
   cpu_exec(-1);
   return 0;
