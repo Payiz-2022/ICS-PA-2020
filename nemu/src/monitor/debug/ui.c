@@ -127,7 +127,7 @@ static int cmd_x(char *args) {
   printf("%24s:", exp);
   int i = 0;
   while (num--) {
-    printf(" %d", (int)addr[i++]);
+    printf(" %02x", (char)addr[i++]);
   }
   putchar('\n');
   return 0;
