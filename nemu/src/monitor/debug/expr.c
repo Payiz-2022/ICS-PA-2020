@@ -141,6 +141,7 @@ word_t evalExp(int start, int end) {
     return 0;
   } else if (start == end) {
     assert(tokens[start].type == TK_DEC);
+    printf("String: %s\n", tokens[start].str);
     word_t val;
     sscanf(tokens[start].str, "%u", &val);
     return val;
