@@ -28,6 +28,18 @@ static char* rl_gets() {
 }
 
 static int cmd_c(char *args) {
+  char result[1000], exp[62000];
+  FILE *fin = fopen("input", "r");
+  assert(fin != NULL);
+  while (fscanf(fin, "%s %s", result, exp) == 2) {
+    word_t ans = 0;
+    sscanf(result, "%u", &ans);
+    bool success = 0;
+    word_t res = expr(exp, &success);
+    if (!success) puts("Parse failed");
+    else if (res != ans) puts("Not matched");
+    else puts("Success");
+  }
   cpu_exec(-1);
   return 0;
 }
