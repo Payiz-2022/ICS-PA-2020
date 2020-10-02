@@ -32,7 +32,7 @@ static int cmd_c(char *args) {
   FILE *fin = fopen("input", "r");
   assert(fin != NULL);
   int count = 0;
-  while (fscanf(fin, "%s %s", result, exp) == 2 && count <= 10) {
+  while (fscanf(fin, "%s %s", result, exp) == 2) {
     count++;
     word_t ans = 0;
     sscanf(result, "%u", &ans);
