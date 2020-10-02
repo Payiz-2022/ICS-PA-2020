@@ -37,7 +37,7 @@ static int cmd_c(char *args) {
     bool success = 0;
     word_t res = expr(exp, &success);
     if (!success) puts("Parse failed");
-    else if (res != ans) puts("Not matched");
+    else if (res != ans) printf("Not matched, ans: %u; res: %u\n", ans, res);
     else puts("Success");
   }
   cpu_exec(-1);
