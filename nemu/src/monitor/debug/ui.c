@@ -37,10 +37,14 @@ static int cmd_c(char *args) {
     word_t ans = 0;
     sscanf(result, "%u", &ans);
     bool success = 0;
-    printf("Expression: %s, answer = %s, res = ", exp, result);
     word_t res = expr(exp, &success);
-    printf("%u\n", res);
-    assert(!success || res == ans);
+    if (success && res == ans) continue;
+    printf("Expression: %s, answer = %s, res = %u\n", exp, result, res);
+    if (!success) {
+      puts("Failed to parse");
+    } else if (res != ans) {
+      puts("Wrong answer");
+    }
   }
   cpu_exec(-1);
   return 0;
