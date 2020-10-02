@@ -141,14 +141,15 @@ word_t evalExp(int start, int end) {
   } else if (start == end) {
     assert(tokens[start].type == TK_DEC);
     word_t val;
+    printf("String: %s\n", tokens[start].str);
     sscanf(tokens[start].str, "%u", &val);
     return val;
   } else if (checkParentheses(start, end) == true) {
     return evalExp(start + 1, end - 1);
   } else {
     int main_operator = findMainOp(start, end);
-    int val1 = evalExp(start, main_operator - 1);
-    int val2 = evalExp(main_operator + 1, end);
+    word_t val1 = evalExp(start, main_operator - 1);
+    word_t val2 = evalExp(main_operator + 1, end);
 
     switch (tokens[main_operator].type) {
       case '+':
