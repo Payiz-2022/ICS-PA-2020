@@ -135,7 +135,7 @@ int findMainOp(int start, int end) {
   return main_operator;
 }
 
-int evalExp(int start, int end) {
+word_t evalExp(int start, int end) {
   if (start > end) {
     return 0;
   } else if (start == end) {
@@ -151,11 +151,17 @@ int evalExp(int start, int end) {
     int val2 = evalExp(main_operator + 1, end);
 
     switch (tokens[main_operator].type) {
-      case '+': return val1 + val2;
-      case '-': return val1 - val2;
-      case '*': return val1 * val2;
-      case '/': return val1 / val2;
-      default: assert(false);
+      case '+':
+        return val1 + val2;
+      case '-':
+        return val1 - val2;
+      case '*':
+        return val1 * val2;
+      case '/': 
+        assert(val2 != 0);
+        return val1 / val2;
+      default:
+        assert(false);
     }
   }
 }
@@ -167,7 +173,5 @@ word_t expr(char *e, bool *success) {
     return 0;
   }
 
-  evalExp(0, nr_token - 1);
-
-  return 0;
+  return evalExp(0, nr_token - 1);
 }
