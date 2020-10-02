@@ -39,7 +39,7 @@ static int cmd_c(char *args) {
     bool success = 0;
     printf("Expression: %s, answer = %s\n", exp, result);
     word_t res = expr(exp, &success);
-    assert(success && res == ans);
+    assert(!success || res == ans);
   }
   cpu_exec(-1);
   return 0;
