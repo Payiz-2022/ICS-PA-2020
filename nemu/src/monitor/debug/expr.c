@@ -72,11 +72,12 @@ static bool make_token(char *e) {
 
 
         // Raise expectation when the unit exceeded the length limit
-        assert(substr_len <= 32);
+        assert(substr_len < 32);
 
         // Insert unit into tokens
         tokens[nr_token].type = rules[i].token_type;
         memcpy(tokens[nr_token].str, e + position, sizeof(char) * substr_len);
+        tokens[nr_token].str[substr_len] = '\0';
         nr_token++;
 
         position += substr_len;
@@ -141,7 +142,6 @@ word_t evalExp(int start, int end) {
     return 0;
   } else if (start == end) {
     assert(tokens[start].type == TK_DEC);
-    printf("String: %s\n", tokens[start].str);
     word_t val;
     sscanf(tokens[start].str, "%u", &val);
     return val;
