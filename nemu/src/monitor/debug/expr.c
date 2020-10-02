@@ -19,6 +19,8 @@ static struct rule {
   {"-", '-'},           // minus
   {"\\*", '*'},         // multiply
   {"/", '/'},           // devide
+  {"\\(", '('},         // lbracket
+  {"\\)", ')'},         // rbracket
   {"[0-9]+", TK_DEC},   // decimal
 };
 
@@ -60,7 +62,7 @@ static bool make_token(char *e) {
 
   while (e[position] != '\0') {
     /* Try all rules one by one. */
-    for (i = 0; i < NR_REGEX; i ++) {
+    for (i = 0; i < NR_REGEX; i++) {
       if (regexec(&re[i], e + position, 1, &pmatch, 0) == 0 && pmatch.rm_so == 0) {
         char *substr_start = e + position;
         int substr_len = pmatch.rm_eo;
@@ -70,10 +72,10 @@ static bool make_token(char *e) {
 
         position += substr_len;
 
-        /* TODO: Now a new token is recognized with rules[i]. Add codes
-         * to record the token in the array `tokens'. For certain types
-         * of tokens, some extra actions should be performed.
-         */
+        // Raise expectation when the unit exceeded the length limit
+        assert(substr_len <= 32);
+
+        // Insert unit into tokens
         tokens[nr_token].type = rules[i].token_type;
         memcpy(tokens[nr_token].str, e + position, sizeof(char) * substr_len);
         nr_token++;
@@ -95,6 +97,69 @@ static bool make_token(char *e) {
   return true;
 }
 
+int checkParentheses(int start, int end) {
+  int par_level = 0;
+  assert(start <= end);
+  for (int i = start; i <= end; i++) {
+    if (tokens[i].type == '(') {
+      par_level++;
+    } else if (tokens[i].type == ')') {
+      par_level--;
+      assert(par_level >= 0);
+      if (par_level == 0 && i != end) {
+        return false;
+      }
+    }
+  }
+  assert(par_level == 0);
+  return true;
+}
+
+int findMainOp(int start, int end) {
+  int par_level = 0, priority = 100, main_operator = -1;
+  for (int i = start; i <= end; i++) {
+    if (tokens[i].type == '(') {
+      par_level++;
+    } else if (tokens[i].type == ')') {
+      par_level--;
+    }
+    if (par_level) continue;
+    if ((tokens[i].type == '*' || tokens[i].type == '/') && priority == 100)
+      main_operator = i;
+    else if (tokens[i].type == '+' || tokens[i].type == '-') {
+      main_operator = i;
+      priority = 50;
+    }
+  }
+  assert(main_operator != -1);
+  return main_operator;
+}
+
+int evalExp(int start, int end) {
+  if (start > end) {
+    return 0;
+  } else if (start == end) {
+    assert(tokens[start].type == TK_DEC);
+    int val;
+    sscanf(tokens[start].str, "%d", &val);
+    return val;
+  } else if (checkParentheses(start, end) == true) {
+    return evalExp(start + 1, end - 1);
+  } else {
+    int main_operator = findMainOp(start, end);
+    int val1 = evalExp(start, main_operator - 1);
+    int val2 = evalExp(main_operator + 1, end);
+
+    switch (tokens[main_operator].type) {
+      case '+': return val1 + val2;
+      case '-': return val1 - val2;
+      case '*': return val1 * val2;
+      case '/': return val1 / val2;
+      default: assert(false);
+    }
+  }
+}
+
 
 word_t expr(char *e, bool *success) {
   if (!make_token(e)) {
@@ -102,8 +167,7 @@ word_t expr(char *e, bool *success) {
     return 0;
   }
 
-  /* TODO: Insert codes to evaluate the expression. */
-  TODO();
+  evalExp(0, nr_token - 1);
 
   return 0;
 }
