@@ -71,9 +71,9 @@ static bool make_token(char *e) {
             i, rules[i].regex, position, substr_len, substr_len, substr_start);
 
 
-        // Raise expectation when the number of units or tokens exceeded the length limit
-        assert(substr_len < 32);
-        assert(nr_token < 32);
+        // Return error when the number of units or tokens exceeded the length limit
+        if (substr_len >= 32) return false;
+        if (nr_token >= 32) return false;
 
         // Insert unit into tokens
         tokens[nr_token].type = rules[i].token_type;
