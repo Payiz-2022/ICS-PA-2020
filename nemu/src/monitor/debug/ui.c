@@ -121,11 +121,13 @@ static int cmd_x(char *args) {
   char *addr;
   sscanf(n, "%d", &num);
   sscanf(exp, "0x%p", &addr);
-  printf("%24s:", exp);
+  
   addr = (char*)(&cpu);
+  
+  printf("%24s:", exp);
+  int i = 0;
   while (num--) {
-    printf(" %02x", *addr);
-    addr++;
+    printf(" %02x", addr[i++]);
   }
   putchar('\n');
   return 0;
