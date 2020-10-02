@@ -140,8 +140,8 @@ word_t evalExp(int start, int end) {
     return 0;
   } else if (start == end) {
     assert(tokens[start].type == TK_DEC);
-    int val;
-    sscanf(tokens[start].str, "%d", &val);
+    word_t val;
+    sscanf(tokens[start].str, "%u", &val);
     return val;
   } else if (checkParentheses(start, end) == true) {
     return evalExp(start + 1, end - 1);
@@ -172,7 +172,7 @@ word_t expr(char *e, bool *success) {
     *success = false;
     return 0;
   }
-  
+
   *success = true;
   return evalExp(0, nr_token - 1);
 }
