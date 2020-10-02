@@ -122,8 +122,6 @@ static int cmd_x(char *args) {
   char *addr;
   sscanf(n, "%d", &num);
   sscanf(exp, "0x%p", &addr);
-  // printf("Compare: %d\n", addr == (char*)&cpu);
-  addr = (char*) &cpu;
 
   printf("%s:", exp);
   int i = 0;

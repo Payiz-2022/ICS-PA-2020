@@ -6,24 +6,20 @@
 #include <regex.h>
 
 enum {
-  TK_NOTYPE = 256, TK_EQ,
-
-  /* TODO: Add more token types */
-
+  TK_NOTYPE = 256, TK_EQ, TK_DEC
 };
 
 static struct rule {
   char *regex;
   int token_type;
 } rules[] = {
-
-  /* TODO: Add more rules.
-   * Pay attention to the precedence level of different rules.
-   */
-
   {" +", TK_NOTYPE},    // spaces
-  {"\\+", '+'},         // plus
   {"==", TK_EQ},        // equal
+  {"\\+", '+'},         // plus
+  {"-", '-'},           // minus
+  {"\\*", '*'},         // multiply
+  {"/", '/'},           // devide
+  {"[0-9]+", TK_DEC},   // decimal
 };
 
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]) )
@@ -78,6 +74,9 @@ static bool make_token(char *e) {
          * to record the token in the array `tokens'. For certain types
          * of tokens, some extra actions should be performed.
          */
+        tokens[nr_token].type = rules[i].token_type;
+        memcpy(tokens[nr_token].str, e + position, sizeof(char) * substr_len);
+        nr_token++;
 
         switch (rules[i].token_type) {
           default: TODO();
