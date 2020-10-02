@@ -31,7 +31,9 @@ static int cmd_c(char *args) {
   char result[1000], exp[62000];
   FILE *fin = fopen("input", "r");
   assert(fin != NULL);
-  if (fscanf(fin, "%s %s", result, exp) == 2) {
+  int count = 0;
+  while (fscanf(fin, "%s %s", result, exp) == 2 && count <= 10) {
+    count++;
     word_t ans = 0;
     sscanf(result, "%u", &ans);
     bool success = 0;
