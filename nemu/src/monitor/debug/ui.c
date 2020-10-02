@@ -28,6 +28,7 @@ static char* rl_gets() {
 }
 
 static int cmd_c(char *args) {
+  printf("%p", &cpu);
   cpu_exec(-1);
   return 0;
 }
@@ -121,10 +122,8 @@ static int cmd_x(char *args) {
   char *addr;
   sscanf(n, "%d", &num);
   sscanf(exp, "0x%p", &addr);
-  
-  addr = (char*)(&cpu);
 
-  printf("%24s:", exp);
+  printf("%s:", exp);
   int i = 0;
   while (num--) {
     printf(" %02x", (char)addr[i++] & 0xff);
