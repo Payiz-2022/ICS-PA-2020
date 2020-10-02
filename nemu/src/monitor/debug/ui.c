@@ -125,9 +125,9 @@ static int cmd_x(char *args) {
   addr = (char*)(&cpu);
 
   printf("%24s:", exp);
-  // int i = 0;
+  int i = 0;
   while (num--) {
-    printf(" %10s", addr);
+    printf(" %02x", (char)addr[i++] & 0xff);
   }
   putchar('\n');
   return 0;
