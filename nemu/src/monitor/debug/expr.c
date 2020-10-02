@@ -113,6 +113,7 @@ int checkParentheses(int start, int end) {
       }
     }
   }
+  if (par_level != 0) printf("Level: %d, start: %d, end: %d\n", par_level, start, end);
   assert(par_level == 0);
   return true;
 }
