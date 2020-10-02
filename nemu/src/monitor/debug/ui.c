@@ -29,8 +29,8 @@ static char* rl_gets() {
 
 static int cmd_c(char *args) {
   char result[1000], exp[62000];
-  freopen("input", "r", stdin);
-  freopen("output", "w", stdout);
+  FILE *fin = freopen("input", "r", stdin);
+  assert(fin != NULL);
   while (scanf("%s %s", result, exp) == 2) {
     word_t ans = 0;
     sscanf(result, "%u", &ans);
