@@ -164,7 +164,7 @@ static int cmd_w(char *args) {
   bool success = false;
   p->exp_val = expr(exp, &success);
   assert(success);
-  printf("Watchpoint %d set at %s (value = %u)", p->NO, p->exp, p->exp_val);
+  printf("Watchpoint %d set at %s (value = %u)\n", p->NO, p->exp, p->exp_val);
   return 0;
 }
 
