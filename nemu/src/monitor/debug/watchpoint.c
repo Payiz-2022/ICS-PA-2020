@@ -55,6 +55,17 @@ void free_wp(WP *wp) {
   }
 }
 
+bool remove_wp(int no) {
+  WP *p = head;
+  while (p) {
+    if (p->NO == no) {
+      free_wp(p);
+      return true;
+    }
+  }
+  return false;
+}
+
 void print_all_wps() {
   WP *p = head;
   while (p) {

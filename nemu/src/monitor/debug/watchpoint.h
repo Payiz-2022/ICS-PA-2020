@@ -13,6 +13,7 @@ typedef struct watchpoint {
 void init_wp_pool();
 WP* new_wp();
 void free_wp(WP *wp);
+bool remove_wp(int no);
 void print_all_wps();
 bool check_all_wps();
 
