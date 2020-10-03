@@ -2,6 +2,7 @@
 #include "expr.h"
 #include "watchpoint.h"
 #include <memory/paddr.h>
+#include <monitor/monitor.h>
 
 #include <stdlib.h>
 #include <readline/readline.h>
@@ -54,6 +55,7 @@ static int cmd_c(char *args) {
 
 
 static int cmd_q(char *args) {
+  nemu_state.state = NEMU_QUIT;
   return -1;
 }
 
