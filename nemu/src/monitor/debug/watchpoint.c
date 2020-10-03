@@ -35,14 +35,7 @@ WP* new_wp() {
 
 void free_wp(WP *wp) {
   assert(wp != NULL);
-  if (free_ == NULL) {
-    free_ = wp;
-  } else {
-    WP *p = free_;
-    while (p->next != NULL) p = p->next;
-    p->next = wp;
-  }
-  wp->next = NULL;
+
   if (head == wp) {
     head = wp->next;
   } else {
@@ -53,6 +46,10 @@ void free_wp(WP *wp) {
     }
     p->next = p->next->next;
   }
+
+  WP *t = free_;
+  free_ = wp;
+  free_->next = t;
 }
 
 bool remove_wp(int no) {
