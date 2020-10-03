@@ -187,7 +187,7 @@ static int cmd_d(char *args) {
   if (remove_wp(wp_no)) {
     printf("Watchpoint %d removed\n", wp_no);
   } else {
-    printf("Watchpoing %d not found\n", wp_no);
+    printf("Watchpoint %d not found\n", wp_no);
   }
   return 0;
 }
