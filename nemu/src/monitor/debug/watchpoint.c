@@ -68,6 +68,7 @@ bool check_all_wps() {
   WP *p = head;
   while (p) {
     bool success = false;
+    printf("String: %s\n", p->exp);
     word_t res = expr(p->exp, &success);
     assert(success);
     if (res != p->exp_val) {
