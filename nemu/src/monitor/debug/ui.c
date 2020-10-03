@@ -72,6 +72,8 @@ static int cmd_x(char *args);
 
 static int cmd_w(char *args);
 
+static int cmd_p(char *args);
+
 static struct {
   char *name;
   char *description;
@@ -83,7 +85,8 @@ static struct {
   {"si", "Step one instruction exactly, argument N means step N times (or till program stops for another reason).", cmd_si},
   {"info", "Generic command for showing things about the program being debugged.", cmd_info},
   {"x", "Read from the memory of the current target process.", cmd_x},
-  {"w", "Add watchpoint.", cmd_w},
+  {"w", "Set watchpoint for expression EXP.", cmd_w},
+  {"p", "Print value of expression EXP.", cmd_p}
 };
 
 #define NR_CMD (sizeof(cmd_table) / sizeof(cmd_table[0]))
@@ -161,6 +164,15 @@ static int cmd_w(char *args) {
   bool success = false;
   p->exp_val = expr(exp, &success);
   assert(success);
+  return 0;
+}
+
+static int cmd_p(char *args) {
+  char *exp = strtok(NULL, " ");
+  bool success = false;
+  word_t val = expr(exp, &success);
+  assert(success);
+  printf("%s = %u\n", exp, val);
   return 0;
 }
 
