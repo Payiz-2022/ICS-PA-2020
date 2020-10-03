@@ -5,6 +5,8 @@
  */
 #include <regex.h>
 
+#include <memory/paddr.h>
+
 enum {
   TK_NOTYPE = 256, TK_EQ, TK_DEC, TK_HEX, TK_AND, TK_NEQ, TK_REG, TK_DEREF
 };
@@ -193,10 +195,8 @@ word_t evalExp(int start, int end) {
         return val1 == val2;
       case TK_NEQ:
         return val1 != val2;
-      case TK_DEREF: ;
-        char *addr = NULL;
-        addr = (void*)(uintptr_t)val2;
-        return *addr & 0xff;
+      case TK_DEREF:
+        return paddr_read(val2, 1);
       default:
         assert(false);
     }
