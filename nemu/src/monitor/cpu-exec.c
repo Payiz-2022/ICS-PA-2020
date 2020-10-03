@@ -3,6 +3,8 @@
 #include <monitor/difftest.h>
 #include <stdlib.h>
 #include <sys/time.h>
+#include "debug/watchpoint.h"
+#include "debug/expr.h"
 
 /* The assembly code of instructions executed is only output to the screen
  * when the number of instructions executed is less than this value.
@@ -88,7 +90,18 @@ void cpu_exec(uint64_t n) {
 #ifdef DEBUG
     asm_print(this_pc, seq_pc - this_pc, n < MAX_INSTR_TO_PRINT);
 
-    /* TODO: check watchpoints here. */
+    // Check breakpoints
+    WP *p = head;
+    while (p) {
+      bool success = false;
+      word_t res = expr(p->exp, &success);
+      if (res != p->exp_val) {
+        nemu_state.state = NEMU_STOP;
+        printf("Program hits breakpoint %d: %s (value = %u, prev value = %u)\n", p->NO, p->exp, res, p->exp_val);
+        p->exp_val = res;
+      }
+      p = p->next;
+    }
 #endif
 
 #ifdef HAS_IOE

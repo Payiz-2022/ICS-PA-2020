@@ -70,6 +70,8 @@ static int cmd_info(char *args);
 
 static int cmd_x(char *args);
 
+static int cmd_w(char *args);
+
 static struct {
   char *name;
   char *description;
@@ -81,6 +83,7 @@ static struct {
   {"si", "Step one instruction exactly, argument N means step N times (or till program stops for another reason).", cmd_si},
   {"info", "Generic command for showing things about the program being debugged.", cmd_info},
   {"x", "Read from the memory of the current target process.", cmd_x},
+  {"w", "Add watchpoint.", cmd_w},
 };
 
 #define NR_CMD (sizeof(cmd_table) / sizeof(cmd_table[0]))
@@ -128,6 +131,7 @@ static int cmd_info(char *args) {
       isa_reg_display();
       break;
     case 'w':
+      print_all_wps();
       break;
   }
   return 0;
@@ -147,6 +151,16 @@ static int cmd_x(char *args) {
     printf(" %02x", (char)addr[i++] & 0xff);
   }
   putchar('\n');
+  return 0;
+}
+
+static int cmd_w(char *args) {
+  char *exp = strtok(NULL, " ");
+  WP* p = new_wp();
+  p->exp = exp;
+  bool success = false;
+  p->exp_val = expr(exp, &success);
+  assert(success);
   return 0;
 }
 

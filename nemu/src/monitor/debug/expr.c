@@ -134,11 +134,18 @@ int findMainOp(int start, int end) {
       par_level--;
     }
     if (par_level) continue;
-    if ((tokens[i].type == '*' || tokens[i].type == '/') && priority == 100)
+    
+    if ((tokens[i].type == '*' || tokens[i].type == '/') && priority == 100) {
       main_operator = i;
-    else if (tokens[i].type == '+' || tokens[i].type == '-') {
+    } else if ((tokens[i].type == '+' || tokens[i].type == '-') && priority >= 50) {
       main_operator = i;
       priority = 50;
+    } else if (tokens[i].type == TK_AND && priority >= 30) {
+      main_operator = i;
+      priority = 30;
+    } else if ((tokens[i].type == TK_EQ || tokens[i].type == TK_NEQ) && priority >= 20) {
+      main_operator = i;
+      priority = 20;
     }
   }
   assert(main_operator != -1);
@@ -177,6 +184,12 @@ word_t evalExp(int start, int end) {
       case '/': 
         assert(val2 != 0);
         return val1 / val2;
+      case TK_AND:
+        return val1 && val2;
+      case TK_EQ:
+        return val1 == val2;
+      case TK_NEQ:
+        return val1 != val2;
       default:
         assert(false);
     }
