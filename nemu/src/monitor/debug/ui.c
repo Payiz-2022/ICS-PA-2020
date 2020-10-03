@@ -184,7 +184,11 @@ static int cmd_d(char *args) {
   char *no = strtok(NULL, " ");
   int wp_no = 0;
   sscanf(no, "%d", &wp_no);
-  assert(remove_wp(wp_no));
+  if (remove_wp(wp_no)) {
+    printf("Watchpoint %d removed\n", wp_no);
+  } else {
+    printf("Watchpoing %d not found\n", wp_no);
+  }
   return 0;
 }
 
