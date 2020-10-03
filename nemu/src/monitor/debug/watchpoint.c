@@ -62,6 +62,7 @@ bool remove_wp(int no) {
       free_wp(p);
       return true;
     }
+    p = p->next;
   }
   return false;
 }
