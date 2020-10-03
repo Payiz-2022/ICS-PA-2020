@@ -23,8 +23,8 @@ static struct rule {
   {"/", '/'},           // devide
   {"\\(", '('},         // lbracket
   {"\\)", ')'},         // rbracket
-  {"[0-9]+", TK_DEC},   // decimal
   {"0x[0-9]+", TK_HEX}, // hexadecimal
+  {"[0-9]+", TK_DEC},   // decimal
   {"\\$[A-Za-z0-9]+", TK_REG},      // register
 };
 
