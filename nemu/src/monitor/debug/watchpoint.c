@@ -59,7 +59,7 @@ void free_wp(WP *wp) {
 void print_all_wps() {
   WP *p = head;
   while (p) {
-    printf("Breakpoint %d: %s (value = %u)\n", p->NO, p->exp, p->exp_val);
+    printf("Watchpoint %d: %s (value = %u)\n", p->NO, p->exp, p->exp_val);
     p = p->next;
   }
 }
