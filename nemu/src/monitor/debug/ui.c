@@ -28,27 +28,28 @@ static char* rl_gets() {
 }
 
 static int cmd_c(char *args) {
-  char result[1000], exp[62000];
-  FILE *fin = fopen("input", "r");
-  assert(fin != NULL);
-  int count = 0;
-  while (fscanf(fin, "%s %s", result, exp) == 2) {
-    count++;
-    word_t ans = 0;
-    sscanf(result, "%u", &ans);
-    bool success = 0;
-    word_t res = expr(exp, &success);
-    if (success && res == ans) continue;
-    printf("Expression: %s, answer = %s, res = %u\n", exp, result, res);
-    if (!success) {
-      puts("Failed to parse");
-    } else if (res != ans) {
-      puts("Wrong answer");
-    }
-  }
   cpu_exec(-1);
   return 0;
 }
+
+// char result[1000], exp[62000];
+// FILE *fin = fopen("input", "r");
+// assert(fin != NULL);
+// int count = 0;
+// while (fscanf(fin, "%s %s", result, exp) == 2) {
+//   count++;
+//   word_t ans = 0;
+//   sscanf(result, "%u", &ans);
+//   bool success = 0;
+//   word_t res = expr(exp, &success);
+//   if (success && res == ans) continue;
+//   printf("Expression: %s, answer = %s, res = %u\n", exp, result, res);
+//   if (!success) {
+//     puts("Failed to parse");
+//   } else if (res != ans) {
+//     puts("Wrong answer");
+//   }
+// }
 
 
 static int cmd_q(char *args) {

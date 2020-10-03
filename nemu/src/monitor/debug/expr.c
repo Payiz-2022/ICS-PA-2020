@@ -6,7 +6,7 @@
 #include <regex.h>
 
 enum {
-  TK_NOTYPE = 256, TK_EQ, TK_DEC
+  TK_NOTYPE = 256, TK_EQ, TK_DEC, TK_HEX, TK_AND, TK_NEQ, TK_REG, TK_DEREF
 };
 
 static struct rule {
@@ -15,6 +15,8 @@ static struct rule {
 } rules[] = {
   {" +", TK_NOTYPE},    // spaces
   {"==", TK_EQ},        // equal
+  {"!=", TK_NEQ},       // not equal
+  {"&&", TK_AND},       // and
   {"\\+", '+'},         // plus
   {"-", '-'},           // minus
   {"\\*", '*'},         // multiply
@@ -22,6 +24,8 @@ static struct rule {
   {"\\(", '('},         // lbracket
   {"\\)", ')'},         // rbracket
   {"[0-9]+", TK_DEC},   // decimal
+  {"0x[0-9]+", TK_HEX}, // hexadecimal
+  {"\\$[A-Za-z0-9]+", TK_REG},      // register
 };
 
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]) )
@@ -84,7 +88,8 @@ static bool make_token(char *e) {
         position += substr_len;
 
         switch (rules[i].token_type) {
-          // default: TODO();
+          case TK_NOTYPE:
+            nr_token--;
         }
 
         break;
@@ -144,9 +149,16 @@ word_t evalExp(int start, int end) {
   if (start > end) {
     return 0;
   } else if (start == end) {
-    assert(tokens[start].type == TK_DEC);
     word_t val;
-    sscanf(tokens[start].str, "%u", &val);
+    if (tokens[start].type == TK_DEC) {
+      sscanf(tokens[start].str, "%u", &val);
+    } else if (tokens[start].type == TK_HEX) {
+      sscanf(tokens[start].str + 2, "%x", &val);
+    } else if (tokens[start].type == TK_REG) {
+      bool success;
+      val = isa_reg_str2val(tokens[start].str, &success);
+      assert(success);
+    }
     return val;
   } else if (checkParentheses(start, end) == true) {
     return evalExp(start + 1, end - 1);
@@ -176,6 +188,13 @@ word_t expr(char *e, bool *success) {
   if (!make_token(e)) {
     *success = false;
     return 0;
+  }
+
+  for (int i = 0; i < nr_token; i ++) {
+    if (tokens[i].type == '*' && (i == 0 || 
+        (tokens[i-1].type != TK_DEC && tokens[i-1].type != TK_HEX && tokens[i-1].type != TK_REG) )) {
+      tokens[i].type = TK_DEREF;
+    }
   }
 
   *success = true;
