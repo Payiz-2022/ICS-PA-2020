@@ -196,7 +196,6 @@ word_t evalExp(int start, int end) {
       case TK_NEQ:
         return val1 != val2;
       case TK_DEREF:
-        printf("Val: %d\n", val2);
         return paddr_read(val2, 1);
       default:
         assert(false);
