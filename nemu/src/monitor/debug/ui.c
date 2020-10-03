@@ -185,9 +185,9 @@ static int cmd_d(char *args) {
   int wp_no = 0;
   sscanf(no, "%d", &wp_no);
   if (remove_wp(wp_no)) {
-    printf("Watchpoint %d removed\n", wp_no);
+    printf("Watchpoint %d removed.\n", wp_no);
   } else {
-    printf("Watchpoint %d not found\n", wp_no);
+    printf("Error: Cannot find watchpoint %d.\n", wp_no);
   }
   return 0;
 }
