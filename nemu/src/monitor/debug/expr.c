@@ -8,7 +8,7 @@
 #include <memory/paddr.h>
 
 enum {
-  TK_NOTYPE = 256, TK_EQ, TK_DEC, TK_HEX, TK_AND, TK_NEQ, TK_REG, TK_DEREF
+  TK_NOTYPE = 256, TK_EQ, TK_DEC, TK_HEX, TK_AND, TK_NEQ, TK_REG, TK_DEREF, TK_NEG
 };
 
 static struct rule {
@@ -85,15 +85,20 @@ static bool make_token(char *e) {
         tokens[nr_token].type = rules[i].token_type;
         memcpy(tokens[nr_token].str, e + position, sizeof(char) * substr_len);
         tokens[nr_token].str[substr_len] = '\0';
-        nr_token++;
 
         position += substr_len;
 
         switch (rules[i].token_type) {
           case TK_NOTYPE:
             nr_token--;
+            break;
+          case '-':
+            if (nr_token == 0 || (tokens[nr_token-1].type != ')' && tokens[nr_token-1].type != TK_DEC 
+              && tokens[nr_token-1].type != TK_HEX && tokens[nr_token-1].type != TK_REG)) 
+              tokens[nr_token].type = TK_NEG;
+            break;
         }
-
+        nr_token++;
         break;
       }
     }
@@ -128,7 +133,7 @@ int checkParentheses(int start, int end) {
 }
 
 int findMainOp(int start, int end) {
-  int par_level = 0, priority = 100, main_operator = -1;
+  int par_level = 0, priority = 120, main_operator = -1;
   for (int i = start; i <= end; i++) {
     if (tokens[i].type == '(') {
       par_level++;
@@ -137,13 +142,13 @@ int findMainOp(int start, int end) {
     }
     if (par_level) continue;
     
-    if (tokens[i].type == TK_DEREF && priority == 100) {
+    if ((tokens[i].type == TK_DEREF || tokens[i].type == TK_NEG) && priority > 100) {
       main_operator = i;
+      priority = 100;
     } else if ((tokens[i].type == '*' || tokens[i].type == '/') && priority >= 80) {
       main_operator = i;
       priority = 80;
-    } else if ((tokens[i].type == '+' || tokens[i].type == '-') && priority >= 50 
-        && (tokens[i-1].type == ')' || tokens[i-1].type == TK_DEC || tokens[i-1].type == TK_HEX || tokens[i-1].type == TK_REG)) {
+    } else if ((tokens[i].type == '+' || tokens[i].type == '-') && priority >= 50) {
       main_operator = i;
       priority = 50;
     } else if (tokens[i].type == TK_AND && priority >= 30) {
@@ -177,9 +182,16 @@ word_t evalExp(int start, int end) {
     return evalExp(start + 1, end - 1);
   } else {
     int main_operator = findMainOp(start, end);
-    word_t val1 = evalExp(start, main_operator - 1);
+    
     word_t val2 = evalExp(main_operator + 1, end);
+    switch (tokens[main_operator].type) {
+      case TK_DEREF:
+        return paddr_read(val2, 1);
+      case TK_NEG:
+        return -val2;
+    }
 
+    word_t val1 = evalExp(start, main_operator - 1);
     switch (tokens[main_operator].type) {
       case '+':
         return val1 + val2;
@@ -196,8 +208,6 @@ word_t evalExp(int start, int end) {
         return val1 == val2;
       case TK_NEQ:
         return val1 != val2;
-      case TK_DEREF:
-        return paddr_read(val2, 1);
       default:
         assert(false);
     }
