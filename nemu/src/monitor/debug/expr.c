@@ -195,7 +195,7 @@ word_t evalExp(int start, int end) {
         return val1 != val2;
       case TK_DEREF: ;
         char *addr = NULL;
-        // addr = (char*)(val2 & 0xffffffff);
+        addr = (void*)(uintptr_t)val2;
         return *addr & 0xff;
       default:
         assert(false);
