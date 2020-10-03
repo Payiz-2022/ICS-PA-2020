@@ -53,10 +53,10 @@ void init_regex() {
 
 typedef struct token {
   int type;
-  char str[32];
+  char str[64];
 } Token;
 
-static Token tokens[32] __attribute__((used)) = {};
+static Token tokens[64] __attribute__((used)) = {};
 static int nr_token __attribute__((used))  = 0;
 
 static bool make_token(char *e) {
@@ -78,8 +78,8 @@ static bool make_token(char *e) {
 
 
         // Return error when the number of units or tokens exceeded the length limit
-        if (substr_len >= 32) return false;
-        if (nr_token >= 32) return false;
+        if (substr_len >= 64) return false;
+        if (nr_token >= 64) return false;
 
         // Insert unit into tokens
         tokens[nr_token].type = rules[i].token_type;
