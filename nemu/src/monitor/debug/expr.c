@@ -162,7 +162,7 @@ word_t evalExp(int start, int end) {
     } else if (tokens[start].type == TK_HEX) {
       sscanf(tokens[start].str + 2, "%x", &val);
     } else if (tokens[start].type == TK_REG) {
-      bool success;
+      bool success = false;
       val = isa_reg_str2val(tokens[start].str, &success);
       assert(success);
     }

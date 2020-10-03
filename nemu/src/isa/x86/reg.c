@@ -14,7 +14,7 @@ void reg_test() {
   cpu.pc = pc_sample;
 
   int i;
-  for (i = R_EAX; i <= R_EDI; i ++) {
+  for (i = R_EAX; i <= R_EDI; i++) {
     sample[i] = rand();
     reg_l(i) = sample[i];
     assert(reg_w(i) == (sample[i] & 0xffff));
@@ -56,6 +56,7 @@ void isa_reg_display() {
 
 word_t isa_reg_str2val(const char *s, bool *success) {
   *success = false;
+  printf("%s\n", s);
   for (int i = R_EAX; i <= R_EDI; i++) {
     if (strcmp(s, regsl[i]) == 0) {
       *success = true;
