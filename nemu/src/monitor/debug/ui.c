@@ -160,7 +160,7 @@ static int cmd_x(char *args) {
 static int cmd_w(char *args) {
   char *exp = strtok(NULL, " ");
   WP* p = new_wp();
-  p->exp = exp;
+  memcpy(p->exp, exp, sizeof(char) * strlen(exp));
   bool success = false;
   p->exp_val = expr(exp, &success);
   assert(success);
