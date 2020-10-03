@@ -10,11 +10,10 @@ typedef struct watchpoint {
   word_t exp_val;
 } WP;
 
-WP *head, *free_;
-
 void init_wp_pool();
 WP* new_wp();
 void free_wp(WP *wp);
 void print_all_wps();
+bool check_all_wps();
 
 #endif

@@ -91,18 +91,8 @@ void cpu_exec(uint64_t n) {
     asm_print(this_pc, seq_pc - this_pc, n < MAX_INSTR_TO_PRINT);
 
     // Check watchpoints
-    WP *p = head;
-    while (p) {
-      bool success = false;
-      word_t res = expr(p->exp, &success);
-      assert(success);
-      if (res != p->exp_val) {
-        nemu_state.state = NEMU_STOP;
-        printf("Program hits watchpoint %d: %s (value = %u, prev value = %u)\n", p->NO, p->exp, res, p->exp_val);
-        p->exp_val = res;
-      }
-      p = p->next;
-    }
+    if (!check_all_wps())
+      nemu_state.state = NEMU_STOP;
 #endif
 
 #ifdef HAS_IOE

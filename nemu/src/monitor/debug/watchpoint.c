@@ -4,7 +4,7 @@
 #define NR_WP 32
 
 static WP wp_pool[NR_WP] = {};
-// static WP *head = NULL, *free_ = NULL;
+static WP *head = NULL, *free_ = NULL;
 
 void init_wp_pool() {
   int i;
@@ -62,4 +62,20 @@ void print_all_wps() {
     printf("Watchpoint %d: %s (value = %u)\n", p->NO, p->exp, p->exp_val);
     p = p->next;
   }
+}
+
+bool check_all_wps() {
+  WP *p = head;
+  while (p) {
+    bool success = false;
+    word_t res = expr(p->exp, &success);
+    assert(success);
+    if (res != p->exp_val) {
+      printf("Program hits watchpoint %d: %s (value = %u, prev = %u)\n", p->NO, p->exp, res, p->exp_val);
+      p->exp_val = res;
+      return false;
+    }
+    p = p->next;
+  }
+  return true;
 }
