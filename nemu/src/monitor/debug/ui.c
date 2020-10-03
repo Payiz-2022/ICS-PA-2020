@@ -179,7 +179,7 @@ static int cmd_p(char *args) {
   bool success = false;
   word_t val = expr(exp, &success);
   assert(success);
-  printf("%s = %u\n", exp, val);
+  printf("%u\n", val);
   return 0;
 }
 
