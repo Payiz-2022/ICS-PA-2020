@@ -142,7 +142,8 @@ int findMainOp(int start, int end) {
     } else if ((tokens[i].type == '*' || tokens[i].type == '/') && priority >= 80) {
       main_operator = i;
       priority = 80;
-    } else if ((tokens[i].type == '+' || tokens[i].type == '-') && priority >= 50) {
+    } else if ((tokens[i].type == '+' || tokens[i].type == '-') && priority >= 50 
+        && !(tokens[main_operator].type == '-' && main_operator != i - 1)) {
       main_operator = i;
       priority = 50;
     } else if (tokens[i].type == TK_AND && priority >= 30) {
