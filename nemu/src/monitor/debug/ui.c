@@ -1,6 +1,7 @@
 #include <isa.h>
 #include "expr.h"
 #include "watchpoint.h"
+#include <memory/paddr.h>
 
 #include <stdlib.h>
 #include <readline/readline.h>
@@ -147,14 +148,14 @@ static int cmd_x(char *args) {
   char *n = strtok(NULL, " ");
   char *exp = strtok(NULL, " ");
   int num;
-  char *addr;
+  word_t addr;
   sscanf(n, "%d", &num);
-  sscanf(exp, "0x%p", &addr);
-
+  sscanf(exp, "0x%u", &addr);
+  
   printf("%s:", exp);
   int i = 0;
   while (num--) {
-    printf(" %02x", (char)addr[i++] & 0xff);
+    printf(" %02x", paddr_read(addr + (i++), 1));
   }
   putchar('\n');
   return 0;
