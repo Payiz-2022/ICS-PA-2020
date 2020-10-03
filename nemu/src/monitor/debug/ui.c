@@ -175,7 +175,7 @@ static int cmd_w(char *args) {
 }
 
 static int cmd_p(char *args) {
-  char *exp = strtok(NULL, " ");
+  char *exp = args;
   bool success = false;
   word_t val = expr(exp, &success);
   assert(success);
