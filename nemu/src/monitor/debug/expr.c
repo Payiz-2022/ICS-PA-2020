@@ -163,7 +163,7 @@ word_t evalExp(int start, int end) {
       sscanf(tokens[start].str + 2, "%x", &val);
     } else if (tokens[start].type == TK_REG) {
       bool success = false;
-      val = isa_reg_str2val(tokens[start].str, &success);
+      val = isa_reg_str2val(tokens[start].str + 1, &success);
       assert(success);
     }
     return val;
