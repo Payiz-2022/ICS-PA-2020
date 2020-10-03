@@ -30,6 +30,7 @@ WP* new_wp() {
   }
   WP* ans = free_;
   free_ = free_->next;
+  ans->next = NULL;
   return ans;
 }
 
