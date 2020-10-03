@@ -150,7 +150,7 @@ static int cmd_x(char *args) {
   int num;
   word_t addr;
   sscanf(n, "%d", &num);
-  sscanf(exp, "0x%u", &addr);
+  sscanf(exp, "0x%x", &addr);
   
   printf("%s:", exp);
   int i = 0;
