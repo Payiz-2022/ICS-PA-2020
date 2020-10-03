@@ -143,7 +143,7 @@ int findMainOp(int start, int end) {
       main_operator = i;
       priority = 80;
     } else if ((tokens[i].type == '+' || tokens[i].type == '-') && priority >= 50 
-        && !(tokens[i].type == '-' && tokens[main_operator].type == '-' && main_operator == i - 1)) {
+        && (tokens[i-1].type == ')' || tokens[i-1].type == TK_DEC || tokens[i-1].type == TK_HEX || tokens[i-1].type == TK_REG)) {
       main_operator = i;
       priority = 50;
     } else if (tokens[i].type == TK_AND && priority >= 30) {
