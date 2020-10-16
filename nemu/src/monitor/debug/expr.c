@@ -80,8 +80,6 @@ static bool make_token(char *e) {
         // Return error when the number of units or tokens exceeded the length limit
         assert(substr_len < 64);
         assert(nr_token < 64);
-        if (substr_len >= 64) return false;
-        if (nr_token >= 64) return false;
 
         // Insert unit into tokens
         tokens[nr_token].type = rules[i].token_type;
