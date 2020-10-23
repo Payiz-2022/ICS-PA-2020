@@ -74,8 +74,8 @@ again:
   opcode = instr_fetch(&s->seq_pc, 1);
   s->opcode = opcode;
   switch (opcode) {
-    EX   (0x50, push)
-    EX   (0x68, push)
+    IDEX (0x50, r, push)
+    IDEXW(0x68, I, push, 4)
     
     EX   (0x0f, 2byte_esc)
     IDEXW(0x80, I2E, gp1, 1)
