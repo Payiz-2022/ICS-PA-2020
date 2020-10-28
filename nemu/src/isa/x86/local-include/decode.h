@@ -294,7 +294,7 @@ static inline def_DHelper(out_a2dx) {
 }
 
 static inline void operand_write(DecodeExecState *s, Operand *op, rtlreg_t* src) {
-  Log("Type: %u\n", op->type);
+  Log("OpType: %u\n", op->type);
   if (op->type == OP_TYPE_REG) { rtl_sr(s, op->reg, src, op->width); }
   else if (op->type == OP_TYPE_MEM) { rtl_sm(s, s->isa.mbase, s->isa.moff, src, op->width); }
   else { assert(0); }
