@@ -31,7 +31,8 @@ static inline def_EHelper(call) {
 }
 
 static inline def_EHelper(ret) {
-  rtl_pop(s, &cpu.eip);
+  rtl_pop(s, &s->jmp_pc);
+  s->is_jmp = 1;
 
   print_asm("ret");
 }
