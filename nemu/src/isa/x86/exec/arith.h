@@ -18,6 +18,7 @@ static inline void cmp_internal(DecodeExecState *s) {
 
 static inline def_EHelper(sub) {
   rtl_subi(s, t0, ddest, id_src1->imm);
+  Log("Type: %u\n", id_dest->type);
   operand_write(s, id_dest, t0);
 }
 
