@@ -17,7 +17,8 @@ static inline void cmp_internal(DecodeExecState *s) {
  
 
 static inline def_EHelper(sub) {
-  TODO();
+  rtl_subi(s, t0, ddest, id_src1->imm);
+  operand_write(s, id_dest, t0);
 }
 
 static inline def_EHelper(cmp) {

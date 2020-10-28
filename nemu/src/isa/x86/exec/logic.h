@@ -12,7 +12,7 @@ static inline def_EHelper(and) {
 }
 
 static inline def_EHelper(xor) {
-  rtl_xori(s, ddest, ddest, id_src1->imm);
+  rtl_xor(s, ddest, ddest, dsrc1);
   operand_write(s, id_dest, ddest);
 
   print_asm_template2(xor);
