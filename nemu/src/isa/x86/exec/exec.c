@@ -77,7 +77,7 @@ again:
     IDEX (0x50, r, push)
     IDEX (0x58, r, pop)
     IDEX (0x68, I, push)
-    IDEX (0xe8, I, call)
+    IDEXW(0xe8, I, call, 4)
     EX   (0xc3, ret)
     IDEX (0x31, I2r, xor)
     
