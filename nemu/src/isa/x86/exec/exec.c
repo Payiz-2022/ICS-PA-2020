@@ -95,7 +95,7 @@ again:
     IDEX (0x68, I, push)
     IDEXW(0xe8, I, call, 4)
     EX   (0xc3, ret)
-    IDEX (0x31, I2r, xor)
+    IDEX (0x31, G2E, xor)
     EX   (0xee, out)
     
     EX   (0x0f, 2byte_esc)
