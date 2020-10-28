@@ -27,12 +27,10 @@ static inline def_rtl(sr, int r, const rtlreg_t* src1, int width) {
 static inline def_rtl(push, const rtlreg_t* src1) {
   rtl_subi(s, &cpu.esp, &cpu.esp, 4);
   rtl_sm(s, &cpu.esp, s->isa.moff, src1, 4);
-  Log("Push: %x at address %x\n", *src1, cpu.esp);
 }
 
 static inline def_rtl(pop, rtlreg_t* dest) {
   rtl_lm(s, dest, &cpu.esp, s->isa.moff, 4);
-  Log("Pop: %x at address %x\n", *dest, cpu.esp);
   rtl_addi(s, &cpu.esp, &cpu.esp, 4);
 }
 
