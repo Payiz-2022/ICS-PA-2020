@@ -73,7 +73,6 @@ static inline void fetch_decode_exec(DecodeExecState *s) {
 again:
   opcode = instr_fetch(&s->seq_pc, 1);
   s->opcode = opcode;
-  Log("Opcode: 0x%x\n", opcode);
   switch (opcode) {
     IDEX (0x50, r, push)
     IDEX (0x51, r, push)
