@@ -24,6 +24,7 @@ static inline def_EHelper(jmp_rm) {
 
 static inline def_EHelper(call) {
   rtl_push(s, &cpu.eip);
+  Log("%u", id_dest->val);
   rtl_addi(s, &cpu.eip, &cpu.eip, id_dest->val);
   s->is_jmp = 1;
   
