@@ -75,6 +75,14 @@ again:
   s->opcode = opcode;
   switch (opcode) {
     IDEX (0x50, r, push)
+    IDEX (0x51, r, push)
+    IDEX (0x52, r, push)
+    IDEX (0x53, r, push)
+    IDEX (0x54, r, push)
+    IDEX (0x55, r, push)
+    IDEX (0x56, r, push)
+    IDEX (0x57, r, push)
+    
     IDEX (0x58, r, pop)
     IDEX (0x68, I, push)
     IDEXW(0xe8, I, call, 4)
