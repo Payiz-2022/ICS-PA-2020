@@ -12,10 +12,9 @@ static inline void set_width(DecodeExecState *s, int width) {
 
 /* 0x80, 0x81, 0x83 */
 static inline def_EHelper(gp1) {
-  Log("Ext opcode: %x\n", s->isa.ext_opcode);
   switch (s->isa.ext_opcode) {
-    EMPTY(0) IDEX (1, I2r, sub) EMPTY(2) EMPTY(3)
-    EMPTY(4) EMPTY(5) EMPTY(6) EMPTY(7)
+    EMPTY(0) EMPTY(1) EMPTY(2) EMPTY(3)
+    EMPTY(4) IDEX(5, I2r, sub) EMPTY(6) EMPTY(7)
   }
 }
 
@@ -74,7 +73,6 @@ static inline void fetch_decode_exec(DecodeExecState *s) {
 again:
   opcode = instr_fetch(&s->seq_pc, 1);
   s->opcode = opcode;
-  Log("Opcode: 0x%x\n", opcode);
   switch (opcode) {
     IDEX (0x50, r, push)
     IDEX (0x51, r, push)
