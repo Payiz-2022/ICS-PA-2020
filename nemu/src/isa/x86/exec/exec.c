@@ -97,6 +97,7 @@ again:
     IDEXW(0xe8, I, call, 4)
     EX   (0xc3, ret)
     IDEX (0x31, I2r, xor)
+    EX   (0xee, out)
     
     EX   (0x0f, 2byte_esc)
     IDEXW(0x80, I2E, gp1, 1)

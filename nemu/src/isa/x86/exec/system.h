@@ -56,7 +56,7 @@ static inline def_EHelper(in) {
 }
 
 static inline def_EHelper(out) {
-  TODO();
+  cpu.gpr[1]._16 = cpu.gpr[1]._8[0];
 
   print_asm_template2(out);
 }
