@@ -30,7 +30,6 @@ static inline uint32_t instr_fetch(vaddr_t *pc, int len) {
     strcatf(log_bytebuf, "%02x ", p_instr[i]);
   }
 #endif
-  Log("PC: %x Len: %d\n", *pc, len);
   (*pc) += len;
   return instr;
 }
