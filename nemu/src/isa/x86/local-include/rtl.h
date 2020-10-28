@@ -31,7 +31,7 @@ static inline def_rtl(push, const rtlreg_t* src1) {
 }
 
 static inline def_rtl(pop, rtlreg_t* dest) {
-  rtl_lm(s, dest, &cpu.esp, 0, 4);
+  rtl_lm(s, dest, &cpu.esp, s->isa.moff, 4);
   Log("Pop: %u at address %u\n", *dest, cpu.esp);
   rtl_addi(s, &cpu.esp, &cpu.esp, 4);
 }
