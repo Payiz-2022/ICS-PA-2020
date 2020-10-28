@@ -12,6 +12,7 @@ static inline void set_width(DecodeExecState *s, int width) {
 
 /* 0x80, 0x81, 0x83 */
 static inline def_EHelper(gp1) {
+  Log("Type: %u\n", s->dest.type);
   switch (s->isa.ext_opcode) {
     EMPTY(0) EMPTY(1) EMPTY(2) EMPTY(3)
     EMPTY(4) EXW(5, sub, 1) EMPTY(6) EMPTY(7)
