@@ -23,7 +23,7 @@ static inline def_EHelper(sub) {
 }
 
 static inline def_EHelper(cmp) {
-  printf("In cmp: dest=%u src1=%u src2=%u", *ddest, *dsrc1, *dsrc2);
+  Log("In cmp: dest=%u src1=%u src2=%u", *ddest, *dsrc1, *dsrc2);
   rtl_sub(s, t0, ddest, dsrc1);
   rtl_update_ZFSF(s, t0, id_dest->width);
   // rtl_set_CF(s, ddest - dsrc1);
