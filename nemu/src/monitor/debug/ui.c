@@ -142,6 +142,9 @@ static int cmd_info(char *args) {
     case 'w':
       print_all_wps();
       break;
+    case 'f':
+      // print_all_flags();
+      break;
   }
   return 0;
 }
