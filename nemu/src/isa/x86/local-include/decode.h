@@ -54,10 +54,9 @@ static inline def_DopHelper(SI) {
    *
    operand_imm(s, op, load_val, ???, op->width);
    */
-  Log("Pre-value: %d\n", op->val);
   sword_t simm = instr_fetch(&s->seq_pc, op->width);
+  simm = (simm & 0x90 ? -1 : 1) * simm & 0x7f;
   operand_imm(s, op, load_val, simm, op->width);
-  Log("Simm: %d, Value: %d\n", simm, op->val);
 }
 
 /* I386 manual does not contain this abbreviation.
