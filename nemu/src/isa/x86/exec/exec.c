@@ -81,6 +81,9 @@ static inline def_EHelper(2byte_esc) {
 
     IDEXW(0xb6, mov_E2G, movzx, 1)
     IDEXW(0xb7, mov_E2G, movzx, 2)
+    
+    IDEXW(0xbe, mov_E2G, movsx, 1)
+    IDEXW(0xbf, mov_E2G, movsx, 2)
 
     IDEX (0x01, gp7_E, gp7)
     default: exec_inv(s);
