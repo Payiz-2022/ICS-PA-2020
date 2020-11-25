@@ -25,8 +25,16 @@ static inline def_EHelper(sub) {
 static inline def_EHelper(cmp) {
   rtl_sub(s, t0, ddest, dsrc1);
   rtl_update_ZFSF(s, t0, id_dest->width);
-  rtl_li(s, t0, *ddest < *dsrc1);
-  rtl_set_CF(s, t0);
+
+  rtl_li(s, s0, *ddest < *dsrc1);
+  rtl_set_CF(s, s0);
+
+  rtl_xor(s, s1, ddest, dsrc1);
+  rtl_xor(s, s2, ddest, t0);
+  rtl_and(s, s0, s1, s2);
+  rtl_msb(s, t0, s1, id_dest->width);
+  rtl_set_OF(s, t0);
+
   print_asm_template2(cmp);
 }
 
