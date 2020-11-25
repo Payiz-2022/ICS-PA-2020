@@ -30,6 +30,7 @@ static char* rl_gets() {
 }
 
 static int cmd_c(char *args) {
+  printf("cmd_c");
   cpu_exec(-1);
   return 0;
 }
