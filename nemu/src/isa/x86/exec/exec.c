@@ -97,6 +97,8 @@ again:
     EX   (0xc3, ret)
     IDEX (0x31, G2E, xor)
     EX   (0xee, out)
+
+    IDEX (0x8d, lea_M2G, lea)
     
     EX   (0x0f, 2byte_esc)
     IDEXW(0x80, I2E, gp1, 1)
