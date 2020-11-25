@@ -108,8 +108,8 @@ again:
     IDEXW(0x3c, I2a, cmp, 1)
     IDEX (0x3d, I2a, cmp)
 
-    IDEX (0x74, J, jcc)
-    IDEX (0x7e, J, jcc)
+    IDEXW(0x74, J, jcc, 1)
+    IDEXW(0x7e, J, jcc, 1)
     
     EX   (0x0f, 2byte_esc)
     IDEXW(0x80, I2E, gp1, 1)
