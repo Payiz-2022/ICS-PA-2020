@@ -62,7 +62,23 @@ static inline def_EHelper(2byte_esc) {
   uint8_t opcode = instr_fetch(&s->seq_pc, 1);
   s->opcode = opcode;
   switch (opcode) {
-  /* TODO: Add more instructions!!! */
+    IDEXW(0x90, E, setcc, 1)
+    IDEXW(0x91, E, setcc, 1)
+    IDEXW(0x92, E, setcc, 1)
+    IDEXW(0x93, E, setcc, 1)
+    IDEXW(0x94, E, setcc, 1)
+    IDEXW(0x95, E, setcc, 1)
+    IDEXW(0x96, E, setcc, 1)
+    IDEXW(0x97, E, setcc, 1)
+    IDEXW(0x98, E, setcc, 1)
+    IDEXW(0x99, E, setcc, 1)
+    IDEXW(0x9a, E, setcc, 1)
+    IDEXW(0x9b, E, setcc, 1)
+    IDEXW(0x9c, E, setcc, 1)
+    IDEXW(0x9d, E, setcc, 1)
+    IDEXW(0x9e, E, setcc, 1)
+    IDEXW(0x9f, E, setcc, 1)
+
     IDEX (0x01, gp7_E, gp7)
     default: exec_inv(s);
   }
@@ -128,23 +144,6 @@ again:
 
     IDEXW(0x74, J, jcc, 1)
     IDEXW(0x7e, J, jcc, 1)
-
-    IDEXW(0x90, E, setcc, 1)
-    IDEXW(0x91, E, setcc, 1)
-    IDEXW(0x92, E, setcc, 1)
-    IDEXW(0x93, E, setcc, 1)
-    IDEXW(0x94, E, setcc, 1)
-    IDEXW(0x95, E, setcc, 1)
-    IDEXW(0x96, E, setcc, 1)
-    IDEXW(0x97, E, setcc, 1)
-    IDEXW(0x98, E, setcc, 1)
-    IDEXW(0x99, E, setcc, 1)
-    IDEXW(0x9a, E, setcc, 1)
-    IDEXW(0x9b, E, setcc, 1)
-    IDEXW(0x9c, E, setcc, 1)
-    IDEXW(0x9d, E, setcc, 1)
-    IDEXW(0x9e, E, setcc, 1)
-    IDEXW(0x9f, E, setcc, 1)
     
     EX   (0x0f, 2byte_esc)
     IDEXW(0x80, I2E, gp1, 1)
