@@ -104,7 +104,7 @@ again:
     IDEX (0x55, r, push)
     IDEX (0x56, r, push)
     IDEX (0x57, r, push)
-    IDEXW(0x61, push_SI, push, 1)
+    IDEXW(0x6a, push_SI, push, 1)
 
     IDEX (0x58, r, pop)
     IDEX (0x59, r, pop)
