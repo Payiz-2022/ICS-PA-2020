@@ -24,7 +24,6 @@ static inline def_EHelper(sub) {
 
 static inline def_EHelper(cmp) {
   // Log("cmp dest: %u src: %u\n", *ddest, *dsrc1);
-  Log("hello");
   rtl_sub(s, t0, ddest, dsrc1);
   rtl_update_ZFSF(s, t0, id_dest->width);
 
