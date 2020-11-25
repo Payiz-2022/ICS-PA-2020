@@ -7,7 +7,7 @@ static inline def_EHelper(test) {
 }
 
 static inline def_EHelper(and) {
-  TODO();
+  rtl_and(s, ddest, ddest, dsrc1);
   print_asm_template2(and);
 }
 
