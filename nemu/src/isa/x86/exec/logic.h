@@ -2,7 +2,10 @@
 
 
 static inline def_EHelper(test) {
-  TODO();
+  rtl_and(s, t0, ddest, dsrc1);
+  rtl_update_ZFSF(s, t0, id_dest->width);
+  rtl_set_CF(s, rz);
+  rtl_set_OF(s, rz);
   print_asm_template2(test);
 }
 
