@@ -55,8 +55,11 @@ static inline def_DopHelper(SI) {
    operand_imm(s, op, load_val, ???, op->width);
    */
   sword_t simm = instr_fetch(&s->seq_pc, op->width);
-  if (op->width == 1)
+  if (op->width == 1) {
+    Log("Before: %x ", simm);
     simm = ((simm & 0x80) ? -1 : 1) * (simm & 0x7f);
+    Log("After: %x\n", simm);
+  }
   operand_imm(s, op, load_val, simm, op->width);
 }
 
