@@ -67,7 +67,7 @@ static uint64_t get_time() {
 
 /* Simulate how the CPU works. */
 void cpu_exec(uint64_t n) {
-  if (n == -1) return;
+  if (n == -1) n = 1;
   switch (nemu_state.state) {
     case NEMU_END: case NEMU_ABORT:
       printf("Program execution has ended. To restart the program, exit NEMU and run again.\n");
