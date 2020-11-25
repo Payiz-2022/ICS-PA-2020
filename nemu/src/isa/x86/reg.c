@@ -54,16 +54,6 @@ void isa_reg_display() {
   }
 }
 
-void print_all_flags() {
-  printf("General Flags:\n");
-  printf("  eflags: 0x%x\n", cpu.eflags.val);
-  printf("      CF: %u\n", cpu.eflags.CF & 1);
-  printf("      ZF: %u\n", cpu.eflags.ZF & 1);
-  printf("      SF: %u\n", cpu.eflags.SF & 1);
-  printf("      IF: %u\n", cpu.eflags.IF & 1);
-  printf("      OF: %u\n", cpu.eflags.OF & 1);
-}
-
 word_t isa_reg_str2val(const char *s, bool *success) {
   *success = false;
   for (int i = R_EAX; i <= R_EDI; i++) {
