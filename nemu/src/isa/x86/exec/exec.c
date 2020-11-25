@@ -99,6 +99,7 @@ again:
     EX   (0xee, out)
 
     IDEX (0x8d, lea_M2G, lea)
+    IDEXW(0xeb, J, jmp, 1)
     
     EX   (0x0f, 2byte_esc)
     IDEXW(0x80, I2E, gp1, 1)
