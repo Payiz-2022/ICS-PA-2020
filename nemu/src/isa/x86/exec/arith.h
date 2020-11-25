@@ -1,7 +1,7 @@
 #include "cc.h"
 
 static inline def_EHelper(add) {
-  TODO();
+  rtl_addi(s, t0, ddest, id_src1->imm);
   print_asm_template2(add);
 }
 
