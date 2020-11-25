@@ -23,11 +23,11 @@ static inline def_EHelper(sub) {
 }
 
 static inline def_EHelper(cmp) {
-  Log("In cmp: dest=%u, src1=%u, setting CF to %d\n", *ddest, *dsrc1, ddest < dsrc1);
   rtl_sub(s, t0, ddest, dsrc1);
   rtl_update_ZFSF(s, t0, id_dest->width);
-  rtl_li(s, t0, ddest < dsrc1);
+  rtl_li(s, t0, *ddest < *dsrc1);
   rtl_set_CF(s, t0);
+  Log("In cmp: dest=%u, src1=%u, setting CF to %d, ZF to %d\n", *ddest, *dsrc1, cpu.eflags.CF, cpu.eflags.ZF);
   print_asm_template2(cmp);
 }
 
