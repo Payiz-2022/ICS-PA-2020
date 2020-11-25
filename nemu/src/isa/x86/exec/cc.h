@@ -36,6 +36,10 @@ static inline void rtl_setcc(DecodeExecState *s, rtlreg_t* dest, uint32_t subcod
     case CC_S:
       TODO();
     case CC_L:
+      rtl_get_SF(s, s1);
+      rtl_get_OF(s, s2);
+      rtl_xor(s, dest, s1, s2);
+      break;
     case CC_LE:
       rtl_get_ZF(s, t0);
       rtl_get_SF(s, s1);

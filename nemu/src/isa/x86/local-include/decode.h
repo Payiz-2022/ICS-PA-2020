@@ -265,6 +265,7 @@ static inline def_DHelper(J) {
   decode_op_SI(s, id_dest, false);
   // the target address can be computed in the decode stage
   s->jmp_pc = id_dest->simm + s->seq_pc;
+  Log("Address: %x\n", s->jmp_pc);
 }
 
 static inline def_DHelper(push_SI) {
