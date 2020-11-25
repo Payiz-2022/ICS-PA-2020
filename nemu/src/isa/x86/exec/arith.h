@@ -22,7 +22,9 @@ static inline def_EHelper(sub) {
 }
 
 static inline def_EHelper(cmp) {
-  TODO();
+  rtl_sub(s, t0, ddest, dsrc1);
+  rtl_update_ZFSF(s, t0, id_dest->width);
+  print_asm_template2(cmp);
 }
 
 static inline def_EHelper(inc) {
