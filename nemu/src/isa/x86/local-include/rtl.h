@@ -72,7 +72,7 @@ def_rtl_setget_eflags(ZF)
 def_rtl_setget_eflags(SF)
 
 static inline def_rtl(update_ZF, const rtlreg_t* result, int width) {
-  cpu.eflags.ZF = (result == 0 ? 1 : 0);
+  cpu.eflags.ZF = (*result == 0);
 }
 
 static inline def_rtl(update_SF, const rtlreg_t* result, int width) {
