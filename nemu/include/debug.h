@@ -26,6 +26,7 @@
 
 #define panic(...) Assert(0, __VA_ARGS__)
 
-#define TODO() panic("please implement me")
+#define TODO() assert(false)
+// #define TODO() panic("please implement me")
 
 #endif
