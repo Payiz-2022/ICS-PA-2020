@@ -125,10 +125,10 @@ again:
     IDEX (0x8d, lea_M2G, lea)
     IDEXW(0xeb, J, jmp, 1)
 
-    IDEXW(0x38, E2G, cmp, 1)
-    IDEX (0x39, E2G, cmp)
-    IDEXW(0x3a, G2E, cmp, 1)
-    IDEX (0x3b, G2E, cmp)
+    IDEXW(0x38, G2E, cmp, 1)
+    IDEX (0x39, G2E, cmp)
+    IDEXW(0x3a, E2G, cmp, 1)
+    IDEX (0x3b, E2G, cmp)
     IDEXW(0x3c, I2a, cmp, 1)
     IDEX (0x3d, I2a, cmp)
 
