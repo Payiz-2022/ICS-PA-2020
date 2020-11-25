@@ -55,7 +55,7 @@ static inline def_DopHelper(SI) {
    operand_imm(s, op, load_val, ???, op->width);
    */
   sword_t simm = instr_fetch(&s->seq_pc, op->width);
-  Log("signed-imm: %d\n", simm);
+  Log("signed-imm: %d (width: %d)\n", simm, op->width);
   operand_imm(s, op, load_val, simm, op->width);
 }
 
