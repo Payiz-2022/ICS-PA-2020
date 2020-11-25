@@ -108,6 +108,24 @@ again:
     IDEXW(0x3c, I2a, cmp, 1)
     IDEX (0x3d, I2a, cmp)
 
+    IDEX (0x40, r, inc)
+    IDEX (0x41, r, inc)
+    IDEX (0x42, r, inc)
+    IDEX (0x43, r, inc)
+    IDEX (0x44, r, inc)
+    IDEX (0x45, r, inc)
+    IDEX (0x46, r, inc)
+    IDEX (0x47, r, inc)
+
+    IDEX (0x48, r, dec)
+    IDEX (0x49, r, dec)
+    IDEX (0x4a, r, dec)
+    IDEX (0x4b, r, dec)
+    IDEX (0x4c, r, dec)
+    IDEX (0x4d, r, dec)
+    IDEX (0x4e, r, dec)
+    IDEX (0x4f, r, dec)
+
     IDEXW(0x74, J, jcc, 1)
     IDEXW(0x7e, J, jcc, 1)
     
