@@ -2,9 +2,7 @@
 
 static inline def_EHelper(add) {
   rtl_add(s, s0, ddest, dsrc1);
-  if (*dsrc1 == 0x10) {
-    Log("Add: %u + %u = %u (width %d)\n", *ddest, *dsrc1, *s0, id_dest->width);
-  }
+  Log("Add: %u + %u = %u (width %d)\n", *ddest, *dsrc1, *s0, id_dest->width);
   operand_write(s, id_dest, s0);
 
   rtl_update_ZFSF(s, s0, id_dest->width);
