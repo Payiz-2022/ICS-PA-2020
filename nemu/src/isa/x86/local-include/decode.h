@@ -206,7 +206,6 @@ static inline def_DHelper(SI2E) {
   if (id_dest->width == 2) {
     *dsrc1 &= 0xffff;
   }
-  Log("SI2E dest width: %d\n", id_dest->width);
 }
 
 static inline def_DHelper(SI_E2G) {

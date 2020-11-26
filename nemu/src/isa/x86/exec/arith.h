@@ -24,14 +24,12 @@ static inline def_EHelper(sub) {
 static inline def_EHelper(cmp) {
   rtl_li(s, s0, (int)*ddest < (int)*dsrc1);
   rtl_set_CF(s, s0);
-  Log("cmp: dest %x src %x width %x\n", *ddest, *dsrc1, id_dest->width);
   rtl_sub(s, s0, ddest, dsrc1);
   rtl_update_ZFSF(s, s0, id_dest->width);
 
   rtl_xor(s, s1, ddest, dsrc1);
   rtl_xor(s, s2, ddest, s0);
   rtl_and(s, s0, s1, s2);
-  Log("%x AND %x result: %x\n", *s1, *s2, *s0);
   rtl_msb(s, s1, s0, id_dest->width);
   rtl_set_OF(s, s1);
 
