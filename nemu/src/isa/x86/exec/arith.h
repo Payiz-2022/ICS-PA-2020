@@ -24,9 +24,8 @@ static inline def_EHelper(sub) {
 static inline def_EHelper(cmp) {
   rtl_li(s, s0, (int)*ddest < (int)*dsrc1);
   rtl_set_CF(s, s0);
-
+  Log("cmp: dest %x src %x width %x\n", *ddest, *dsrc1, id_dest->width);
   rtl_sub(s, s0, ddest, dsrc1);
-  Log("cmp: dest %x src %x result %x width %x\n", *ddest, *dsrc1, *s0, id_dest->width);
   rtl_update_ZFSF(s, s0, id_dest->width);
 
   rtl_xor(s, s1, ddest, dsrc1);
