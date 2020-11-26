@@ -137,6 +137,31 @@ again:
     IDEXW(0x34, I2a, xor, 1)
     IDEX (0x35, I2r, xor)
 
+    IDEXW(0x38, G2E, cmp, 1)
+    IDEX (0x39, G2E, cmp)
+    IDEXW(0x3a, E2G, cmp, 1)
+    IDEX (0x3b, E2G, cmp)
+    IDEXW(0x3c, I2a, cmp, 1)
+    IDEX (0x3d, I2a, cmp)
+
+    IDEX (0x40, r, inc)
+    IDEX (0x41, r, inc)
+    IDEX (0x42, r, inc)
+    IDEX (0x43, r, inc)
+    IDEX (0x44, r, inc)
+    IDEX (0x45, r, inc)
+    IDEX (0x46, r, inc)
+    IDEX (0x47, r, inc)
+
+    IDEX (0x48, r, dec)
+    IDEX (0x49, r, dec)
+    IDEX (0x4a, r, dec)
+    IDEX (0x4b, r, dec)
+    IDEX (0x4c, r, dec)
+    IDEX (0x4d, r, dec)
+    IDEX (0x4e, r, dec)
+    IDEX (0x4f, r, dec)
+
     IDEX (0x50, r, push)
     IDEX (0x51, r, push)
     IDEX (0x52, r, push)
@@ -163,35 +188,6 @@ again:
     EX   (0xc9, leave)
     EX   (0x90, nop)
 
-    IDEX (0x8d, lea_M2G, lea)
-    IDEXW(0xeb, J, jmp, 1)
-    IDEX (0xe9, J, jmp)
-
-    IDEXW(0x38, G2E, cmp, 1)
-    IDEX (0x39, G2E, cmp)
-    IDEXW(0x3a, E2G, cmp, 1)
-    IDEX (0x3b, E2G, cmp)
-    IDEXW(0x3c, I2a, cmp, 1)
-    IDEX (0x3d, I2a, cmp)
-
-    IDEX (0x40, r, inc)
-    IDEX (0x41, r, inc)
-    IDEX (0x42, r, inc)
-    IDEX (0x43, r, inc)
-    IDEX (0x44, r, inc)
-    IDEX (0x45, r, inc)
-    IDEX (0x46, r, inc)
-    IDEX (0x47, r, inc)
-
-    IDEX (0x48, r, dec)
-    IDEX (0x49, r, dec)
-    IDEX (0x4a, r, dec)
-    IDEX (0x4b, r, dec)
-    IDEX (0x4c, r, dec)
-    IDEX (0x4d, r, dec)
-    IDEX (0x4e, r, dec)
-    IDEX (0x4f, r, dec)
-
     IDEXW(0x70, J, jcc, 1)
     IDEXW(0x71, J, jcc, 1)
     IDEXW(0x72, J, jcc, 1)
@@ -211,6 +207,10 @@ again:
 
     IDEXW(0x84, G2E, test, 1)
     IDEX (0x85, G2E, test)
+
+    IDEX (0x8d, lea_M2G, lea)
+    IDEXW(0xeb, J, jmp, 1)
+    IDEX (0xe9, J, jmp)
     
     EX   (0x0f, 2byte_esc)
     IDEXW(0x80, I2E, gp1, 1)
