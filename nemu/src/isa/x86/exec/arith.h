@@ -33,7 +33,7 @@ static inline def_EHelper(cmp) {
   rtl_xor(s, s1, ddest, dsrc1);
   rtl_xor(s, s2, ddest, t0);
   rtl_and(s, s0, s1, s2);
-  rtl_msb(s, t0, s1, id_dest->width);
+  rtl_msb(s, t0, s0, id_dest->width);
   rtl_set_OF(s, t0);
 
   print_asm_template2(cmp);
