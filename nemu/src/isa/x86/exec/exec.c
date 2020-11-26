@@ -118,6 +118,13 @@ again:
     IDEXW(0x02, E2G, add, 1)
     IDEX (0x03, E2G, add)
 
+    IDEXW(0x10, G2E, adc, 1)
+    IDEX (0x11, G2E, adc)
+    IDEXW(0x12, E2G, adc, 1)
+    IDEX (0x13, E2G, adc)
+    IDEXW(0x14, I2a, adc, 1)
+    IDEX (0x15, I2a, adc)
+
     IDEX (0x50, r, push)
     IDEX (0x51, r, push)
     IDEX (0x52, r, push)
