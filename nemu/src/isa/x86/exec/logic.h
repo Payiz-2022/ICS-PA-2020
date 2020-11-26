@@ -6,7 +6,7 @@ static inline def_EHelper(test) {
   rtl_update_ZFSF(s, t0, id_dest->width);
   rtl_set_CF(s, rz);
   rtl_set_OF(s, rz);
-  operand_write(s, id_dest, t0);
+  rtl_li(s, ddest, *t0);
 
   print_asm_template2(test);
 }
