@@ -8,6 +8,7 @@ static inline void set_width(DecodeExecState *s, int width) {
     width = s->isa.is_operand_size_16 ? 2 : 4;
   }
   s->src1.width = s->dest.width = s->src2.width = width;
+  Log("SETWIDTH dest width: %d\n", s->dest.width);
 }
 
 /* 0x80, 0x81, 0x83 */
