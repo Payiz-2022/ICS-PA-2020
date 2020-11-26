@@ -2,8 +2,8 @@
 
 
 static inline def_EHelper(test) {
-  rtl_and(s, ddest, ddest, dsrc1);
-  rtl_update_ZFSF(s, ddest, id_dest->width);
+  rtl_and(s, t0, ddest, dsrc1);
+  rtl_update_ZFSF(s, t0, id_dest->width);
   rtl_set_CF(s, rz);
   rtl_set_OF(s, rz);
 
@@ -20,7 +20,7 @@ static inline def_EHelper(xor) {
   rtl_set_CF(s, rz);
   rtl_set_OF(s, rz);
   rtl_update_ZFSF(s, ddest, id_dest->width);
-  
+
   print_asm_template2(xor);
 }
 
