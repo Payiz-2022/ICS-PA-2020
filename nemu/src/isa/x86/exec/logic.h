@@ -13,11 +13,16 @@ static inline def_EHelper(test) {
 static inline def_EHelper(and) {
   rtl_and(s, ddest, ddest, dsrc1);
 
+  rtl_update_ZFSF(s, ddest, id_dest->width);
+  rtl_set_OF(s, rz);
+  rtl_set_CF(s, rz);
+
   print_asm_template2(and);
 }
 
 static inline def_EHelper(xor) {
   rtl_xor(s, ddest, ddest, dsrc1);
+
   rtl_update_ZFSF(s, ddest, id_dest->width);
   rtl_set_CF(s, rz);
   rtl_set_OF(s, rz);
@@ -27,6 +32,10 @@ static inline def_EHelper(xor) {
 
 static inline def_EHelper(or) {
   rtl_or(s, ddest, ddest, dsrc1);
+  
+  rtl_update_ZFSF(s, ddest, id_dest->width);
+  rtl_set_OF(s, rz);
+  rtl_set_CF(s, rz);
 
   print_asm_template2(or);
 }
