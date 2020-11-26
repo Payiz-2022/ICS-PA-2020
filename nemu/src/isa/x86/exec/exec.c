@@ -121,6 +121,7 @@ again:
     IDEX (0x31, G2E, xor)
     EX   (0xee, out)
     EX   (0xc9, leave)
+    EX   (0x90, nop)
 
     IDEX (0x8d, lea_M2G, lea)
     IDEXW(0xeb, J, jmp, 1)
