@@ -142,6 +142,7 @@ again:
 
     IDEX (0x8d, lea_M2G, lea)
     IDEXW(0xeb, J, jmp, 1)
+    IDEX (0xe9, J, jmp)
 
     IDEXW(0x38, G2E, cmp, 1)
     IDEX (0x39, G2E, cmp)
