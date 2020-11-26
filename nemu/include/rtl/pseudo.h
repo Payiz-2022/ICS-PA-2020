@@ -37,7 +37,7 @@ static inline def_rtl(zext, rtlreg_t* dest, const rtlreg_t* src1, int width) {
 
 static inline def_rtl(msb, rtlreg_t* dest, const rtlreg_t* src1, int width) {
   rtl_li(s, dest, (*src1 >> (width * 8 - 1)) & 1);
-  Log("msb number: %x, width: %d, expected: %x actual: %x\n", *src1, width, (*src1 >> (width * 8 - 1)) & 1, *dest);
+  Log("msb number: %x, width: %d, expected: %x actual: %x\n", *src1, width, (*src1 >> (width * 8 - 1)) & 1, *ddest);
 }
 
 #endif
