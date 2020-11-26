@@ -8,14 +8,13 @@ static inline void set_width(DecodeExecState *s, int width) {
     width = s->isa.is_operand_size_16 ? 2 : 4;
   }
   s->src1.width = s->dest.width = s->src2.width = width;
-  Log("SETWIDTH dest width: %d\n", s->dest.width);
 }
 
 /* 0x80, 0x81, 0x83 */
 static inline def_EHelper(gp1) {
   switch (s->isa.ext_opcode) {
     EXW(0, add, 1) EMPTY(1) EMPTY(2) EMPTY(3)
-    EXW(4, and, 1) EXW(5, sub, 1) EMPTY(6) EXW(7, cmp, 1)
+    EXW(4, and, 1) EXW(5, sub, 1) EMPTY(6) EXW(7, cmp, 4)
   }
 }
 
