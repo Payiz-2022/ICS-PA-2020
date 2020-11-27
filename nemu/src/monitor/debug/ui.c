@@ -194,7 +194,7 @@ static int cmd_p(char *args) {
   if (!success) {
     printf("Invalid Expression\n");
   } else {
-    printf("%u\n", val);
+    printf("%u (0x%x)\n", val, val);
   }
   return 0;
 }

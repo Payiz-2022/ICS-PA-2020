@@ -79,7 +79,7 @@ bool check_all_wps() {
     word_t res = expr(p->exp, &success);
     assert(success);
     if (res != p->exp_val) {
-      printf("Program hits watchpoint %d: %s (value = %u, prev = %u)\n", p->NO, p->exp, res, p->exp_val);
+      printf("Program hits watchpoint %d: %s (value = %u (0x%x), prev = %u (0x%x))\n", p->NO, p->exp, res, res, p->exp_val, p->exp_val);
       p->exp_val = res;
       return false;
     }
