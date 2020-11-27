@@ -10,6 +10,7 @@ static inline def_EHelper(add) {
   rtl_set_CF(s, s1);
   rtl_is_add_overflow(s, s1, s0, ddest, dsrc1, id_dest->width);
   rtl_set_OF(s, s1);
+  Log("%%esp: %x\n", cpu.esp);
 
   print_asm_template2(add);
 }
@@ -43,7 +44,6 @@ static inline def_EHelper(cmp) {
   rtl_and(s, s0, s1, s2);
   rtl_msb(s, s1, s0, id_dest->width);
   rtl_set_OF(s, s1);
-  Log("Cmp %x, %x; esp %x\n", *ddest, *dsrc1, cpu.esp);
 
   print_asm_template2(cmp);
 }
