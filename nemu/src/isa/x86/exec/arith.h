@@ -8,10 +8,8 @@ static inline def_EHelper(add) {
   rtl_set_CF(s, s1);
   rtl_is_add_overflow(s, s1, s0, ddest, dsrc1, id_dest->width);
   rtl_set_OF(s, s1);
-  Log("%%esp: %x\n", cpu.esp);
 
   operand_write(s, id_dest, s0);
-
   print_asm_template2(add);
 }
 
@@ -50,12 +48,14 @@ static inline def_EHelper(cmp) {
 
 static inline def_EHelper(inc) {
   rtl_addi(s, s0, ddest, 1);
+
   operand_write(s, id_dest, s0);
   print_asm_template1(inc);
 }
 
 static inline def_EHelper(dec) {
   rtl_subi(s, s0, ddest, 1);
+
   operand_write(s, id_dest, s0);
   print_asm_template1(dec);
 }
@@ -79,6 +79,7 @@ static inline def_EHelper(adc) {
   rtl_is_add_carry(s, s0, s0, dsrc1);
   rtl_or(s, s0, s0, s2);
   rtl_set_CF(s, s0);
+
   operand_write(s, id_dest, s1);
   print_asm_template2(adc);
 }
@@ -94,6 +95,7 @@ static inline def_EHelper(sbb) {
   rtl_is_sub_carry(s, s0, ddest, s0);
   rtl_or(s, s0, s0, s2);
   rtl_set_CF(s, s0);
+
   operand_write(s, id_dest, s1);
   print_asm_template2(sbb);
 }
@@ -169,8 +171,8 @@ static inline def_EHelper(imul3) {
   rtl_sext(s, dsrc2, dsrc2, id_src1->width);
 
   rtl_imul_lo(s, ddest, dsrc2, dsrc1);
-  operand_write(s, id_dest, ddest);
 
+  operand_write(s, id_dest, ddest);
   print_asm_template3(imul);
 }
 
