@@ -130,6 +130,13 @@ again:
     IDEXW(0x14, I2a, adc, 1)
     IDEX (0x15, I2a, adc)
 
+    IDEXW(0x20, G2E, and, 1)
+    IDEX (0x21, G2E, and)
+    IDEXW(0x22, E2G, and, 1)
+    IDEX (0x23, E2G, and)
+    IDEXW(0x24, I2a, and, 1)
+    IDEX (0x25, I2a, and)
+
     IDEXW(0x30, G2E, xor, 1)
     IDEX (0x31, G2E, xor)
     IDEXW(0x32, E2G, xor, 1)
