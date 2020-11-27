@@ -175,7 +175,10 @@ word_t evalExp(int start, int end) {
     } else if (tokens[start].type == TK_REG) {
       bool success = false;
       val = isa_reg_str2val(tokens[start].str + 1, &success);
-      assert(success);
+      if (!success) {
+        printf("Invalid Expression\n");
+        return false;
+      }
     }
     return val;
   } else if (checkParentheses(start, end) == true) {
@@ -200,7 +203,10 @@ word_t evalExp(int start, int end) {
       case '*':
         return val1 * val2;
       case '/': 
-        assert(val2 != 0);
+        if (val2 != 0) {
+          printf("Invalid Expression\n");
+          return false;
+        }
         return val1 / val2;
       case TK_AND:
         return val1 && val2;
@@ -209,7 +215,8 @@ word_t evalExp(int start, int end) {
       case TK_NEQ:
         return val1 != val2;
       default:
-        assert(false);
+        printf("Invalid Expression\n");
+        return false;
     }
   }
 }
