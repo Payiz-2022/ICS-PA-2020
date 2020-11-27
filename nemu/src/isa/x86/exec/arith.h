@@ -2,7 +2,6 @@
 
 static inline def_EHelper(add) {
   rtl_add(s, s0, ddest, dsrc1);
-  Log("Add: %u + %u = %u (width %d) esp:%x\n", *ddest, *dsrc1, *s0, id_dest->width, cpu.esp);
   operand_write(s, id_dest, s0);
 
   rtl_update_ZFSF(s, s0, id_dest->width);
