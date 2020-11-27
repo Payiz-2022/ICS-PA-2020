@@ -187,8 +187,11 @@ static int cmd_p(char *args) {
   char *exp = args;
   bool success = false;
   word_t val = expr(exp, &success);
-  assert(success);
-  printf("%u\n", val);
+  if (!success) {
+    printf("Invalid Expression\n");
+  } else {
+    printf("%u\n", val);
+  }
   return 0;
 }
 
