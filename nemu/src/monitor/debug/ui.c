@@ -174,12 +174,16 @@ static int cmd_x(char *args) {
 
 static int cmd_w(char *args) {
   char *exp = strtok(NULL, " ");
-  WP* p = new_wp();
-  memcpy(p->exp, exp, sizeof(char) * strlen(exp));
   bool success = false;
-  p->exp_val = expr(exp, &success);
-  assert(success);
-  printf("Watchpoint %d set at %s (value = %u)\n", p->NO, p->exp, p->exp_val);
+  word_t val = expr(exp, &success);
+  if (!success){ 
+    printf("Invalid Expression\n");
+  } else {
+    WP* p = new_wp();
+    memcpy(p->exp, exp, sizeof(char) * strlen(exp));
+    p->exp_val = val;
+    printf("Watchpoint %d set at %s (value = %u)\n", p->NO, p->exp, p->exp_val);
+  }
   return 0;
 }
 
