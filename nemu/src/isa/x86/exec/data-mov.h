@@ -74,10 +74,8 @@ static inline def_EHelper(movzx) {
 }
 
 static inline def_EHelper(lea) {
-  Log("Lea esp:%x\n", cpu.esp);
   rtl_addi(s, ddest, s->isa.mbase, s->isa.moff);
   operand_write(s, id_dest, ddest);
-  Log("Lea end esp:%x\n", cpu.esp);
 
   print_asm_template2(lea);
 }

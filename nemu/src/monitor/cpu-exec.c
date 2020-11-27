@@ -91,8 +91,10 @@ void cpu_exec(uint64_t n) {
     asm_print(this_pc, seq_pc - this_pc, n < MAX_INSTR_TO_PRINT);
 
     // Check watchpoints
-    if (!check_all_wps())
+    if (!check_all_wps()) {
       nemu_state.state = NEMU_STOP;
+      Log("NEMU Stopped (pc = 0x%x)\n", cpu.pc);
+    }
 #endif
 
 #ifdef HAS_IOE
