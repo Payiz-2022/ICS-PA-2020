@@ -221,6 +221,8 @@ again:
     IDEXW(0xeb, J, jmp, 1)
     IDEX (0xe9, J, jmp)
 
+    EX   (0x99, cltd)
+
     IDEXW(0xa8, I2a, test, 1)
     IDEX (0xa9, I2a, test)
     

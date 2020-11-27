@@ -44,13 +44,13 @@ void reg_test() {
 void isa_reg_display() {
   printf("General Purpose Registers:\n");
   for (int i = R_EAX; i <= R_EDI; i++) {
-    printf("%10s: 0x%08x  %-d\n", regsl[i], reg_l(i), reg_l(i));
+    printf("%10s: 0x%08x  %-u (%d)\n", regsl[i], reg_l(i), reg_l(i), reg_l(i));
   }
   for (int i = R_AX; i <= R_DI; i++) {
-    printf("%10s: 0x%04x      %-d\n", regsw[i], reg_w(i), reg_w(i));
+    printf("%10s: 0x%04x      %-u\n", regsw[i], reg_w(i), reg_w(i));
   }
   for (int i = R_AL; i <= R_BH; i++) {
-    printf("%10s: 0x%02x        %-d\n", regsb[i], reg_b(i), reg_b(i));
+    printf("%10s: 0x%02x        %-u\n", regsb[i], reg_b(i), reg_b(i));
   }
 }
 
