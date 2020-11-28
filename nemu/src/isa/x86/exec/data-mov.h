@@ -41,19 +41,23 @@ static inline def_EHelper(cltd) {
     if (cpu.eax & 0x8000) cpu.edx |= 0xffff;
     else cpu.edx &= 0xffff0000;
   } else {
-    if ((signed)cpu.eax < 0) cpu.edx = 0xffffffff;
+    if (cpu.eax & 0x80000000) cpu.edx = 0xffffffff;
     else cpu.edx = 0;
   }
 
-  print_asm(s->isa.is_operand_size_16 ? "cwtl" : "cltd");
+  print_asm(s->isa.is_operand_size_16 ? "cwtd" : "cltd");
 }
 
 static inline def_EHelper(cwtl) {
   if (s->isa.is_operand_size_16) {
-  TODO();
+    rtl_lr(s, s0, R_AL, 1);
+    rtl_sext(s, s0, s0, 1);
+    rtl_sr(s, R_AX, s0, 2);
   }
   else {
-  TODO();
+    rtl_lr(s, s0, R_AX, 2);
+    rtl_sext(s, s0, s0, 2);
+    rtl_sr(s, R_EAX, s0, 4);
   }
 
   print_asm(s->isa.is_operand_size_16 ? "cbtw" : "cwtl");
