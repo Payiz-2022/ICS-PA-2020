@@ -47,16 +47,18 @@ static inline def_EHelper(cmp) {
 }
 
 static inline def_EHelper(inc) {
-  rtl_addi(s, s0, ddest, 1);
-
-  operand_write(s, id_dest, s0);
+  rtl_addi(s, ddest, ddest, 1);
+  rtl_update_ZFSF(s, ddest, id_dest->width);
+  operand_write(s, id_dest, ddest);
+  
   print_asm_template1(inc);
 }
 
 static inline def_EHelper(dec) {
-  rtl_subi(s, s0, ddest, 1);
-
-  operand_write(s, id_dest, s0);
+  rtl_subi(s, ddest, ddest, 1);
+  rtl_update_ZFSF(s, ddest, id_dest->width);
+  operand_write(s, id_dest, ddest);
+  
   print_asm_template1(dec);
 }
 
