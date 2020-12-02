@@ -4,11 +4,16 @@
 #if !defined(__ISA_NATIVE__) || defined(__NATIVE_USE_KLIB__)
 
 size_t strlen(const char *s) {
-  return 0;
+  char* p = (void*)s;
+  while (*p) p++;
+  return p - s;
 }
 
-char *strcpy(char* dst,const char* src) {
-  return NULL;
+char *strcpy(char* dst, const char* src) {
+  size_t n = strlen(src);
+  for (unsigned int i = 0; i < n; i++)
+    dst[i] = src[i];
+  return dst;
 }
 
 char* strncpy(char* dst, const char* src, size_t n) {
