@@ -4,7 +4,7 @@ ISA=${1#*ISA=}
 CPUTEST_PATH=$NEMU_HOME/../am-kernels/tests/cpu-tests
 
 echo "compiling NEMU..."
-if make ISA=$ISA; then
+if make -j16 ISA=$ISA; then
   echo "NEMU compile OK"
 else
   echo "NEMU compile error... exit..."
@@ -12,7 +12,7 @@ else
 fi
 
 echo "compiling testcases..."
-if make -C $CPUTEST_PATH ARCH=$ISA-nemu &> /dev/null; then
+if make -j16 -C $CPUTEST_PATH ARCH=$ISA-nemu &> /dev/null; then
   echo "testcases compile OK"
 else
   echo "testcases compile error... exit..."
@@ -26,7 +26,7 @@ for file in $files; do
   base=`basename $file | sed -e "s/-$ISA-nemu.bin//"`
   printf "[%14s] " $base
   logfile=$base-log.txt
-  make ISA=$ISA run ARGS="-b -l $ori_log $file" &> $logfile
+  make -j16 ISA=$ISA run ARGS="-b -l $ori_log $file" &> $logfile
 
   if (grep 'nemu: .*HIT GOOD TRAP' $logfile > /dev/null) then
     echo -e "\033[1;32mPASS!\033[0m"
