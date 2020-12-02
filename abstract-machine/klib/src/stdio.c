@@ -17,14 +17,14 @@ void sprint_basic_format(char** pout, char** pin, va_list* args) {
   switch (**pin) {
     case 's':
       ; char *p = va_arg(*args, char*);
-      while (*p) *(*pout) = *p++;
+      while (*p) *(*pout)++ = *p++;
       break;
 
     case 'd':
       ; int val = va_arg(*args, int);
       int f = 1;
       if (val < 0) {
-        *(*pout++) = '-';
+        *(*pout)++ = '-';
         f = -1;
       }
       int buf[24] = {0};
@@ -34,7 +34,7 @@ void sprint_basic_format(char** pout, char** pin, va_list* args) {
         val /= 10;
       }
       for (; i >= 0; i--) {
-        *(*pout++) = buf[i] - '0';
+        *(*pout)++ = buf[i] - '0';
       }
       break;
 
@@ -48,7 +48,7 @@ void sprint_format(char** pout, char** pin, va_list* args) {
   switch (**pin) {
     // To be implemented
     case '%':
-      *(*pout++) = '%';
+      *(*pout)++ = '%';
       break;
 
     case 'l':
