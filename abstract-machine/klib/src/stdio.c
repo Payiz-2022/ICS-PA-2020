@@ -77,6 +77,7 @@ int sprintf(char *out, const char *fmt, ...) {
         pout++;
     }
   }
+  *pout = 0;
   return pout - out;
 }
 
