@@ -14,7 +14,14 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
 }
 
 int sprintf(char *out, const char *fmt, ...) {
-  return 0;
+  char *pout = out;
+  char *pin = (void*)fmt;
+  while (*pin) {
+    *pout = *pin;
+    pin++;
+    pout++;
+  }
+  return pout - out;
 }
 
 int snprintf(char *out, size_t n, const char *fmt, ...) {
