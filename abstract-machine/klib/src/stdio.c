@@ -45,6 +45,7 @@ void sprint_basic_format(char** pout, char** pin, va_list* args) {
 }
 
 void sprint_format(char** pout, char** pin, va_list* args) {
+  return;
   switch (**pin) {
     // To be implemented
     case '%':
