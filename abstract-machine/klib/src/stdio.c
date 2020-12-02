@@ -22,7 +22,7 @@ void sprint_basic_format(char** pout, char** pin, va_list* args) {
 
     case 'd':
       ; int val = va_arg(*args, int);
-      *(*pout)++ = val + '0';
+      *(*pout)++ = '1';
       return;
       int f = 1;
       if (val < 0) {
