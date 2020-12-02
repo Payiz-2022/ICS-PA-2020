@@ -33,8 +33,8 @@ void sprint_basic_format(char** pout, char** pin, va_list* args) {
         buf[i] = (val % 10) * f;
         val /= 10;
       }
-      for (; i >= 0; i--) {
-        assert(false);
+      assert(false);
+      for (i--; i >= 0; i--) {
         *(*pout)++ = buf[i] + '0';
       }
       break;
