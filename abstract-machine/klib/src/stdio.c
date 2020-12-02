@@ -14,6 +14,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
 }
 
 void sprint_basic_format(char** pout, char** pin, va_list* args) {
+  assert(**pin != 'd');
   switch (**pin) {
     case 's':
       ; char *p = va_arg(*args, char*);
@@ -22,7 +23,6 @@ void sprint_basic_format(char** pout, char** pin, va_list* args) {
 
     case 'd':
       ; int val = va_arg(*args, int);
-      assert(false);
       int f = 1;
       if (val < 0) {
         *(*pout)++ = '-';
