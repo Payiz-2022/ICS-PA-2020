@@ -49,12 +49,21 @@ int strncmp(const char* s1, const char* s2, size_t n) {
   return *p1 - *p2;
 }
 
-void* memset(void* v,int c,size_t n) {
-  return NULL;
+void* memset(void* v, int c, size_t n) {
+  int *p = v;
+  for (unsigned int i = 0; i < (n >> 2); i++) {
+    p[i] = c;
+  }
+  return v;
 }
 
-void* memmove(void* dst,const void* src,size_t n) {
-  return NULL;
+void* memmove(void* dst, const void* src, size_t n) {
+  char *pd = dst;
+  const char *ps = src;
+  for (unsigned int i = 0; i < n; i++) {
+    pd[i] = ps[i];
+  }
+  return dst;
 }
 
 void* memcpy(void* out, const void* in, size_t n) {
