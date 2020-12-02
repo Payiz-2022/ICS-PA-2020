@@ -89,7 +89,8 @@ static inline def_rtl(lm, rtlreg_t *dest, const rtlreg_t* addr, word_t offset, i
 }
 
 static inline def_rtl(sm, const rtlreg_t* addr, word_t offset, const rtlreg_t* src1, int len) {
-  Log("write: %x to 0x%x(esp: 0x%x) len %d\n", *src1, *addr + offset, cpu.esp, len);
+  if (*src1 == 0x13)
+    Log("write: %x to 0x%x(esp: 0x%x offset: 0x%x) len %d\n", *src1, *addr + offset, cpu.esp, offset, len);
   vaddr_write(*addr + offset, *src1, len);
 }
 

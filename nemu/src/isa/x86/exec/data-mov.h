@@ -4,7 +4,6 @@ static inline def_EHelper(mov) {
 }
 
 static inline def_EHelper(push) {
-  Log("push: %x\n", *ddest);
   rtl_push(s, ddest);
   operand_write(s, id_dest, ddest);
 
