@@ -17,8 +17,7 @@ void sprint_basic_format(char** pout, char** pin, va_list* args) {
   switch (**pin) {
     case 's':
       ; char *p = va_arg(*args, char*);
-      printf("String: %s\n", p);
-      // while (*p) *(*pout++) = *p++;
+      while (*p) *(*pout) = *p++;
       break;
 
     case 'd':
