@@ -50,9 +50,9 @@ int strncmp(const char* s1, const char* s2, size_t n) {
 }
 
 void* memset(void* v, int c, size_t n) {
-  int *p = v;
-  for (unsigned int i = 0; i < (n >> 2); i++) {
-    p[i] = c;
+  char *p = v;
+  for (unsigned int i = 0; i < n; i++) {
+    p[i] = (char)c;
   }
   return v;
 }
