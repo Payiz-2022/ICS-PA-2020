@@ -67,11 +67,16 @@ void* memmove(void* dst, const void* src, size_t n) {
 }
 
 void* memcpy(void* out, const void* in, size_t n) {
-  return NULL;
+  return memmove(out, in, n);
 }
 
 int memcmp(const void* s1, const void* s2, size_t n) {
-  return 0;
+  char *p1 = (void*)s1;
+  char *p2 = (void*)s2;
+  while (*p1 == *p2 && n--) {
+    p1++; p2++;
+  }
+  return *p1 - *p2;
 }
 
 #endif
