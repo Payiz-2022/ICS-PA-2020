@@ -43,7 +43,7 @@ int strcmp(const char* s1, const char* s2) {
 int strncmp(const char* s1, const char* s2, size_t n) {
   char *p1 = (void*)s1;
   char *p2 = (void*)s2;
-  while (*p1 && *p2 && (*p1 == *p2) && n--) {
+  while (*p1 && *p2 && (*p1 == *p2) && --n) {
     p1++; p2++;
   }
   return *p1 - *p2;
@@ -73,7 +73,7 @@ void* memcpy(void* out, const void* in, size_t n) {
 int memcmp(const void* s1, const void* s2, size_t n) {
   char *p1 = (void*)s1;
   char *p2 = (void*)s2;
-  while (*p1 == *p2 && n--) {
+  while (*p1 == *p2 && --n) {
     p1++; p2++;
   }
   return *p1 - *p2;
