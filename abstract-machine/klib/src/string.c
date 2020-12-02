@@ -17,19 +17,36 @@ char *strcpy(char* dst, const char* src) {
 }
 
 char* strncpy(char* dst, const char* src, size_t n) {
-  return NULL;
+  for (unsigned int i = 0; i < n; i++)
+    dst[i] = src[i];
+  return dst;
 }
 
 char* strcat(char* dst, const char* src) {
-  return NULL;
+  size_t offset = strlen(dst);
+  size_t n = strlen(src);
+  for (unsigned int i = 0; i < n; i++)
+    dst[offset + i] = src[i];
+  dst[offset + n] = 0;
+  return dst;
 }
 
 int strcmp(const char* s1, const char* s2) {
-  return 0;
+  char *p1 = (void*)s1;
+  char *p2 = (void*)s2;
+  while (*p1 && *p2 && (*p1 == *p2)) {
+    p1++; p2++;
+  }
+  return *p1 - *p2;
 }
 
 int strncmp(const char* s1, const char* s2, size_t n) {
-  return 0;
+  char *p1 = (void*)s1;
+  char *p2 = (void*)s2;
+  while (*p1 && *p2 && (*p1 == *p2) && n--) {
+    p1++; p2++;
+  }
+  return *p1 - *p2;
 }
 
 void* memset(void* v,int c,size_t n) {
