@@ -22,6 +22,7 @@ void sprint_basic_format(char** pout, char** pin, va_list* args) {
 
     case 'd':
       ; int val = va_arg(*args, int);
+      assert(false);
       int f = 1;
       if (val < 0) {
         *(*pout)++ = '-';
@@ -33,7 +34,6 @@ void sprint_basic_format(char** pout, char** pin, va_list* args) {
         buf[i] = (val % 10) * f;
         val /= 10;
       }
-      assert(false);
       for (i--; i >= 0; i--) {
         *(*pout)++ = buf[i] + '0';
       }
