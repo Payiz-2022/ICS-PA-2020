@@ -34,6 +34,7 @@ void sprint_basic_format(char** pout, char** pin, va_list* args) {
         val /= 10;
       }
       for (; i >= 0; i--) {
+        assert(buf[i] > 0);
         *(*pout)++ = buf[i] + '0';
       }
       break;
