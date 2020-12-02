@@ -139,12 +139,12 @@ again:
     IDEXW(0x24, I2a, and, 1)
     IDEX (0x25, I2a, and)
 
-    IDEXW(0x26, G2E, sub, 1)
-    IDEX (0x27, G2E, sub)
-    IDEXW(0x28, E2G, sub, 1)
-    IDEX (0x29, E2G, sub)
-    IDEXW(0x2a, I2a, sub, 1)
-    IDEX (0x2b, I2a, sub)
+    IDEXW(0x28, G2E, sub, 1)
+    IDEX (0x29, G2E, sub)
+    IDEXW(0x2a, E2G, sub, 1)
+    IDEX (0x2b, E2G, sub)
+    IDEXW(0x2c, I2a, sub, 1)
+    IDEX (0x2d, I2a, sub)
 
     IDEXW(0x30, G2E, xor, 1)
     IDEX (0x31, G2E, xor)
