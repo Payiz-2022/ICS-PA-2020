@@ -240,6 +240,11 @@ again:
 
     IDEXW(0xa8, I2a, test, 1)
     IDEX (0xa9, I2a, test)
+
+    IDEXW(0xe4, in_I2a, in, 1)
+    IDEX (0xe5, in_I2a, in)
+    IDEXW(0xe6, out_a2I, out, 1)
+    IDEX (0xe7, out_a2I, out)
     
     EX   (0x0f, 2byte_esc)
     IDEXW(0x80, I2E, gp1, 1)
