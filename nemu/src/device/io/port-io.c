@@ -26,6 +26,7 @@ uint32_t pio_read_common(ioaddr_t addr, int len) {
 
 void pio_write_common(ioaddr_t addr, uint32_t data, int len) {
   Log("Addr: 0x%x Data: 0x%x Write len: %d\n", addr, data, len);
+  printf("%d\n", 10);
   assert(addr + len - 1 < PORT_IO_SPACE_MAX);
   int mapid = find_mapid_by_addr(maps, nr_map, addr);
   assert(mapid != -1);
