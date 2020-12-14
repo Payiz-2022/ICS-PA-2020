@@ -65,6 +65,7 @@ static inline def_EHelper(in) {
 
 static inline def_EHelper(out) {
   cpu.gpr[1]._16 = cpu.gpr[1]._8[0];
+  Log("Dest: 0x%x, Src: 0x%x\n", *ddest, *dsrc1);
   switch (id_dest->width) {
     case 1:
       pio_write_b(*ddest, *dsrc1);
