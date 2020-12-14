@@ -207,7 +207,6 @@ again:
     IDEX (0x68, I, push)
     IDEXW(0xe8, I, call, 4)
     EX   (0xc3, ret)
-    EX   (0xee, out)
     EX   (0xc9, leave)
     EX   (0x90, nop)
 
@@ -245,6 +244,11 @@ again:
     IDEX (0xe5, in_I2a, in)
     IDEXW(0xe6, out_a2I, out, 1)
     IDEX (0xe7, out_a2I, out)
+
+    IDEXW(0xec, in_dx2a, in, 1)
+    IDEX (0xed, in_dx2a, in)
+    IDEXW(0xee, out_a2dx, out, 1)
+    IDEX (0xef, out_a2dx, out)
     
     EX   (0x0f, 2byte_esc)
     IDEXW(0x80, I2E, gp1, 1)
