@@ -5,6 +5,7 @@ uint32_t boot_time;
 
 void __am_timer_init() {
   boot_time = inl(RTC_ADDR);
+  return;
   putch('\n');
   putch('B');
   putch('O');
