@@ -30,7 +30,7 @@ void __am_timer_init() {
 
 void __am_timer_uptime(AM_TIMER_UPTIME_T *uptime) {
   uptime->us = inl(RTC_ADDR) - boot_time;
-  if (uptime->us % 1000) return;
+  return;
   putch('\n');
   putch('U');
   putch('P');
