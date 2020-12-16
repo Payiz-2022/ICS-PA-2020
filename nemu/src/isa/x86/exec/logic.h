@@ -70,6 +70,22 @@ static inline def_EHelper(shr) {
   print_asm_template2(shr);
 }
 
+static inline def_EHelper(rol) {
+  *ddest = (*ddest << *dsrc1) + (*ddest >> (id_dest->width * 8 - *dsrc1));
+  operand_write(s, id_dest, ddest);
+  rtl_update_ZFSF(s, ddest, id_dest->width);
+
+  print_asm_template2(rol);
+}
+
+static inline def_EHelper(ror) {
+  *ddest = (*ddest >> *dsrc1) + (*ddest << (id_dest->width * 8 - *dsrc1));
+  operand_write(s, id_dest, ddest);
+  rtl_update_ZFSF(s, ddest, id_dest->width);
+
+  print_asm_template2(ror);
+}
+
 
 static inline def_EHelper(setcc) {
   uint32_t cc = s->opcode & 0xf;
