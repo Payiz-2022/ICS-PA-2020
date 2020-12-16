@@ -57,6 +57,7 @@ int main(const char *args);
 
 static void init_platform() __attribute__((constructor));
 static void init_platform() {
+  assert(false);
   // create memory object and set up mapping to simulate the physical memory
   pmem_fd = memfd_create("pmem", 0);
   assert(pmem_fd != -1);
@@ -154,7 +155,7 @@ static void init_platform() {
 
   // set stdout unbuffered
   setbuf(stdout, NULL);
-  
+
   const char *args = getenv("mainargs");
   halt(main(args ? args : "")); // call main here!
 }
