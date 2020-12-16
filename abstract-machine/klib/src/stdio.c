@@ -35,7 +35,6 @@ void sprint_basic_format(char** pout, char** pin, va_list* args) {
 
     case 'd':
       ; int val = va_arg(*args, int);
-      putch(val % 10 + '0');
       int f = 1;
       if (val < 0) {
         *(*pout)++ = '-';
@@ -84,6 +83,7 @@ void sprint_format(char** pout, char** pin, va_list* args) {
     case 'l':
       (*pin)++;
       sprint_format(pout, pin, args);
+      break;
 
     default:
       sprint_basic_format(pout, pin, args);
@@ -100,6 +100,7 @@ int sprintf(char *out, const char *fmt, ...) {
     switch (*pin) {
       case '%':
         pin++;
+        putch(va_arg(args, int) % 10 + '0');
         sprint_format(&pout, &pin, &args);
       default:
         *pout = *pin;
