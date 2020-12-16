@@ -9,7 +9,7 @@ int printf(const char *fmt, ...) {
   va_list args;
   va_start(args, fmt);
   char s[100];
-  sprintf(s, fmt, args);
+  // sprintf_parsed(s, fmt, args);
   va_end(args);
   char *p = s;
   while (*p) {
@@ -91,11 +91,7 @@ void sprint_format(char** pout, char** pin, va_list* args) {
   }
 }
 
-int sprintf(char *out, const char *fmt, ...) {
-  va_list args;
-  va_start(args, fmt);
-
-
+int sprintf_parsed(char *out, const char *fmt, va_list args) {
   char *pout = out;
   char *pin = (void*)fmt;
   while (*pin) {
@@ -109,9 +105,17 @@ int sprintf(char *out, const char *fmt, ...) {
         pout++;
     }
   }
-  va_end(args);
+  
   *pout = 0;
   return pout - out;
+}
+
+int sprintf(char *out, const char *fmt, ...) {
+  va_list args;
+  va_start(args, fmt);
+  int len = sprintf_parsed(out, fmt, args);
+  va_end(args);
+  return len;
 }
 
 int snprintf(char *out, size_t n, const char *fmt, ...) {
