@@ -62,7 +62,8 @@ int sprint_read_pad(char** pout, char** pin, va_list* args) {
   int sum = **pin - '0';
   if (sum < '0' || sum > '9') return 0;
   (*pin)++;
-  sum += sprint_read_pad(pout, pin, args);
+  int ans = sprint_read_pad(pout, pin, args);
+  if (ans) return sum * 10 + ans;
   return sum;
 }
 
