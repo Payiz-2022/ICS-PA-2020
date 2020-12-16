@@ -30,26 +30,26 @@ void __am_timer_init() {
 
 void __am_timer_uptime(AM_TIMER_UPTIME_T *uptime) {
   uptime->us = inl(RTC_ADDR) - boot_time;
-  // if (uptime->us % 100000) return;
-  // putch('\n');
-  // putch('U');
-  // putch('P');
-  // putch('T');
-  // putch('I');
-  // putch('M');
-  // putch('E');
-  // putch(' ');
-  // unsigned int t = uptime->us;
-  // int buf[20] = {0}, i = 0;
-  // while (t) {
-  //   buf[++i] = t % 10;
-  //   t /= 10;
-  // }
-  // if (i == 0) i++;
-  // while (i--) {
-  //   putch('0' + buf[i+1]);
-  // }
-  // putch('\n');
+  if (uptime->us % 100000) return;
+  putch('\n');
+  putch('U');
+  putch('P');
+  putch('T');
+  putch('I');
+  putch('M');
+  putch('E');
+  putch(' ');
+  unsigned int t = uptime->us;
+  int buf[20] = {0}, i = 0;
+  while (t) {
+    buf[++i] = t % 10;
+    t /= 10;
+  }
+  if (i == 0) i++;
+  while (i--) {
+    putch('0' + buf[i+1]);
+  }
+  putch('\n');
 }
 
 void __am_timer_rtc(AM_TIMER_RTC_T *rtc) {
