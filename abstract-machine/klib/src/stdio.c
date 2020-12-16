@@ -94,13 +94,15 @@ int sprintf(char *out, const char *fmt, ...) {
   va_list args;
   va_start(args, fmt);
 
+
   char *pout = out;
   char *pin = (void*)fmt;
   while (*pin) {
     switch (*pin) {
       case '%':
         pin++;
-        sprint_format(&pout, &pin, &args);
+        putch(va_arg(args, int) + '0');
+        // sprint_format(&pout, &pin, &args);
       default:
         *pout = *pin;
         pin++;
