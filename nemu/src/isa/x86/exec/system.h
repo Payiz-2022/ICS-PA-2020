@@ -1,7 +1,7 @@
 #include <monitor/difftest.h>
 
 static inline def_EHelper(lidt) {
-  TODO();
+  // TODO();
 
   print_asm_template1(lidt);
 }
