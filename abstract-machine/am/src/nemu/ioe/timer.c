@@ -46,7 +46,7 @@ void __am_timer_uptime(AM_TIMER_UPTIME_T *uptime) {
   }
   if (i == 0) i++;
   while (i--) {
-    putch('0' + buf[i]);
+    putch('0' + buf[i+1]);
   }
   putch('\n');
 }
