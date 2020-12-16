@@ -30,34 +30,56 @@ static struct {
 } pref;
 
 void sprint_basic_format(char** pout, char** pin, va_list* args) {
-  switch (**pin) {
-    case 's':
-      ; char *p = va_arg(*args, char*);
-      while (*p) *(*pout)++ = *p++;
-      break;
-
-    case 'd':
-      ; int val = va_arg(*args, int);
-      int f = 1;
-      if (val < 0) {
-        *(*pout)++ = '-';
-        f = -1;
-      }
-      int buf[24] = {0};
-      int i = 0;
-      for (; i < 10 && val; i++) {
-        buf[i] = (val % 10) * f;
-        val /= 10;
-      }
-      if (i < pref.lpad) i = pref.lpad;
-      if (i == 0) i++;
-      for (i--; i >= 0; i--) {
-        *(*pout)++ = buf[i] + '0';
-      }
-      break;
-
-    default:
-      assert(false);
+  if (**pin == 's') {
+    char *p = va_arg(*args, char*);
+    while (*p) *(*pout)++ = *p++;
+  } else if (**pin == 'd') {
+    int val = va_arg(*args, int);
+    int f = 1;
+    if (val < 0) {
+      *(*pout)++ = '-';
+      f = -1;
+    }
+    int buf[24] = {0};
+    int i = 0;
+    for (; i < 10 && val; i++) {
+      buf[i] = (val % 10) * f;
+      val /= 10;
+    }
+    if (i < pref.lpad) i = pref.lpad;
+    if (i == 0) i++;
+    for (i--; i >= 0; i--) {
+      *(*pout)++ = buf[i] + '0';
+    }
+  } else if (**pin == 'u') {
+    unsigned int val = va_arg(*args, unsigned int);
+    int buf[24] = {0};
+    int i = 0;
+    for (; i < 10 && val; i++) {
+      buf[i] = (val % 10);
+      val /= 10;
+    }
+    if (i < pref.lpad) i = pref.lpad;
+    if (i == 0) i++;
+    for (i--; i >= 0; i--) {
+      *(*pout)++ = buf[i] + '0';
+    }
+  } else if (**pin == 'x') {
+    const char hex_char[16] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
+    int val = va_arg(*args, int);
+    int buf[24] = {0};
+    int i = 0;
+    for (; i < 10 && val; i++) {
+      buf[i] = (val % 16);
+      val /= 16;
+    }
+    if (i < pref.lpad) i = pref.lpad;
+    if (i == 0) i++;
+    for (i--; i >= 0; i--) {
+      *(*pout)++ = hex_char[buf[i]];
+    }
+  } else {
+    assert(false);
   }
   (*pin)++;
 }
