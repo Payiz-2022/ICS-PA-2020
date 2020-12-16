@@ -22,6 +22,10 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
   return 0;
 }
 
+// static struct {
+//   int lpad;
+// } pref;
+
 void sprint_basic_format(char** pout, char** pin, va_list* args) {
   switch (**pin) {
     case 's':
@@ -73,6 +77,8 @@ void sprint_format(char** pout, char** pin, va_list* args) {
     case '0':
       (*pin)++;
       (*pin)++;
+      sprint_format(pout, pin, args);
+      break;
       // pref.lpad = sprint_read_pad(pout, pin, args);
 
     case 'l':
