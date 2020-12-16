@@ -100,7 +100,6 @@ int sprintf(char *out, const char *fmt, ...) {
     switch (*pin) {
       case '%':
         pin++;
-        putch(va_arg(args, int) % 10 + '0');
         sprint_format(&pout, &pin, &args);
       default:
         *pout = *pin;
