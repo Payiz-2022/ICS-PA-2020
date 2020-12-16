@@ -79,7 +79,6 @@ void sprint_basic_format(char** pout, char** pin, va_list* args) {
       *(*pout)++ = hex_char[buf[i]];
     }
   } else {
-    putch(**pin);
     assert(false);
   }
   (*pin)++;
@@ -89,8 +88,8 @@ int sprint_read_pad(char** pout, char** pin) {
   int sum = **pin - '0';
   if (sum < 0 || sum > 9) return 0;
   (*pin)++;
-  // int ans = sprint_read_pad(pout, pin, args);
-  // if (ans) return sum * 10 + ans;
+  int ans = sprint_read_pad(pout, pin);
+  if (ans) return sum * 10 + ans;
   return sum;
 }
 
