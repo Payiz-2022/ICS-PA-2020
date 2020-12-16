@@ -69,7 +69,6 @@ static inline def_EHelper(dec) {
 }
 
 static inline def_EHelper(neg) {
-  Log("NEG: %d ", *ddest);
   if (*ddest) {
     rtl_addi(s, s0, rz, 1);
     rtl_set_CF(s, s0);
@@ -78,13 +77,14 @@ static inline def_EHelper(neg) {
   }
 
   if (id_dest->width == 1) {
+    Log("NEG: %d ", *ddest);
     rtl_addi(s, s0, rz, (-(signed)(*ddest << 24)) >> 24);
     operand_write(s, id_dest, s0);
+    Log("Result: %d ", *ddest);
   } else {
     rtl_addi(s, s0, rz, -(signed)(*ddest));
     operand_write(s, id_dest, s0);
   }
-  Log("Result: %d ", *ddest);
   rtl_update_ZFSF(s, ddest, id_dest->width);
 
   print_asm_template1(neg);
