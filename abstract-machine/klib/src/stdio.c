@@ -18,7 +18,7 @@ int printf(const char *fmt, ...) {
   //   putch(*p);
   //   p++;
   // }
-  return 0;
+  return 1;
 }
 
 int vsprintf(char *out, const char *fmt, va_list ap) {
