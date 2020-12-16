@@ -46,7 +46,7 @@ void sprint_basic_format(char** pout, char** pin, va_list* args) {
         buf[i] = (val % 10) * f;
         val /= 10;
       }
-      // if (i < pref.lpad) i = pref.lpad;
+      if (i < pref.lpad) i = pref.lpad;
       for (i--; i >= 0; i--) {
         *(*pout)++ = buf[i] + '0';
       }
