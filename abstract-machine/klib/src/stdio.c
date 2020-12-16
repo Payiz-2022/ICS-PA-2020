@@ -5,11 +5,13 @@
 
 #if !defined(__ISA_NATIVE__) || defined(__NATIVE_USE_KLIB__)
 
+int sprintf_parsed(char *out, const char *fmt, va_list args);
+
 int printf(const char *fmt, ...) {
   va_list args;
   va_start(args, fmt);
   char s[100];
-  // sprintf_parsed(s, fmt, args);
+  sprintf_parsed(s, fmt, args);
   va_end(args);
   char *p = s;
   while (*p) {
