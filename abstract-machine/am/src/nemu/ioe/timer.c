@@ -28,7 +28,7 @@ void __am_timer_init() {
   putch('\n');
 }
 
-void volatile __am_timer_uptime(AM_TIMER_UPTIME_T *uptime) {
+void __am_timer_uptime(AM_TIMER_UPTIME_T *uptime) {
   uptime->us = inl(RTC_ADDR) - boot_time;
   putch('\n');
   putch('U');
