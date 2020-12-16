@@ -38,7 +38,7 @@ void __am_timer_uptime(AM_TIMER_UPTIME_T *uptime) {
   putch('M');
   putch('E');
   putch(' ');
-  uint64_t t = boot_time;
+  int t = uptime->us;
   int buf[20] = {0}, i = 0;
   while (t) {
     buf[++i] = t % 10;
