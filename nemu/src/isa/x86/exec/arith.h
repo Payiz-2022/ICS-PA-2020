@@ -77,10 +77,8 @@ static inline def_EHelper(neg) {
   }
 
   if (id_dest->width == 1) {
-    Log("NEG: %d ", *ddest);
     rtl_addi(s, s0, rz, (-(signed)(*ddest << 24)) >> 24);
     operand_write(s, id_dest, s0);
-    Log("Result: %d ", *ddest);
   } else {
     rtl_addi(s, s0, rz, -(signed)(*ddest));
     operand_write(s, id_dest, s0);
