@@ -154,7 +154,7 @@ static void init_platform() {
 
   // set stdout unbuffered
   setbuf(stdout, NULL);
-
+  assert(false);
   const char *args = getenv("mainargs");
   halt(main(args ? args : "")); // call main here!
 }
