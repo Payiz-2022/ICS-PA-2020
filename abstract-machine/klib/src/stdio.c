@@ -84,9 +84,9 @@ void sprint_basic_format(char** pout, char** pin, va_list* args) {
   (*pin)++;
 }
 
-int sprint_read_pad(char** pout, char** pin, va_list* args) {
+int sprint_read_pad(char** pout, char** pin) {
   int sum = **pin - '0';
-  if (sum < '0' || sum > '9') return 0;
+  if (sum < 0 || sum > 9) return 0;
   (*pin)++;
   // int ans = sprint_read_pad(pout, pin, args);
   // if (ans) return sum * 10 + ans;
@@ -102,7 +102,7 @@ void sprint_format(char** pout, char** pin, va_list* args) {
 
     case '0':
       (*pin)++;
-      pref.lpad = sprint_read_pad(pout, pin, args);
+      pref.lpad = sprint_read_pad(pout, pin);
       sprint_format(pout, pin, args);
       break;
 
