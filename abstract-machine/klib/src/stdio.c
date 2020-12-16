@@ -27,6 +27,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
 
 static struct {
   int lpad;
+  char pad_char;
 } pref;
 
 void sprint_basic_format(char** pout, char** pin, va_list* args) {
@@ -36,18 +37,22 @@ void sprint_basic_format(char** pout, char** pin, va_list* args) {
   } else if (**pin == 'd') {
     int val = va_arg(*args, int);
     int f = 1;
-    if (val < 0) {
-      *(*pout)++ = '-';
-      f = -1;
-    }
+    if (val < 0) f = -1;
+
     int buf[24] = {0};
     int i = 0;
     for (; i < 10 && val; i++) {
       buf[i] = (val % 10) * f;
       val /= 10;
     }
+
     if (i < pref.lpad) i = pref.lpad;
     if (i == 0) i++;
+    if (pref.pad_char == '0') *(*pout)++ = '-';
+    for (int j = 0; j < pref.lpad - i - (f == -1); j++)
+      *(*pout)++ = pref.pad_char;
+    if (pref.pad_char == ' ') *(*pout)++ = '-';
+    
     for (i--; i >= 0; i--) {
       *(*pout)++ = buf[i] + '0';
     }
@@ -61,6 +66,8 @@ void sprint_basic_format(char** pout, char** pin, va_list* args) {
     }
     if (i < pref.lpad) i = pref.lpad;
     if (i == 0) i++;
+    for (int j = 0; j < pref.lpad - i; j++)
+      *(*pout)++ = pref.pad_char;
     for (i--; i >= 0; i--) {
       *(*pout)++ = buf[i] + '0';
     }
@@ -87,21 +94,26 @@ void sprint_basic_format(char** pout, char** pin, va_list* args) {
 
 int sprint_read_pad(char** pout, char** pin) {
   int sum = **pin - '0';
-  if (sum < 0 || sum > 9) return 0;
+  if (sum < 0 || sum > 9) return -1;
   (*pin)++;
   int ans = sprint_read_pad(pout, pin);
-  if (ans) return sum * 10 + ans;
+  if (ans != -1) return sum * 10 + ans;
   return sum;
 }
 
 void sprint_format(char** pout, char** pin, va_list* args) {
   switch (**pin) {
-    // To be implemented
     case '%':
       *(*pout)++ = '%';
       break;
 
     case '0':
+      (*pin)++;
+      pref.pad_char = '0';
+      sprint_format(pout, pin, args);
+      break;
+
+    case '1' ... '9':
       (*pin)++;
       pref.lpad = sprint_read_pad(pout, pin);
       sprint_format(pout, pin, args);
@@ -118,11 +130,11 @@ void sprint_format(char** pout, char** pin, va_list* args) {
 }
 
 int sprintf_parsed(char *out, const char *fmt, va_list args) {
-  pref.lpad = 0;
-
   char *pout = out;
   char *pin = (void*)fmt;
   while (*pin) {
+    pref.lpad = 0;
+    pref.pad_char = ' ';
     switch (*pin) {
       case '%':
         pin++;
