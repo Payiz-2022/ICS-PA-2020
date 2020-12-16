@@ -10,6 +10,7 @@ int printf(const char *fmt, ...) {
   va_start(args, fmt);
   char s[100];
   sprintf(s, fmt, args);
+  va_end(args);
   char *p = s;
   while (*p) {
     putch(*p);
