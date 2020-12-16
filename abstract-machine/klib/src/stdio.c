@@ -94,6 +94,8 @@ void sprint_format(char** pout, char** pin, va_list* args) {
 }
 
 int sprintf_parsed(char *out, const char *fmt, va_list args) {
+  pref.lpad = 0;
+
   char *pout = out;
   char *pin = (void*)fmt;
   while (*pin) {
