@@ -15,7 +15,7 @@ void __am_timer_init() {
   putch('M');
   putch('E');
   putch(' ');
-  unsigned long long t = boot_time;
+  uint64_t t = boot_time;
   int buf[20] = {0}, i = 0;
   while (t) {
     buf[++i] = t % 10;
@@ -38,7 +38,7 @@ void __am_timer_uptime(AM_TIMER_UPTIME_T *uptime) {
   putch('M');
   putch('E');
   putch(' ');
-  unsigned long long t = boot_time;
+  uint64_t t = boot_time;
   int buf[20] = {0}, i = 0;
   while (t) {
     buf[++i] = t % 10;
