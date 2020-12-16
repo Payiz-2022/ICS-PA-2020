@@ -50,6 +50,7 @@ void sprint_basic_format(char** pout, char** pin, va_list* args) {
         val /= 10;
       }
       if (i < pref.lpad) i = pref.lpad;
+      if (i == 0) i++;
       for (i--; i >= 0; i--) {
         *(*pout)++ = buf[i] + '0';
       }
