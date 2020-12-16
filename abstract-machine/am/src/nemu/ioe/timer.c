@@ -23,7 +23,7 @@ void __am_timer_init() {
   }
   if (i == 0) i++;
   while (i--) {
-    putch('0' + buf[i]);
+    putch('0' + buf[i--]);
   }
   putch('\n');
 }
@@ -45,8 +45,8 @@ void __am_timer_uptime(AM_TIMER_UPTIME_T *uptime) {
     t /= 10;
   }
   if (i == 0) i++;
-  while (i--) {
-    putch('0' + buf[i]);
+  while (i) {
+    putch('0' + buf[i--]);
   }
   putch('\n');
 }
