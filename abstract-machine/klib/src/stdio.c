@@ -5,13 +5,13 @@
 
 #if !defined(__ISA_NATIVE__) || defined(__NATIVE_USE_KLIB__)
 
-int sprintf_parsed(char *out, const char *fmt, va_list args);
+int sprintf_parsed(char *out, const char *fmt, va_list *args);
 
 int printf(const char *fmt, ...) {
   va_list args;
   va_start(args, fmt);
   char s[100];
-  sprintf_parsed(s, fmt, args);
+  sprintf_parsed(s, fmt, &args);
   va_end(args);
   char *p = s;
   while (*p) {
@@ -116,7 +116,7 @@ void sprint_format(char** pout, char** pin, va_list* args) {
   }
 }
 
-int sprintf_parsed(char *out, const char *fmt, va_list args) {
+int sprintf_parsed(char *out, const char *fmt, va_list *args) {
   pref.lpad = 0;
 
   char *pout = out;
@@ -125,7 +125,7 @@ int sprintf_parsed(char *out, const char *fmt, va_list args) {
     switch (*pin) {
       case '%':
         pin++;
-        sprint_format(&pout, &pin, &args);
+        sprint_format(&pout, &pin, args);
       default:
         *pout = *pin;
         pin++;
@@ -140,7 +140,7 @@ int sprintf_parsed(char *out, const char *fmt, va_list args) {
 int sprintf(char *out, const char *fmt, ...) {
   va_list args;
   va_start(args, fmt);
-  int len = sprintf_parsed(out, fmt, args);
+  int len = sprintf_parsed(out, fmt, &args);
   va_end(args);
   return len;
 }
