@@ -61,7 +61,6 @@ static inline def_EHelper(in) {
       rtl_li(s, s0, pio_read_l(*dsrc1));
   }
   operand_write(s, id_dest, s0);
-  Log("Read %d to 0x%x", *s0, *ddest);
 
   print_asm_template2(in);
 }
@@ -78,7 +77,7 @@ static inline def_EHelper(out) {
     case 4:
       pio_write_l(*ddest, *dsrc1);
   }
-  Log("Write %d to 0x%x", *dsrc1, *ddest);
+  // Log("Write %d to 0x%x", *dsrc1, *ddest);
   
   print_asm_template2(out);
 }
