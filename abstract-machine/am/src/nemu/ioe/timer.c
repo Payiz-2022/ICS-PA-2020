@@ -1,10 +1,10 @@
 #include <am.h>
 #include <nemu.h>
 
-uint64_t boot_time;
+uint32_t boot_time;
 
 void __am_timer_init() {
-  boot_time = ((long long)inl(RTC_ADDR) << 32) + inl(RTC_ADDR + 4);
+  boot_time = inl(RTC_ADDR + 4);
   putch('\n');
   putch('B');
   putch('O');
@@ -29,7 +29,7 @@ void __am_timer_init() {
 }
 
 void __am_timer_uptime(AM_TIMER_UPTIME_T *uptime) {
-  uptime->us = ((long long)inl(RTC_ADDR) << 32) + inl(RTC_ADDR + 4) - boot_time;
+  uptime->us = inl(RTC_ADDR + 4) - boot_time;
   putch('\n');
   putch('U');
   putch('P');
