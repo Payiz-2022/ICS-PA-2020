@@ -50,6 +50,7 @@ void sprint_basic_format(char** pout, char** pin, va_list* args) {
       for (i--; i >= 0; i--) {
         *(*pout)++ = buf[i] + '0';
       }
+      putch(buf[0] + '0');
       break;
 
     default:
