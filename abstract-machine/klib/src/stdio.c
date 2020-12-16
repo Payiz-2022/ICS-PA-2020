@@ -79,6 +79,7 @@ void sprint_basic_format(char** pout, char** pin, va_list* args) {
       *(*pout)++ = hex_char[buf[i]];
     }
   } else {
+    putch(**pin);
     assert(false);
   }
   (*pin)++;
