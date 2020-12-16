@@ -108,6 +108,7 @@ int sprintf(char *out, const char *fmt, ...) {
         pout++;
     }
   }
+  va_end(args);
   *pout = 0;
   return pout - out;
 }
