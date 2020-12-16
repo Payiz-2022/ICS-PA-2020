@@ -4,7 +4,7 @@
 uint64_t boot_time;
 
 void __am_timer_init() {
-  boot_time = (long long)inl(RTC_ADDR + 4);// * 1000000 + inl(RTC_ADDR);
+  boot_time = (uint64_t)inl(RTC_ADDR + 4) * 1000000LL + inl(RTC_ADDR);
   putch('\n');
   putch('B');
   putch('O');
@@ -29,7 +29,7 @@ void __am_timer_init() {
 }
 
 void __am_timer_uptime(AM_TIMER_UPTIME_T *uptime) {
-  uptime->us = (long long)inl(RTC_ADDR + 4);// * 1000000 + inl(RTC_ADDR) - boot_time;
+  uptime->us = (uint64_t)inl(RTC_ADDR + 4) * 1000000LL + inl(RTC_ADDR) - boot_time;
   putch('\n');
   putch('U');
   putch('P');
