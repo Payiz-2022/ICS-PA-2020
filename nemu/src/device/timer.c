@@ -10,12 +10,12 @@ static uint32_t *rtc_port_base = NULL;
 
 static void rtc_io_handler(uint32_t offset, int len, bool is_write) {
   assert(offset == 0 || offset == 4);
-  printf("Time: %lld Is_write: %d\n", (long long)(void *)rtc_port_base, is_write);
   if (!is_write) {
     struct timeval now;
     gettimeofday(&now, NULL);
     rtc_port_base[0] = now.tv_usec;
     rtc_port_base[1] = now.tv_sec;
+    printf("Time: %lld\n", (long long)(void *)rtc_port_base);
   }
 }
 
