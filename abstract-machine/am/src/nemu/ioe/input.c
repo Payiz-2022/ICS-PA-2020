@@ -5,6 +5,7 @@
 
 void __am_input_keybrd(AM_INPUT_KEYBRD_T *kbd) {
   int k = inl(KBD_ADDR);
+  if (k != 0) putch('@');
   kbd->keydown = (k & KEYDOWN_MASK ? true : false);
   if (!kbd->keydown) {
     kbd->keycode = AM_KEY_NONE;
