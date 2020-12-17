@@ -70,6 +70,24 @@ static inline def_EHelper(shr) {
   print_asm_template2(shr);
 }
 
+static inline def_EHelper(shld) {
+  *ddest = (*ddest << *dsrc1) + (*dsrc2 >> (id_src1->width * 8 - *dsrc1));
+  operand_write(s, id_dest, ddest);
+  rtl_update_ZFSF(s, ddest, id_dest->width);
+  // unnecessary to update CF and OF in NEMU
+
+  print_asm_template2(shl);
+}
+
+static inline def_EHelper(shrd) {
+  *ddest = (*ddest >> *dsrc1) + (*dsrc2 << (id_src1->width * 8 - *dsrc1));
+  operand_write(s, id_dest, ddest);
+  rtl_update_ZFSF(s, ddest, id_dest->width);
+  // unnecessary to update CF and OF in NEMU
+
+  print_asm_template2(shr);
+}
+
 static inline def_EHelper(rol) {
   *ddest = (*ddest << *dsrc1) + (*ddest >> (id_dest->width * 8 - *dsrc1));
   operand_write(s, id_dest, ddest);
