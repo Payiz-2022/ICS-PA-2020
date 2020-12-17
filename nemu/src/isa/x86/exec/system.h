@@ -77,6 +77,6 @@ static inline def_EHelper(out) {
     case 4:
       pio_write_l(*ddest, *dsrc1);
   }
-  // Log("Write %d to 0x%x", *dsrc1, *ddest);  
+  Log("Write %d to 0x%x", *dsrc1, *ddest);
   print_asm_template2(out);
 }
