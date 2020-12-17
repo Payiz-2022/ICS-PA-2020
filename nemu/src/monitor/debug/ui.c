@@ -35,7 +35,9 @@ static int cmd_c(char *args) {
     sscanf(args, "%d", &num);
   while (num--) {
     cpu_exec(-1);
-    if (nemu_state.state == NEMU_QUIT) return 0;
+    if (nemu_state.state == NEMU_QUIT || 
+        nemu_state.state == NEMU_ABORT ||
+        nemu_state.state == NEMU_END) return 0;
   }
   return 0;
 }
