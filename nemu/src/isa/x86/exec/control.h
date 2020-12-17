@@ -45,8 +45,7 @@ static inline def_EHelper(ret_imm) {
 
 static inline def_EHelper(call_rm) {
   s->is_jmp = 1;
-  s->jmp_pc = id_dest->val;
-  printf("Call_rm 0x%x ddest 0x%x\n", id_dest->val, *ddest);
+  s->jmp_pc = *ddest;
   rtl_push(s, &s->seq_pc);
 
   print_asm("call *%s", id_dest->str);
