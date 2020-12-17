@@ -36,9 +36,6 @@ static inline uint32_t instr_fetch(vaddr_t *pc, int len) {
 
 static inline void update_pc(DecodeExecState *s) {
   cpu.pc = (s->is_jmp ? s->jmp_pc : s->seq_pc);
-  if (s->is_jmp && cpu.pc < 1000) {
-    printf("0x%x 0x%x 0x%x\n", cpu.pc, s->jmp_pc, s->seq_pc);
-  }
 }
 
 #ifdef DEBUG
