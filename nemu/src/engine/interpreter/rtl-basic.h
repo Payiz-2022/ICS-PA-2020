@@ -123,7 +123,6 @@ static inline def_rtl(host_sm, void *addr, const rtlreg_t *src1, int len) {
 // control
 
 static inline def_rtl(j, vaddr_t target) {
-  if (target < 100) assert(false);
   s->jmp_pc = target;
   s->is_jmp = true;
 }
