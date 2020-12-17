@@ -44,8 +44,6 @@ static inline def_EHelper(gp4) {
 
 /* 0xff */
 static inline def_EHelper(gp5) {
-  if (s->isa.ext_opcode == 2 || s->isa.ext_opcode == 3)
-    printf("CALL Opcode: %d\n", s->isa.ext_opcode);
   switch (s->isa.ext_opcode) {
     EXW(0, inc, -1) EXW(1, dec, -1) EX(2, call_rm) EX(3, call)
     EX(4, jmp_rm) EMPTY(5) EX(6, push) EMPTY(7)
