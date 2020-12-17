@@ -78,8 +78,10 @@ void sprint_basic_format(char** pout, char** pin, va_list* args) {
       buf[i] = (val % 16);
       val /= 16;
     }
-    if (i < pref.lpad) i = pref.lpad;
+
     if (i == 0) i++;
+    for (int j = 0; j < pref.lpad - i; j++)
+      *(*pout)++ = pref.pad_char;
     for (i--; i >= 0; i--) {
       *(*pout)++ = hex_char[buf[i]];
     }
