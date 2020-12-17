@@ -61,7 +61,6 @@ static inline def_EHelper(in) {
       rtl_li(s, s0, pio_read_l(*dsrc1));
   }
   operand_write(s, id_dest, s0);
-  Log("Read 0x%x from port 0x%x\n", *ddest, *dsrc1);
 
   print_asm_template2(in);
 }
