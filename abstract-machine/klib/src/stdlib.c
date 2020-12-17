@@ -31,7 +31,7 @@ int atoi(const char* nptr) {
 
 uintptr_t *addr;
 void *malloc(size_t size) {
-  printf("0x%x", heap.start);
+  printf("0x%x", heap.start);asdf
   if (!addr) addr = heap.start;
   void *t = addr;
   addr += size;
