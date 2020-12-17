@@ -203,7 +203,7 @@ word_t evalExp(int start, int end) {
       case '*':
         return val1 * val2;
       case '/': 
-        if (val2 != 0) {
+        if (val2 == 0) {
           printf("Invalid Expression\n");
           return false;
         }
