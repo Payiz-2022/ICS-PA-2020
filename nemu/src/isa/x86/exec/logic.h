@@ -22,10 +22,10 @@ static inline def_EHelper(and) {
 }
 
 static inline def_EHelper(xor) {
-  if (cpu.pc >= 0x10d2f1)
+  if (cpu.pc == 0x10d2f3)
     printf("xor 0x%x 0x%x ", *ddest, *dsrc1);
   rtl_xor(s, ddest, ddest, dsrc1);
-  if (cpu.pc >= 0x10d2f1)
+  if (cpu.pc == 0x10d2f3)
     printf("result 0x%x\n", *ddest);
 
   rtl_update_ZFSF(s, ddest, id_dest->width);
