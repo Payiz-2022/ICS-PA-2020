@@ -177,7 +177,7 @@ static int cmd_x(char *args) {
     return 0;
   }
   
-  printf("%s:", exp);
+  printf("0x%08x:", addr);
   int i = 0;
   while (num--) {
     printf(" %02x", paddr_read(addr + (i++), 1));
