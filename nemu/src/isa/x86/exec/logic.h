@@ -22,7 +22,9 @@ static inline def_EHelper(and) {
 }
 
 static inline def_EHelper(xor) {
+  printf("xor 0x%x 0x%x ", *ddest, *dsrc1);
   rtl_xor(s, ddest, ddest, dsrc1);
+  printf("result 0x%x", *ddest);
 
   rtl_update_ZFSF(s, ddest, id_dest->width);
   rtl_set_CF(s, rz);
