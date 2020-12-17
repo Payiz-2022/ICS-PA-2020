@@ -169,7 +169,13 @@ static int cmd_x(char *args) {
   int num;
   word_t addr;
   sscanf(n, "%d", &num);
-  sscanf(exp, "0x%x", &addr);
+
+  bool success = false;
+  addr = expr(exp, &success);
+  if (!success) {
+    printf("Invalid Expression\n");
+    return 0;
+  }
   
   printf("%s:", exp);
   int i = 0;
