@@ -50,7 +50,6 @@ void sprint_basic_format(char** pout, char** pin, va_list* args) {
     if (f == -1 && pref.pad_char == '0') *(*pout)++ = '-';
     for (int j = 0; j < pref.lpad - i - (f == -1); j++)
       *(*pout)++ = pref.pad_char;
-    // putch(pref.lpad - i - (f == -1) + '0');
     if (f == -1 && pref.pad_char == ' ') *(*pout)++ = '-';
     
     for (i--; i >= 0; i--) {
@@ -113,7 +112,6 @@ void sprint_format(char** pout, char** pin, va_list* args) {
       break;
 
     case '1' ... '9':
-      (*pin)++;
       pref.lpad = sprint_read_pad(pout, pin);
       sprint_format(pout, pin, args);
       break;
