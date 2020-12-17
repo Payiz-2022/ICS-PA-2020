@@ -71,7 +71,7 @@ void sprint_basic_format(char** pout, char** pin, va_list* args) {
     }
   } else if (**pin == 'x') {
     const char hex_char[16] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
-    int val = va_arg(*args, int);
+    unsigned int val = va_arg(*args, unsigned int);
     int buf[24] = {0};
     int i = 0;
     for (; i < 10 && val; i++) {
@@ -85,6 +85,9 @@ void sprint_basic_format(char** pout, char** pin, va_list* args) {
     for (i--; i >= 0; i--) {
       *(*pout)++ = hex_char[buf[i]];
     }
+  } else if (**pin == 'c'){
+    char val = va_arg(*args, int);
+    *(*pout)++ = val;
   } else {
     putch(**pin);
     assert(false);
