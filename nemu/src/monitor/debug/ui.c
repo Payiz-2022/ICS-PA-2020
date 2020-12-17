@@ -30,7 +30,13 @@ static char* rl_gets() {
 }
 
 static int cmd_c(char *args) {
-  cpu_exec(-1);
+  int num = 1;
+  if (args != NULL)
+    sscanf(args, "%d", &num);
+  while (num--) {
+    cpu_exec(-1);
+    if (nemu_state.state == NEMU_QUIT) return 0;
+  }
   return 0;
 }
 
