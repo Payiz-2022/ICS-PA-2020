@@ -196,7 +196,7 @@ static int cmd_w(char *args) {
     WP* p = new_wp();
     memcpy(p->exp, exp, sizeof(char) * strlen(exp));
     p->exp_val = val;
-    printf("Watchpoint %d set at %s (value = %u)\n", p->NO, p->exp, p->exp_val);
+    printf("Watchpoint %d set at %s (value = %u (0x%x))\n", p->NO, p->exp, p->exp_val, p->exp_val);
   }
   return 0;
 }

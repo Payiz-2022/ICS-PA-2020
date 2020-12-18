@@ -67,7 +67,7 @@ bool remove_wp(int no) {
 void print_all_wps() {
   WP *p = head;
   while (p) {
-    printf("Watchpoint %d: %s (value = %u)\n", p->NO, p->exp, p->exp_val);
+    printf("Watchpoint %d: %s (value = %u (0x%x))\n", p->NO, p->exp, p->exp_val, p->exp_val);
     p = p->next;
   }
 }
