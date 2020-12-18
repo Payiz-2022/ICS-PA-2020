@@ -71,8 +71,8 @@ static inline def_EHelper(shr) {
 }
 
 static inline def_EHelper(shld) {
-  printf("shld ddest 0x%x; dsrc1 0x%x; dsrc2 0x%x", *ddest, *dsrc1, *dsrc2);
-  *ddest = (*ddest << *dsrc1) + (*dsrc2 >> (id_src2->width * 8 - *dsrc1));
+  printf("shld ddest 0x%x; dsrc1 0x%x; dsrc2 0x%x(width %d) ", *ddest, *dsrc1, *dsrc2, id_src2->width);
+  *ddest = (*ddest << *dsrc1) | (*dsrc2 >> (id_src2->width * 8 - *dsrc1));
   printf("result 0x%x\n", *ddest);
   operand_write(s, id_dest, ddest);
   rtl_update_ZFSF(s, ddest, id_dest->width);
@@ -82,7 +82,7 @@ static inline def_EHelper(shld) {
 }
 
 static inline def_EHelper(shrd) {
-  *ddest = (*ddest >> *dsrc1) + (*dsrc2 << (id_src2->width * 8 - *dsrc1));
+  *ddest = (*ddest >> *dsrc1) | (*dsrc2 << (id_src2->width * 8 - *dsrc1));
   operand_write(s, id_dest, ddest);
   rtl_update_ZFSF(s, ddest, id_dest->width);
   // unnecessary to update CF and OF in NEMU
@@ -91,7 +91,7 @@ static inline def_EHelper(shrd) {
 }
 
 static inline def_EHelper(rol) {
-  *ddest = (*ddest << *dsrc1) + (*ddest >> (id_dest->width * 8 - *dsrc1));
+  *ddest = (*ddest << *dsrc1) | (*ddest >> (id_dest->width * 8 - *dsrc1));
   operand_write(s, id_dest, ddest);
   rtl_update_ZFSF(s, ddest, id_dest->width);
 
@@ -99,7 +99,7 @@ static inline def_EHelper(rol) {
 }
 
 static inline def_EHelper(ror) {
-  *ddest = (*ddest >> *dsrc1) + (*ddest << (id_dest->width * 8 - *dsrc1));
+  *ddest = (*ddest >> *dsrc1) | (*ddest << (id_dest->width * 8 - *dsrc1));
   operand_write(s, id_dest, ddest);
   rtl_update_ZFSF(s, ddest, id_dest->width);
 
