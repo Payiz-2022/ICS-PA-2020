@@ -6,8 +6,8 @@
 
 void __am_gpu_init() {
   int i;
-  int w = inw(VGACTL_ADDR);  // TODO: get the correct width
-  int h = inw(VGACTL_ADDR + 2);  // TODO: get the correct height
+  int h = inw(VGACTL_ADDR);  // TODO: get the correct width
+  int w = inw(VGACTL_ADDR + 2);  // TODO: get the correct height
   uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
   for (i = 0; i < w * h; i ++) fb[i] = i;
   outl(SYNC_ADDR, 1);
@@ -16,15 +16,14 @@ void __am_gpu_init() {
 void __am_gpu_config(AM_GPU_CONFIG_T *cfg) {
   *cfg = (AM_GPU_CONFIG_T) {
     .present = true, .has_accel = false,
-    .width = inw(VGACTL_ADDR), .height = inw(VGACTL_ADDR + 2),
+    .width = inw(VGACTL_ADDR + 2), .height = inw(VGACTL_ADDR),
     .vmemsz = 400*300*32
   };
 }
 
 void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
-  const int W = inw(VGACTL_ADDR);
-  const int H = inw(VGACTL_ADDR + 2);
-  printf("W: %d, H: %d\n", W, H);
+  const int H = inw(VGACTL_ADDR);
+  const int W = inw(VGACTL_ADDR + 2);
   uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
   int x = ctl->x, y = ctl->y, w = ctl->w, h = ctl->h;
   uint32_t *pixels = ctl->pixels;
