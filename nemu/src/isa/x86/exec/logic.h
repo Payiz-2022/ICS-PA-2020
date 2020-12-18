@@ -72,7 +72,7 @@ static inline def_EHelper(shr) {
 
 static inline def_EHelper(shld) {
   printf("shld ddest 0x%x; dsrc1 0x%x; dsrc2 0x%x(width %d) ", *ddest, *dsrc1, *dsrc2, id_src2->width);
-  if (*dsrc1 != 0)
+  if (*dsrc1 != 0 && *dsrc1 <= id_src2->width && *dsrc1 <= id_dest->width)
     *ddest = (*ddest << *dsrc1) | (*dsrc2 >> (id_src2->width * 8 - *dsrc1));
   printf("result 0x%x\n", *ddest);
   operand_write(s, id_dest, ddest);
@@ -83,7 +83,7 @@ static inline def_EHelper(shld) {
 }
 
 static inline def_EHelper(shrd) {
-  if (*dsrc1 != 0)
+  if (*dsrc1 != 0 && *dsrc1 <= id_src2->width && *dsrc1 <= id_dest->width)
     *ddest = (*ddest >> *dsrc1) | (*dsrc2 << (id_src2->width * 8 - *dsrc1));
   operand_write(s, id_dest, ddest);
   rtl_update_ZFSF(s, ddest, id_dest->width);
@@ -93,7 +93,7 @@ static inline def_EHelper(shrd) {
 }
 
 static inline def_EHelper(rol) {
-  if (*dsrc1 != 0)
+  if (*dsrc1 != 0 && *dsrc1 <= id_dest->width)
     *ddest = (*ddest << *dsrc1) | (*ddest >> (id_dest->width * 8 - *dsrc1));
   operand_write(s, id_dest, ddest);
   rtl_update_ZFSF(s, ddest, id_dest->width);
@@ -102,7 +102,7 @@ static inline def_EHelper(rol) {
 }
 
 static inline def_EHelper(ror) {
-  if (*dsrc1 != 0)
+  if (*dsrc1 != 0 && *dsrc1 <= id_dest->width)
     *ddest = (*ddest >> *dsrc1) | (*ddest << (id_dest->width * 8 - *dsrc1));
   operand_write(s, id_dest, ddest);
   rtl_update_ZFSF(s, ddest, id_dest->width);
