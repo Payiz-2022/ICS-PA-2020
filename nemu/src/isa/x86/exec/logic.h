@@ -71,7 +71,9 @@ static inline def_EHelper(shr) {
 }
 
 static inline def_EHelper(shld) {
+  printf("shld ddest 0x%x; dsrc1 0x%x; dsrc2 0x%x", *ddest, *dsrc1, *dsrc2);
   *ddest = (*ddest << *dsrc1) + (*dsrc2 >> (id_src2->width * 8 - *dsrc1));
+  printf("result 0x%x\n", *ddest);
   operand_write(s, id_dest, ddest);
   rtl_update_ZFSF(s, ddest, id_dest->width);
   // unnecessary to update CF and OF in NEMU
