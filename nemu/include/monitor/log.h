@@ -3,7 +3,7 @@
 
 #include <common.h>
 
-#ifndef DEBUG
+#ifdef DEBUG
 extern FILE* log_fp;
 #	define log_write(...) \
   do { \
