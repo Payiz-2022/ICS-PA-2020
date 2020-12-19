@@ -5,23 +5,19 @@
 
 #if !defined(__ISA_NATIVE__) || defined(__NATIVE_USE_KLIB__)
 
-int sprintf_parsed(char *out, const char *fmt, va_list args);
+int vsprintf(char*, const char*, va_list);
 
 int printf(const char *fmt, ...) {
   va_list args;
   va_start(args, fmt);
   char s[100];
-  sprintf_parsed(s, fmt, args);
+  vsprintf(s, fmt, args);
   va_end(args);
   char *p = s;
   while (*p) {
     putch(*p);
     p++;
   }
-  return 0;
-}
-
-int vsprintf(char *out, const char *fmt, va_list ap) {
   return 0;
 }
 
@@ -131,7 +127,7 @@ void sprint_format(char** pout, char** pin, va_list* args) {
   }
 }
 
-int sprintf_parsed(char *out, const char *fmt, va_list args) {
+int vsprintf(char *out, const char *fmt, va_list args) {
   char *pout = out;
   char *pin = (void*)fmt;
   while (*pin) {
@@ -155,7 +151,7 @@ int sprintf_parsed(char *out, const char *fmt, va_list args) {
 int sprintf(char *out, const char *fmt, ...) {
   va_list args;
   va_start(args, fmt);
-  int len = sprintf_parsed(out, fmt, args);
+  int len = vsprintf(out, fmt, args);
   va_end(args);
   return len;
 }
