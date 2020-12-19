@@ -1,6 +1,5 @@
 #include <am.h>
 #include <nemu.h>
-#include <klib.h>
 
 #define KEYDOWN_MASK 0x8000
 

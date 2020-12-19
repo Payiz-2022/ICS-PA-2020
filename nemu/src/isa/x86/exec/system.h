@@ -60,6 +60,8 @@ static inline def_EHelper(in) {
     case 4:
       rtl_li(s, s0, pio_read_l(*dsrc1));
   }
+  if (*s0 != 0)
+    printf("Read 0x%x from 0x%x\n", *s0, *dsrc1);
   operand_write(s, id_dest, s0);
 
   print_asm_template2(in);
