@@ -6,7 +6,7 @@
 
 /* RTL pseudo instructions */
 
-static inline def_rtl(lr, rtlreg_t* dest, int r, int width) {
+def_rtl(lr, rtlreg_t* dest, int r, int width) {
   switch (width) {
     case 4: rtl_mv(s, dest, &reg_l(r)); return;
     case 1: rtl_host_lm(s, dest, &reg_b(r), 1); return;
