@@ -11,6 +11,5 @@ void __am_input_keybrd(AM_INPUT_KEYBRD_T *kbd) {
     kbd->keycode = AM_KEY_NONE;
   } else {
     kbd->keycode = k & ~KEYDOWN_MASK;
-    printf("Pressed 0x%x\n", kbd->keycode);
   }
 }
