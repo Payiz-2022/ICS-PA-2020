@@ -18,6 +18,7 @@ NEMUFLAGS += -b -l $(shell dirname $(IMAGE).elf)/nemu-log.txt $(IMAGE).bin
 CFLAGS += -DMAINARGS=\"$(mainargs)\"
 CFLAGS += -I$(AM_HOME)/am/src/nemu/include
 .PHONY: $(AM_HOME)/am/src/nemu/trm.c
+$(shell touch trm.c)
 
 image: $(IMAGE).elf
 	@$(OBJDUMP) -d $(IMAGE).elf > $(IMAGE).txt
