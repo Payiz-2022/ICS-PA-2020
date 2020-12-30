@@ -28,7 +28,6 @@ static struct {
 
 void sprint_basic_format(char** pout, char** pin, va_list* args) {
   if (**pin == 's') {
-    return;
     char *p = va_arg(*args, char*);
     while (*p) *(*pout)++ = *p++;
   } else if (**pin == 'd') {
@@ -89,6 +88,7 @@ void sprint_basic_format(char** pout, char** pin, va_list* args) {
     putch(**pin);
     assert(false);
   }
+  return;
   (*pin)++;
 }
 
