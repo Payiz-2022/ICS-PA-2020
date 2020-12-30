@@ -1,4 +1,5 @@
 #include <monitor/difftest.h>
+#include "../intr.c"
 
 static inline def_EHelper(lidt) {
   cpu.idtr.limit = vaddr_read(*ddest, 2);
@@ -24,7 +25,7 @@ static inline def_EHelper(mov_cr2r) {
 }
 
 static inline def_EHelper(int) {
-  TODO();
+  raise_intr(s, *ddest, cpu.pc);
 
   print_asm("int %s", id_dest->str);
 
