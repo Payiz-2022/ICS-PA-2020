@@ -5,7 +5,7 @@ void raise_intr(DecodeExecState *s, uint32_t NO, vaddr_t ret_addr) {
   /* TODO: Trigger an interrupt/exception with ``NO''.
    * That is, use ``NO'' to index the IDT.
    */
-
+  assert(0);
   vaddr_t intr_gate = cpu.idtr.base + NO * 64;
   uint32_t gate_l = vaddr_read(intr_gate, 2);
   uint32_t gate_h = vaddr_read(intr_gate + 4, 4);
@@ -19,7 +19,7 @@ void raise_intr(DecodeExecState *s, uint32_t NO, vaddr_t ret_addr) {
   rtl_push(s, s0);
   rtl_li(s, s0, cpu.pc);
   rtl_push(s, s0);
-  assert(0);
+
   rtl_j(s, intr_addr);
 }
 
