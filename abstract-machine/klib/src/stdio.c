@@ -28,6 +28,7 @@ static struct {
 
 void sprint_basic_format(char** pout, char** pin, va_list* args) {
   if (**pin == 's') {
+    return;
     char *p = va_arg(*args, char*);
     while (*p) *(*pout)++ = *p++;
   } else if (**pin == 'd') {
@@ -136,7 +137,7 @@ int vsprintf(char *out, const char *fmt, va_list args) {
     switch (*pin) {
       case '%':
         pin++;
-        // sprint_format(&pout, &pin, &args);
+        sprint_format(&pout, &pin, &args);
       default:
         *pout = *pin;
         pin++;
