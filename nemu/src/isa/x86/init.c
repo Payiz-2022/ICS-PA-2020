@@ -18,7 +18,7 @@ static void restart() {
   cpu.pc = PMEM_BASE + IMAGE_START;
 
   cpu.cs = 8;
-  // cpu.eflags.val = 0x2;
+  cpu.eflags.val = 0x2;
 }
 
 void init_isa() {
