@@ -6,7 +6,7 @@ void raise_intr(DecodeExecState *s, uint32_t NO, vaddr_t ret_addr) {
    * That is, use ``NO'' to index the IDT.
    */
 
-  vaddr_t intr_gate = cpu.idtr.base + NO * 64;
+  vaddr_t intr_gate = cpu.idtr.base + NO * 8;
   printf("NO: 0x%x, intr_gate: 0x%x\n", NO, intr_gate);
   uint32_t gate_l = vaddr_read(intr_gate, 2);
   uint32_t gate_h = vaddr_read(intr_gate + 4, 4);
