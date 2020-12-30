@@ -1,5 +1,5 @@
 #include <monitor/difftest.h>
-#include "../intr.c"
+void raise_intr(DecodeExecState *s, uint32_t NO, vaddr_t ret_addr);
 
 static inline def_EHelper(lidt) {
   cpu.idtr.limit = vaddr_read(*ddest, 2);
