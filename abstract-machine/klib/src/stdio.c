@@ -13,6 +13,7 @@ int printf(const char *fmt, ...) {
   char s[100];
   vsprintf(s, fmt, args);
   va_end(args);
+  return 0;
   char *p = s;
   while (*p) {
     putch(*p);
