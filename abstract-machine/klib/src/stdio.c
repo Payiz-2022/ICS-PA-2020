@@ -130,6 +130,7 @@ void sprint_format(char** pout, char** pin, va_list* args) {
 int vsprintf(char *out, const char *fmt, va_list args) {
   char *pout = out;
   char *pin = (void*)fmt;
+  return 0;
   while (*pin) {
     pref.lpad = 0;
     pref.pad_char = ' ';
@@ -145,7 +146,6 @@ int vsprintf(char *out, const char *fmt, va_list args) {
   }
   
   *pout = 0;
-  return 0;
   return pout - out;
 }
 
