@@ -8,10 +8,10 @@
 int vsprintf(char*, const char*, va_list);
 
 int printf(const char *fmt, ...) {
-  return 0;
   va_list args;
   va_start(args, fmt);
   char s[100];
+  return 0;
   vsprintf(s, fmt, args);
   va_end(args);
   char *p = s;
