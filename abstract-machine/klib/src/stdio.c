@@ -12,7 +12,6 @@ int printf(const char *fmt, ...) {
   va_start(args, fmt);
   char s[100];
   vsprintf(s, fmt, args);
-  return 0;
   va_end(args);
   char *p = s;
   while (*p) {
@@ -146,6 +145,7 @@ int vsprintf(char *out, const char *fmt, va_list args) {
   }
   
   *pout = 0;
+  return 0;
   return pout - out;
 }
 
