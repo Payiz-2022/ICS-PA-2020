@@ -1,7 +1,7 @@
 #include <monitor/difftest.h>
 
 static inline def_EHelper(lidt) {
-  printf("lidt 0x%x\n", *ddest);
+  assert(0);
   cpu.idtr.limit = vaddr_read(*ddest, 2);
   cpu.idtr.base = vaddr_read(*ddest + 2, 4);
 
