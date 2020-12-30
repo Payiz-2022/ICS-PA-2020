@@ -11,8 +11,8 @@ int printf(const char *fmt, ...) {
   va_list args;
   va_start(args, fmt);
   char s[100];
-  return 0;
   vsprintf(s, fmt, args);
+  return 0;
   va_end(args);
   char *p = s;
   while (*p) {
