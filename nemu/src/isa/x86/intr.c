@@ -7,9 +7,9 @@ void raise_intr(DecodeExecState *s, uint32_t NO, vaddr_t ret_addr) {
    */
 
   vaddr_t intr_gate = cpu.idtr.base + NO * 64;
+  assert(0);
   uint32_t gate_l = vaddr_read(intr_gate, 2);
   uint32_t gate_h = vaddr_read(intr_gate + 4, 4);
-  assert(0);
   if ((gate_h & 0x8000) == 0) return;
 
   vaddr_t intr_addr = ((gate_h >> 16) << 16) | gate_l;
