@@ -18,6 +18,8 @@
  */
 
 typedef struct {
+  /* GENERAL REGISTERS */
+
   union {
     union {
       uint32_t _32;
@@ -35,6 +37,14 @@ typedef struct {
     };
   };
 
+  /* SEGMENT REGISTERS */
+
+  struct {
+    uint16_t cs, ss, ds, es, fs, gs;
+  };
+
+  /* STATUS AND INSTRUCTION REGISTERS */
+
   union {
     uint32_t val;
     struct {
@@ -51,6 +61,11 @@ typedef struct {
     vaddr_t pc;
     vaddr_t eip;
   };
+
+  struct {
+    uint16_t limit;
+    vaddr_t base;
+  } idtr;
 } x86_CPU_state;
 
 // decode
