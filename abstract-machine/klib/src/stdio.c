@@ -130,14 +130,13 @@ void sprint_format(char** pout, char** pin, va_list* args) {
 int vsprintf(char *out, const char *fmt, va_list args) {
   char *pout = out;
   char *pin = (void*)fmt;
-  return 0;
   while (*pin) {
     pref.lpad = 0;
     pref.pad_char = ' ';
     switch (*pin) {
       case '%':
         pin++;
-        sprint_format(&pout, &pin, &args);
+        // sprint_format(&pout, &pin, &args);
       default:
         *pout = *pin;
         pin++;
