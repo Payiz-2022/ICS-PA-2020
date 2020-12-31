@@ -15,7 +15,8 @@ void raise_intr(DecodeExecState *s, uint32_t NO, vaddr_t ret_addr) {
   rtl_li(s, s0, cpu.cs);
   rtl_push(s, s0);
 
-  rtl_push(s, &cpu.pc);
+  rtl_li(s, s0, ret_addr);
+  rtl_push(s, s0);
 
   rtl_j(s, intr_addr);
 }
