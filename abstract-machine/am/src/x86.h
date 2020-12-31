@@ -1,4 +1,3 @@
-#include <klib.h>
 // CPU rings
 #define DPL_KERN       0x0     // Kernel (ring 0)
 #define DPL_USER       0x3     // User (ring 3)
@@ -288,7 +287,6 @@ static inline void set_idt(void *idt, int size) {
   } __attribute__((packed)) data;
   data.size = size;
   data.idt = idt;
-  printf("data: 0x%x", &data);
   asm volatile ("lidt (%0)" : : "r"(&data));
 }
 
