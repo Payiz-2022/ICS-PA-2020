@@ -17,7 +17,8 @@ static inline def_EHelper(pop) {
 }
 
 static inline def_EHelper(pusha) {
-  TODO();
+  for (int i = R_EAX; i <= R_EDI; i++)
+    rtl_push(s, &reg_l(i));
 
   print_asm("pusha");
 }
