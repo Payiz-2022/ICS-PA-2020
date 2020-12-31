@@ -216,11 +216,6 @@ again:
     IDEX (0x5f, r, pop)
 
     IDEX (0x68, I, push)
-    IDEXW(0xe8, I, call, 4)
-    EX   (0xc3, ret)
-    EX   (0xc9, leave)
-    EX   (0xcf, iret)
-    EX   (0x90, nop)
 
     IDEXW(0x70, J, jcc, 1)
     IDEXW(0x71, J, jcc, 1)
@@ -243,22 +238,26 @@ again:
     IDEX (0x85, G2E, test)
 
     IDEX (0x8d, lea_M2G, lea)
-    IDEXW(0xeb, J, jmp, 1)
-    IDEX (0xe9, J, jmp)
-
+    EX   (0x90, nop)
     EX   (0x98, cwtl)
     EX   (0x99, cltd)
 
     IDEXW(0xa8, I2a, test, 1)
     IDEX (0xa9, I2a, test)
 
+    EX   (0xc3, ret)
+    EX   (0xc9, leave)
     IDEXW(0xcd, I, int, 1)
+    EX   (0xcf, iret)
 
     IDEXW(0xe4, in_I2a, in, 1)
     IDEX (0xe5, in_I2a, in)
     IDEXW(0xe6, out_a2I, out, 1)
     IDEX (0xe7, out_a2I, out)
+    IDEXW(0xe8, I, call, 4)
+    IDEX (0xe9, J, jmp)
 
+    IDEXW(0xeb, J, jmp, 1)
     IDEXW(0xec, in_dx2a, in, 1)
     IDEX (0xed, in_dx2a, in)
     IDEXW(0xee, out_a2dx, out, 1)
