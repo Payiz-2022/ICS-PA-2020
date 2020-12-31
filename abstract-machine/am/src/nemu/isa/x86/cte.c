@@ -20,6 +20,7 @@ Context* __am_irq_handle(Context *c) {
     switch (c->irq) {
       default: ev.event = EVENT_ERROR; break;
     }
+    printf("irq: 0x%x\n", c->irq);
 
     c = user_handler(ev, c);
     assert(c != NULL);

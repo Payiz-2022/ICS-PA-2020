@@ -162,6 +162,7 @@ static int cmd_info(char *args) {
     case 's':
       printf("Segment Registers:\n");
       printf("      CS: 0x%x\n", cpu.cs);
+      break;
     default:
       printf("Unsupported subcommand: %s\n", subcmd);
   }
