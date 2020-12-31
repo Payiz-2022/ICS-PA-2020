@@ -14,12 +14,12 @@ void raise_intr(DecodeExecState *s, uint32_t NO, vaddr_t ret_addr) {
 
   vaddr_t intr_addr = ((gate_h >> 16) << 16) | gate_l;
 
-  rtl_li(s, s0, cpu.eflags.val);
-  rtl_push(s, s0);
-  rtl_li(s, s0, cpu.cs);
-  rtl_push(s, s0);
-  rtl_li(s, s0, cpu.pc);
-  rtl_push(s, s0);
+  // rtl_li(s, s0, cpu.eflags.val);
+  // rtl_push(s, s0);
+  // rtl_li(s, s0, cpu.cs);
+  // rtl_push(s, s0);
+  // rtl_li(s, s0, cpu.pc);
+  // rtl_push(s, s0);
 
   rtl_j(s, intr_addr);
 }
