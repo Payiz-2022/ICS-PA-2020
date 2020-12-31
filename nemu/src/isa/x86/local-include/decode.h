@@ -191,7 +191,7 @@ static inline def_DHelper(setcc_E) {
 
 static inline def_DHelper(gp7_E) {
   operand_rm(s, id_dest, false, NULL, false);
-  printf("dest val: 0x%x\n", id_dest->val);
+  printf("dest val: %p\n", id_dest);
 }
 
 /* used by test in group3 */
