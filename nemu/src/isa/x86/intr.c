@@ -24,4 +24,5 @@ void query_intr(DecodeExecState *s) {
   cpu.cs = *s0;
   rtl_pop(s, s0);
   rtl_jr(s, s0);
+  printf("jump back to 0x%x\n", *s0);
 }
