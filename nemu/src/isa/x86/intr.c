@@ -24,7 +24,6 @@ void raise_intr(DecodeExecState *s, uint32_t NO, vaddr_t ret_addr) {
 void query_intr(DecodeExecState *s) {
   rtl_pop(s, s0);
   rtl_jr(s, s0);
-  printf("Jump back to 0x%x\n", *s0);
 
   rtl_pop(s, s0);
   cpu.cs = *s0;
