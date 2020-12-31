@@ -190,7 +190,7 @@ static inline def_DHelper(setcc_E) {
 }
 
 static inline def_DHelper(gp7_E) {
-  operand_rm(s, id_dest, false, NULL, false);
+  operand_rm(s, id_dest, true, NULL, false);
 }
 
 /* used by test in group3 */
