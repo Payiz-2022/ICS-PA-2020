@@ -203,6 +203,7 @@ again:
     IDEX (0x56, r, push)
     IDEX (0x57, r, push)
     EX   (0x60, pusha)
+    EX   (0x61, popa)
     IDEXW(0x6a, push_SI, push, 1)
 
     IDEX (0x58, r, pop)

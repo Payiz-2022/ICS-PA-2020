@@ -17,14 +17,15 @@ static inline def_EHelper(pop) {
 }
 
 static inline def_EHelper(pusha) {
-  for (int i = R_EAX; i <= R_EDI; i++)
+  for (int i = R_EDI; i >= R_EAX; i--)
     rtl_push(s, &reg_l(i));
 
   print_asm("pusha");
 }
 
 static inline def_EHelper(popa) {
-  TODO();
+  for (int i = R_EAX; i <= R_EDI; i++)
+    rtl_pop(s, &reg_l(i));
 
   print_asm("popa");
 }
