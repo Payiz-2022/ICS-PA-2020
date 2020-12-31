@@ -219,6 +219,7 @@ again:
     IDEXW(0xe8, I, call, 4)
     EX   (0xc3, ret)
     EX   (0xc9, leave)
+    EX   (0xcf, iret)
     EX   (0x90, nop)
 
     IDEXW(0x70, J, jcc, 1)
