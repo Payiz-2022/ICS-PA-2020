@@ -1,5 +1,7 @@
 #include <monitor/difftest.h>
+
 void raise_intr(DecodeExecState *s, uint32_t NO, vaddr_t ret_addr);
+void query_intr(DecodeExecState *s);
 
 static inline def_EHelper(lidt) {
   cpu.idtr.limit = vaddr_read(*s->isa.mbase, 2);
@@ -35,7 +37,7 @@ static inline def_EHelper(int) {
 }
 
 static inline def_EHelper(iret) {
-  TODO();
+  query_intr(s);
 
   print_asm("iret");
 
