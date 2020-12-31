@@ -159,6 +159,11 @@ static int cmd_info(char *args) {
       printf("      IF: %u\n", cpu.eflags.IF & 1);
       printf("      OF: %u\n", cpu.eflags.OF & 1);
       break;
+    case 's':
+      printf("Segment Registers:\n");
+      printf("      CS: 0x%x\n", cpu.cs);
+    default:
+      printf("Unsupported subcommand: %s\n", subcmd);
   }
   return 0;
 }
