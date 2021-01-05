@@ -14,7 +14,7 @@ static inline void operand_reg(DecodeExecState *s, Operand *op, bool load_val, i
     op->preg = &op->val;
     if (load_val) rtl_lr(s, &op->val, r, width);
   }
-  printf("reg: %%%s", reg_name(r, width));
+  Log("reg: %%%s\n", reg_name(r, width));
   print_Dop(op->str, OP_STR_SIZE, "%%%s", reg_name(r, width));
 }
 
