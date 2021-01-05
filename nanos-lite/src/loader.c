@@ -13,7 +13,7 @@
 
 static uintptr_t loader(PCB *pcb, const char *filename) {
   ramdisk_read((void*)PMEM_START, 0, get_ramdisk_size());
-  return *(int*)(PMEM_START + 0x18);
+  return *(uintptr_t*)(PMEM_START + 0x18);
 }
 
 void naive_uload(PCB *pcb, const char *filename) {
