@@ -1,7 +1,6 @@
 #include "cc.h"
 
 static inline def_EHelper(add) {
-  print_asm_template2(add);
   rtl_add(s, s0, ddest, dsrc1);
   
   rtl_update_ZFSF(s, s0, id_dest->width);
@@ -11,7 +10,7 @@ static inline def_EHelper(add) {
   rtl_set_OF(s, s1);
   operand_write(s, id_dest, s0);
 
-  // print_asm_template2(add);
+  print_asm_template2(add);
 }
 
 // dest <- sub result
