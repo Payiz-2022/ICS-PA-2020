@@ -2,6 +2,7 @@
 #include "local-include/rtl.h"
 
 void raise_intr(DecodeExecState *s, uint32_t NO, vaddr_t ret_addr) {
+  assert(false);
   vaddr_t intr_gate = cpu.idtr.base + NO * 8;
 
   uint32_t gate_l = vaddr_read(intr_gate, 2);
