@@ -35,11 +35,7 @@ static inline uint32_t instr_fetch(vaddr_t *pc, int len) {
 }
 
 static inline void update_pc(DecodeExecState *s) {
-  uint32_t prev_cpu_pc = cpu.pc;
   cpu.pc = (s->is_jmp ? s->jmp_pc : s->seq_pc);
-  if (cpu.pc == 0x97979797) {
-    printf("Last PC: 0x%08x\n", prev_cpu_pc);
-  }
 }
 
 #ifdef DEBUG

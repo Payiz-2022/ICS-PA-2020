@@ -27,7 +27,7 @@ static inline def_EHelper(mov_cr2r) {
 }
 
 static inline def_EHelper(int) {
-  raise_intr(s, *ddest, cpu.pc + 2);
+  raise_intr(s, *ddest, s->seq_pc);
 
   print_asm("int %s", id_dest->str);
 
