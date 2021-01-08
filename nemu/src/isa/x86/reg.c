@@ -52,9 +52,9 @@ void isa_reg_display() {
   for (int i = R_AL; i <= R_BH; i++) {
     printf("%10s: 0x%02x        %-u\n", regsb[i], reg_b(i), reg_b(i));
   }
-  printf("       EIP: 0x%08x\n", cpu.eip);
+  printf("       eip: 0x%08x\n", cpu.eip);
 
-  printf("General Flags:\n");
+  printf("\nGeneral Flags:\n");
   printf("  eflags: 0x%x\n", cpu.eflags.val);
   printf("      CF: %u\n", cpu.eflags.CF & 1);
   printf("      ZF: %u\n", cpu.eflags.ZF & 1);
@@ -62,7 +62,7 @@ void isa_reg_display() {
   printf("      IF: %u\n", cpu.eflags.IF & 1);
   printf("      OF: %u\n", cpu.eflags.OF & 1);
 
-  printf("Segment Registers:\n");
+  printf("\nSegment Registers:\n");
   printf("      CS: 0x%x\n", cpu.cs);
 }
 
