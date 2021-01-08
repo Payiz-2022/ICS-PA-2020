@@ -9,7 +9,7 @@
 # define Elf_Phdr Elf32_Phdr
 #endif
 
-#define PMEM_START 0x3200000
+#define PMEM_START 0x3000000
 
 static uintptr_t loader(PCB *pcb, const char *filename) {
   ramdisk_read((void*)PMEM_START, 0, get_ramdisk_size());
