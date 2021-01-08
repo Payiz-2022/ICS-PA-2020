@@ -9,5 +9,5 @@
 
 int main() {
   // _syscall_(SYS_yield, 0, 0, 0);
-  return 0;
+  return -1;
 }
