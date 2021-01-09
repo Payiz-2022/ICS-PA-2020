@@ -16,7 +16,7 @@ void do_syscall(Context *c) {
     case SYS_write:
       if (c->GPR2 == 1 || c->GPR2 == 2) {
         char *buf = (void*)a[2];
-        for (int i = 0; i < a[3]; i++) {
+        for (int i = 0; i < 10; i++) {
           putch(buf[i]);
         }
         call_return(a[3]);
