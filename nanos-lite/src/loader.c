@@ -17,6 +17,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 
   Elf32_Off p_off = buf_Eheader.e_phoff;
   for (int i = 0; i < buf_Eheader.e_phnum; i++) {
+    // Read from each program header
     Elf32_Phdr buf_Pheader;
     ramdisk_read((void*)&buf_Pheader, p_off, buf_Eheader.e_phentsize);
     p_off += buf_Eheader.e_phentsize;
