@@ -77,7 +77,7 @@ void init_difftest(char *ref_so_file, long img_size, int port) {
 }
 
 static void checkregs(CPU_state *ref, vaddr_t pc) {
-  if (!isa_difftest_checkregs(ref, pc)) {
+  if (!isa_difftest_checkregs(ref, pc) || cpu.eip == 0x1009b0) {
     printf("== CURRENT ENV ==\n");
     isa_reg_display();
     memcpy((void*)&cpu, (void*)ref, 8 * sizeof(rtlreg_t));
