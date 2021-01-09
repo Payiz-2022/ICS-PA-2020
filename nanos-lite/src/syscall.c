@@ -14,7 +14,7 @@ void do_syscall(Context *c) {
     case SYS_exit: halt(0); break;
     case SYS_yield: yield(); call_return(0); break;
     case SYS_write:
-      Log("sys_write: fd: %d  buf_addr: 0x%x  count: %d\n", a[1], a[2], a[3]);
+      // Log("sys_write: fd: %d  buf_addr: 0x%x  count: %d\n", a[1], a[2], a[3]);
       if (c->GPR2 == 1 || c->GPR2 == 2) {
         char *buf = (void*)a[2];
         for (int i = 0; i < a[3]; i++) {
