@@ -12,8 +12,20 @@
 #define PMEM_START 0x3000000
 
 static uintptr_t loader(PCB *pcb, const char *filename) {
-  ramdisk_read((void*)PMEM_START, 0, get_ramdisk_size());
-  return *(uintptr_t*)(PMEM_START + 0x18);
+  Elf32_Ehdr buf_Eheader;
+  ramdisk_read((void*)&buf_Eheader, 0, sizeof(buf_Eheader));
+
+  Elf32_Off p_off = buf_Eheader.e_phoff;
+  for (int i = 0; i < buf_Eheader.e_phnum; i++) {
+    Elf32_Phdr buf_Pheader;
+    ramdisk_read((void*)&buf_Pheader, p_off, buf_Eheader.e_phentsize);
+    p_off += buf_Eheader.e_phentsize;
+
+    memcpy((void*)buf_Pheader.p_vaddr, (void*)buf_Pheader.p_offset, buf_Pheader.p_filesz);
+    memset((void*)(buf_Pheader.p_vaddr + buf_Pheader.p_filesz), 0, buf_Pheader.p_memsz - buf_Pheader.p_filesz);
+  }
+
+  return buf_Eheader.e_entry;
 }
 
 void naive_uload(PCB *pcb, const char *filename) {
