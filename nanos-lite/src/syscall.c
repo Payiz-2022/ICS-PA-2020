@@ -18,7 +18,7 @@ void do_syscall(Context *c) {
         // Log("sys_write: fd: %d  buf_addr: 0x%x  count: %d", a[1], a[2], a[3]);
         char *buf = (void*)a[2];
         for (int i = 0; i < a[3]; i++) {
-          putch(buf[1]);
+          putch(buf[i]);
         }
         call_return(a[3]);
       } else {
