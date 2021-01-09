@@ -4,7 +4,7 @@
 #include "difftest.h"
 
 bool isa_difftest_checkregs(CPU_state *ref_r, vaddr_t pc) {
-  if (memcmp((void*)ref_r, (void*)&cpu, 7 * sizeof(rtlreg_t)) == 0 
+  if (memcmp((void*)ref_r + 4, (void*)&cpu + 4, 7 * sizeof(rtlreg_t)) == 0 
       && ref_r->eip == cpu.eip)
     return true;
   return false;
