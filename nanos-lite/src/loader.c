@@ -21,7 +21,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
     ramdisk_read((void*)&buf_Pheader, p_off, buf_Eheader.e_phentsize);
     p_off += buf_Eheader.e_phentsize;
 
-    memcpy((void*)buf_Pheader.p_vaddr, (void*)buf_Pheader.p_offset, buf_Pheader.p_filesz);
+    ramdisk_read((void*)buf_Pheader.p_vaddr, buf_Pheader.p_offset, buf_Pheader.p_filesz);
     memset((void*)(buf_Pheader.p_vaddr + buf_Pheader.p_filesz), 0, buf_Pheader.p_memsz - buf_Pheader.p_filesz);
     printf("Loader: Load into 0x%x from 0x%x (filesize 0x%x memsize 0x%x)\n", buf_Pheader.p_vaddr, buf_Pheader.p_offset, buf_Pheader.p_filesz, buf_Pheader.p_memsz);
   }
