@@ -20,7 +20,7 @@ void do_syscall(Context *c) {
         for (int i = 0; i < a[3]; i++) {
           putch(buf[i]);
         }
-        call_return(a[3]);
+        call_return(a[3] * 4);
       } else {
         call_return(-1);
       }
