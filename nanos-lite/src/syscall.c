@@ -11,9 +11,17 @@ void do_syscall(Context *c) {
   a[3] = c->GPR4;
 
   switch (a[0]) {
-    case SYS_exit: halt(0); break;
-    case SYS_yield: yield(); call_return(0); break;
+    case SYS_exit:
+      halt(0);
+      break;
+
+    case SYS_yield:
+      yield();
+      call_return(0);
+      break;
+
     case SYS_write:
+      Log("write!");
       if (c->GPR2 == 1 || c->GPR2 == 2) {
         char *buf = (void*)a[2];
         for (int i = 0; i < a[3]; i++) {
@@ -24,6 +32,11 @@ void do_syscall(Context *c) {
         call_return(-1);
       }
       break;
+
+    case SYS_brk:
+      call_return(0);
+      break;
+
     default: panic("Unhandled syscall ID = %d", a[0]);
   }
 }
