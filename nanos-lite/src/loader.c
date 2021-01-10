@@ -23,7 +23,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
     p_off += buf_Eheader.e_phentsize;
 
     ramdisk_read((void*)buf_Pheader.p_vaddr, buf_Pheader.p_offset, buf_Pheader.p_filesz);
-    memset((void*)(buf_Pheader.p_vaddr + buf_Pheader.p_filesz), 0, buf_Pheader.p_memsz - buf_Pheader.p_filesz);
+    // memset((void*)(buf_Pheader.p_vaddr + buf_Pheader.p_filesz), 0, buf_Pheader.p_memsz - buf_Pheader.p_filesz);
   }
 
   return buf_Eheader.e_entry;
