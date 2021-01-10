@@ -4,21 +4,21 @@
 #ifdef __LP64__
 # define Elf_Ehdr Elf64_Ehdr
 # define Elf_Phdr Elf64_Phdr
+# define Elf_Off Elf64_Off
 #else
 # define Elf_Ehdr Elf32_Ehdr
 # define Elf_Phdr Elf32_Phdr
+# define Elf_Off Elf32_Off
 #endif
 
-#define PMEM_START 0x3000000
-
 static uintptr_t loader(PCB *pcb, const char *filename) {
-  Elf32_Ehdr buf_Eheader;
+  Elf_Ehdr buf_Eheader;
   ramdisk_read((void*)&buf_Eheader, 0, sizeof(buf_Eheader));
 
-  Elf32_Off p_off = buf_Eheader.e_phoff;
+  Elf_Off p_off = buf_Eheader.e_phoff;
   for (int i = 0; i < buf_Eheader.e_phnum; i++) {
     // Read from each program header
-    Elf32_Phdr buf_Pheader;
+    Elf_Phdr buf_Pheader;
     ramdisk_read((void*)&buf_Pheader, p_off, buf_Eheader.e_phentsize);
     p_off += buf_Eheader.e_phentsize;
 
