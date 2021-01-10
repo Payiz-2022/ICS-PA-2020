@@ -15,7 +15,7 @@ void do_syscall(Context *c) {
     case SYS_yield: yield(); call_return(0); break;
     case SYS_write:
       if (c->GPR2 == 1 || c->GPR2 == 2) {
-        Log("sys_write: fd: %d  buf_addr: 0x%x  count: %d  reg: 0x%x", a[1], a[2], a[3], c->esi);
+        // Log("sys_write: fd: %d  buf_addr: 0x%x  count: %d  reg: 0x%x", a[1], a[2], a[3], c->esi);
         char *buf = (void*)a[2];
         for (int i = 0; i < a[3]; i++) {
           putch(buf[i]);
