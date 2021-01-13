@@ -25,6 +25,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
     Elf_Phdr buf_Pheader;
     fs_read(fd, (void*)&buf_Pheader, buf_Eheader.e_phentsize);
 
+    Log("Load program header (vaddr = 0x%x, filesz = 0x%x)", buf_Pheader.p_vaddr, buf_Pheader.p_filesz);
     fs_read(fd, (void*)buf_Pheader.p_vaddr, buf_Pheader.p_filesz);
     memset((void*)(buf_Pheader.p_vaddr + buf_Pheader.p_filesz), 0, buf_Pheader.p_memsz - buf_Pheader.p_filesz);
   }
