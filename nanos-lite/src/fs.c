@@ -51,10 +51,10 @@ int fs_open(const char *pathname, int flags, int mode){
 }
 
 size_t fs_read(int fd, void *buf, size_t len) {
-  Log("[File System] fs_read (fd = %d): read %d bytes, offset %d", fd, len, CUR_FT.open_offset);
   assert(CUR_FT.open_offset + len <= CUR_FT.size);
   size_t ret = ramdisk_read(buf, CUR_FT.disk_offset + CUR_FT.open_offset, len);
   CUR_FT.open_offset += ret;
+  Log("[File System] fs_read (fd = %d): read %d bytes, offset %d", fd, ret, CUR_FT.open_offset);
   return ret;
 }
 
