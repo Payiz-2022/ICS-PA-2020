@@ -24,7 +24,6 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   for (int i = 0; i < buf_Eheader.e_phnum; i++) {
     // Read from each program header
     fs_read(fd, (void*)&buf_Pheader[i], buf_Eheader.e_phentsize);
-    // Log("[Loader] Load program header (vaddr = 0x%x, filesz = 0x%x)", buf_Pheader[i].p_vaddr, buf_Pheader[i].p_filesz);
   }
 
   for (int i = 0; i < buf_Eheader.e_phnum; i++) {

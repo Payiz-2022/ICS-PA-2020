@@ -75,6 +75,7 @@ size_t fs_lseek(int fd, size_t offset, int whence) {
   } else {
     panic("Invalid parameter for fs_lseek");
   }
+  Log("[File System] Moving file (fd = %d) pointer to %d", fd, CUR_FT.open_offset);
   return CUR_FT.open_offset;
 }
 
