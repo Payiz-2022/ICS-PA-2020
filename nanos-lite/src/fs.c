@@ -31,6 +31,49 @@ static Finfo file_table[] __attribute__((used)) = {
 #include "files.h"
 };
 
+#define FILES_CNT (sizeof(file_table) / sizeof(Finfo))
+#define CUR_FT file_table[fd]
+
 void init_fs() {
   // TODO: initialize the size of /dev/fb
+}
+
+int fs_open(const char *pathname, int flags, int mode){
+  for (int i = 0; i < FILES_CNT; i++) {
+    if (strcmp(pathname, file_table[i].name) == 0) {
+      return i;
+    }
+  }
+  panic("File %s not found", pathname);
+}
+
+size_t fs_read(int fd, void *buf, size_t len) {
+  assert(CUR_FT.disk_offset + len <= CUR_FT.size);
+  size_t ret = ramdisk_read(buf, CUR_FT.disk_offset, len);
+  CUR_FT.disk_offset += len;
+  return ret;
+}
+
+size_t fs_write(int fd, const void *buf, size_t len) {
+  assert(CUR_FT.disk_offset + len <= CUR_FT.size);
+  size_t ret = ramdisk_write(buf, CUR_FT.disk_offset, len);
+  CUR_FT.disk_offset += len;
+  return ret;
+}
+
+size_t fs_lseek(int fd, size_t offset, int whence) {
+  if (whence == SEEK_SET) {
+    CUR_FT.disk_offset = offset;
+  } else if (whence == SEEK_CUR) {
+    CUR_FT.disk_offset += offset;
+  } else if (whence == SEEK_END) {
+    CUR_FT.disk_offset = CUR_FT.size + offset;
+  } else {
+    panic("Invalid parameter for fs_lseek");
+  }
+  return CUR_FT.disk_offset;
+}
+
+int fs_close(int fd) {
+  return 0;
 }

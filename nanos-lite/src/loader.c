@@ -1,5 +1,6 @@
 #include <proc.h>
 #include <elf.h>
+#include <fs.h>
 
 #ifdef __LP64__
 # define Elf_Ehdr Elf64_Ehdr
@@ -12,17 +13,19 @@
 #endif
 
 static uintptr_t loader(PCB *pcb, const char *filename) {
-  Elf_Ehdr buf_Eheader;
-  ramdisk_read((void*)&buf_Eheader, 0, sizeof(buf_Eheader));
+  int fd = fs_open(filename, 0, 0);
 
-  Elf_Off p_off = buf_Eheader.e_phoff;
+  Elf_Ehdr buf_Eheader;
+  fs_read(fd, (void*)&buf_Eheader, sizeof(buf_Eheader));
+
+  fs_lseek(fd, buf_Eheader.e_phoff, SEEK_SET);
+
   for (int i = 0; i < buf_Eheader.e_phnum; i++) {
     // Read from each program header
     Elf_Phdr buf_Pheader;
-    ramdisk_read((void*)&buf_Pheader, p_off, buf_Eheader.e_phentsize);
-    p_off += buf_Eheader.e_phentsize;
+    fs_read(fd, (void*)&buf_Pheader, buf_Eheader.e_phentsize);
 
-    ramdisk_read((void*)buf_Pheader.p_vaddr, buf_Pheader.p_offset, buf_Pheader.p_filesz);
+    fs_read(fd, (void*)buf_Pheader.p_vaddr, buf_Pheader.p_filesz);
     memset((void*)(buf_Pheader.p_vaddr + buf_Pheader.p_filesz), 0, buf_Pheader.p_memsz - buf_Pheader.p_filesz);
   }
 
