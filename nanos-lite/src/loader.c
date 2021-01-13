@@ -32,6 +32,8 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
     fs_read(fd, (void*)buf_Pheader[i].p_vaddr, buf_Pheader[i].p_filesz);
     memset((void*)(buf_Pheader[i].p_vaddr + buf_Pheader[i].p_filesz), 0, buf_Pheader[i].p_memsz - buf_Pheader[i].p_filesz);
   }
+  
+  fs_lseek(fd, 0, SEEK_SET);
 
   return buf_Eheader.e_entry;
 }
