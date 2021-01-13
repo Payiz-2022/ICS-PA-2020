@@ -9,6 +9,7 @@ typedef struct {
   size_t disk_offset;
   ReadFn read;
   WriteFn write;
+  size_t open_offset;
 } Finfo;
 
 enum {FD_STDIN, FD_STDOUT, FD_STDERR, FD_FB};
@@ -42,6 +43,7 @@ int fs_open(const char *pathname, int flags, int mode){
   for (int i = 0; i < FILES_CNT; i++) {
     if (strcmp(pathname, file_table[i].name) == 0) {
       Log("Opening file %s (fd = %d)", pathname, i);
+      file_table[i].open_offset = 0;
       return i;
     }
   }
@@ -49,31 +51,30 @@ int fs_open(const char *pathname, int flags, int mode){
 }
 
 size_t fs_read(int fd, void *buf, size_t len) {
-  Log("fs_read  offset: %d, len: %d, size: %d", CUR_FT.disk_offset, len, CUR_FT.size);
-  assert(CUR_FT.disk_offset + len <= CUR_FT.size);
-  size_t ret = ramdisk_read(buf, CUR_FT.disk_offset, len);
-  CUR_FT.disk_offset += len;
+  assert(CUR_FT.open_offset + len <= CUR_FT.size);
+  size_t ret = ramdisk_read(buf, CUR_FT.open_offset, len);
+  CUR_FT.open_offset += len;
   return ret;
 }
 
 size_t fs_write(int fd, const void *buf, size_t len) {
-  assert(CUR_FT.disk_offset + len <= CUR_FT.size);
-  size_t ret = ramdisk_write(buf, CUR_FT.disk_offset, len);
-  CUR_FT.disk_offset += len;
+  assert(CUR_FT.open_offset + len <= CUR_FT.size);
+  size_t ret = ramdisk_write(buf, CUR_FT.open_offset, len);
+  CUR_FT.open_offset += len;
   return ret;
 }
 
 size_t fs_lseek(int fd, size_t offset, int whence) {
   if (whence == SEEK_SET) {
-    CUR_FT.disk_offset = offset;
+    CUR_FT.open_offset = offset;
   } else if (whence == SEEK_CUR) {
-    CUR_FT.disk_offset += offset;
+    CUR_FT.open_offset += offset;
   } else if (whence == SEEK_END) {
-    CUR_FT.disk_offset = CUR_FT.size + offset;
+    CUR_FT.open_offset = CUR_FT.size + offset;
   } else {
     panic("Invalid parameter for fs_lseek");
   }
-  return CUR_FT.disk_offset;
+  return CUR_FT.open_offset;
 }
 
 int fs_close(int fd) {
