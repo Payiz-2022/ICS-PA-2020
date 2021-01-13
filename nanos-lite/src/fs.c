@@ -51,7 +51,9 @@ int fs_open(const char *pathname, int flags, int mode){
 }
 
 size_t fs_read(int fd, void *buf, size_t len) {
-  assert(CUR_FT.open_offset + len <= CUR_FT.size);
+  if (CUR_FT.open_offset + len > CUR_FT.size) {
+    len = CUR_FT.size - CUR_FT.open_offset;
+  }
   size_t ret = ramdisk_read(buf, CUR_FT.disk_offset + CUR_FT.open_offset, len);
   CUR_FT.open_offset += ret;
   Log("[File System] fs_read (fd = %d): read %d bytes, offset %d", fd, ret, CUR_FT.open_offset);
@@ -59,7 +61,9 @@ size_t fs_read(int fd, void *buf, size_t len) {
 }
 
 size_t fs_write(int fd, const void *buf, size_t len) {
-  assert(CUR_FT.open_offset + len <= CUR_FT.size);
+  if (CUR_FT.open_offset + len > CUR_FT.size) {
+    len = CUR_FT.size - CUR_FT.open_offset;
+  }
   size_t ret = ramdisk_write(buf, CUR_FT.disk_offset + CUR_FT.open_offset, len);
   CUR_FT.open_offset += ret;
   return ret;
