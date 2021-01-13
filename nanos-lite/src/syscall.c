@@ -1,7 +1,8 @@
 #include <common.h>
+#include <fs.h>
 #include "syscall.h"
 
-#define call_return(val) c->GPRx = val;
+#define set_return(val) c->GPRx = val;
 
 void do_syscall(Context *c) {
   uintptr_t a[4];
@@ -18,7 +19,15 @@ void do_syscall(Context *c) {
 
     case SYS_yield:
       yield();
-      call_return(0);
+      set_return(0);
+      break;
+
+    case SYS_open:
+      set_return(fs_open((const char*)a[1], a[2], a[3]));
+      break;
+
+    case SYS_read:
+      set_return(fs_read(a[1], (void*)a[2], a[3]));
       break;
 
     case SYS_write:
@@ -27,14 +36,22 @@ void do_syscall(Context *c) {
         for (int i = 0; i < a[3]; i++) {
           putch(buf[i]);
         }
-        call_return(a[3]);
+        set_return(a[3]);
       } else {
-        call_return(-1);
+        set_return(fs_write(a[1], (void*)a[2], a[3]));
       }
       break;
 
+    case SYS_close:
+      set_return(fs_close(a[1]));
+      break;
+
+    case SYS_lseek:
+      set_return(fs_lseek(a[1], a[2], a[3]));
+      break;
+
     case SYS_brk:
-      call_return(0);
+      set_return(0);
       break;
 
     default: panic("Unhandled syscall ID = %d", a[0]);
