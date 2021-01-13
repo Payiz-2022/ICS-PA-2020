@@ -54,6 +54,7 @@ size_t fs_read(int fd, void *buf, size_t len) {
   assert(CUR_FT.open_offset + len <= CUR_FT.size);
   size_t ret = ramdisk_read(buf, CUR_FT.disk_offset + CUR_FT.open_offset, len);
   CUR_FT.open_offset += ret;
+  Log("[File System] fs_read: read %d bytes, offset %d", ret, CUR_FT.open_offset);
   return ret;
 }
 
