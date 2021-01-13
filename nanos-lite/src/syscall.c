@@ -9,6 +9,7 @@ void do_syscall(Context *c) {
   a[1] = c->GPR2;
   a[2] = c->GPR3;
   a[3] = c->GPR4;
+  Log("[Syscall] Received syscall (id = %d)", a[0]);
 
   switch (a[0]) {
     case SYS_exit:
@@ -21,7 +22,6 @@ void do_syscall(Context *c) {
       break;
 
     case SYS_write:
-      Log("write!");
       if (c->GPR2 == 1 || c->GPR2 == 2) {
         char *buf = (void*)a[2];
         for (int i = 0; i < a[3]; i++) {
