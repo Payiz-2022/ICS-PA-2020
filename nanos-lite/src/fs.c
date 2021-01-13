@@ -52,15 +52,15 @@ int fs_open(const char *pathname, int flags, int mode){
 
 size_t fs_read(int fd, void *buf, size_t len) {
   assert(CUR_FT.open_offset + len <= CUR_FT.size);
-  size_t ret = ramdisk_read(buf, CUR_FT.open_offset, len);
+  size_t ret = ramdisk_read(buf, CUR_FT.disk_offset + CUR_FT.open_offset, len);
   CUR_FT.open_offset += len;
   return ret;
 }
 
 size_t fs_write(int fd, const void *buf, size_t len) {
   assert(CUR_FT.open_offset + len <= CUR_FT.size);
-  size_t ret = ramdisk_write(buf, CUR_FT.open_offset, len);
-  CUR_FT.open_offset += len;
+  size_t ret = ramdisk_write(buf, CUR_FT.disk_offset + CUR_FT.open_offset, len);
+  CUR_FT.open_offset += ret;
   return ret;
 }
 
