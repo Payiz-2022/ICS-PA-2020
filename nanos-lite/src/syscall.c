@@ -55,8 +55,14 @@ void do_syscall(Context *c) {
       break;
 
     case SYS_gettimeofday:
+      ;
+      struct timeval {
+        long int tv_sec;   /* seconds */
+        long int tv_usec;  /* and microseconds */
+      };
       // set_return(gettimeofday((struct timeval*)a[1], (struct timezone*)a[2]));
-      io_read(AM_TIMER_RTC);
+      ((struct timeval*)a[1])->tv_usec = io_read(AM_TIMER_UPTIME).us;
+      ((struct timeval*)a[1])->tv_sec = ((struct timeval*)a[1])->tv_usec / 1000;
       set_return(0);
       break;
 
