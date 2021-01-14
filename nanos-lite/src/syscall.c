@@ -54,6 +54,12 @@ void do_syscall(Context *c) {
       set_return(0);
       break;
 
+    case SYS_gettimeofday:
+      // set_return(gettimeofday((struct timeval*)a[1], (struct timezone*)a[2]));
+      io_read(AM_TIMER_RTC);
+      set_return(0);
+      break;
+
     default: panic("Unhandled syscall ID = %d", a[0]);
   }
 }
