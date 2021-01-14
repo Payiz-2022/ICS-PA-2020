@@ -1,6 +1,8 @@
 #ifndef __COMMON_H__
 #define __COMMON_H__
 
+// #define DEBUG
+
 /* Uncomment these macros to enable corresponding functionality. */
 #define HAS_CTE
 //#define HAS_VME

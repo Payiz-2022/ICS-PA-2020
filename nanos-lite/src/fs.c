@@ -61,7 +61,9 @@ size_t fs_read(int fd, void *buf, size_t len) {
   }
   size_t ret = ramdisk_read(buf, CUR_FT.disk_offset + CUR_FT.open_offset, len);
   CUR_FT.open_offset += ret;
-  Log("[File System] fs_read (fd = %d): read %d bytes, offset %d", fd, ret, CUR_FT.open_offset);
+  #ifdef DEBUG
+    Log("[File System] fs_read (fd = %d): read %d bytes, offset %d", fd, ret, CUR_FT.open_offset);
+  #endif
   return ret;
 }
 
@@ -84,7 +86,9 @@ size_t fs_lseek(int fd, size_t offset, int whence) {
   } else {
     panic("Invalid parameter for fs_lseek");
   }
-  Log("[File System] fs_lseek (fd = %d): moving to %d", fd, CUR_FT.open_offset);
+  #ifdef DEBUG
+    Log("[File System] fs_lseek (fd = %d): moving to %d", fd, CUR_FT.open_offset);
+  #endif
   return CUR_FT.open_offset;
 }
 
