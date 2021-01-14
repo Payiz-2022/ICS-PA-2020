@@ -64,7 +64,7 @@ void do_syscall(Context *c) {
       };
       // set_return(gettimeofday((struct timeval*)a[1], (struct timezone*)a[2]));
       ((struct timeval*)a[1])->tv_usec = io_read(AM_TIMER_UPTIME).us;
-      ((struct timeval*)a[1])->tv_sec = ((struct timeval*)a[1])->tv_usec / 1000;
+      ((struct timeval*)a[1])->tv_sec = ((struct timeval*)a[1])->tv_usec / 1000000;
       set_return(0);
       break;
 

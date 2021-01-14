@@ -6,8 +6,8 @@ int main() {
   gettimeofday(&current_time, NULL);
   while (1) {
     gettimeofday(&current_time, NULL);
-    if (current_time.tv_usec % 1000 == 0)
-      printf("usec: %ld\n", current_time.tv_usec);
+    if (current_time.tv_usec % 1000000 == 0)
+      printf("Second: %ld\n", current_time.tv_sec);
   }
   return 0;
 }
