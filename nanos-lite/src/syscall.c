@@ -33,15 +33,7 @@ void do_syscall(Context *c) {
       break;
 
     case SYS_write:
-      if (c->GPR2 == 1 || c->GPR2 == 2) {
-        char *buf = (void*)a[2];
-        for (int i = 0; i < a[3]; i++) {
-          putch(buf[i]);
-        }
-        set_return(a[3]);
-      } else {
-        set_return(fs_write(a[1], (void*)a[2], a[3]));
-      }
+      set_return(fs_write(a[1], (void*)a[2], a[3]));
       break;
 
     case SYS_close:
