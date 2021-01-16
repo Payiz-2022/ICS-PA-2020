@@ -24,7 +24,9 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   for (int i = 0; i < buf_Eheader.e_phnum; i++) {
     // Read from each program header
     fs_read(fd, (void*)&buf_Pheader[i], buf_Eheader.e_phentsize);
-    Log("[Loader] Load program header (vaddr = 0x%x, filesz = 0x%x)", buf_Pheader[i].p_vaddr, buf_Pheader[i].p_filesz);
+    #ifdef DEBUG
+      Log("[Loader] Load program header (vaddr = 0x%x, filesz = 0x%x)", buf_Pheader[i].p_vaddr, buf_Pheader[i].p_filesz);
+    #endif
   }
 
   for (int i = 0; i < buf_Eheader.e_phnum; i++) {
@@ -40,6 +42,8 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 
 void naive_uload(PCB *pcb, const char *filename) {
   uintptr_t entry = loader(pcb, filename);
-  Log("Jump to entry = %p", entry);
+  #ifdef DEBUG
+    Log("Jump to entry = %p", entry);
+  #endif
   ((void(*)())entry) ();
 }
