@@ -65,7 +65,7 @@ size_t fs_read(int fd, void *buf, size_t len) {
   size_t ret = CUR_FT.read ? CUR_FT.read(buf, CUR_FT.disk_offset + CUR_FT.open_offset, len) : ramdisk_read(buf, CUR_FT.disk_offset + CUR_FT.open_offset, len);
   CUR_FT.open_offset += ret;
   #ifdef DEBUG
-    Log("[File System] fs_read (fd = %d): Read %d bytes, offset %d", fd, ret, CUR_FT.open_offset);
+    Log("[File System] fs_read (fd = %d): Read %d bytes, offset %d, length %d", fd, ret, CUR_FT.open_offset, len);
   #endif
   return ret;
 }
