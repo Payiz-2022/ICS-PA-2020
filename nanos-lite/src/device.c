@@ -20,7 +20,8 @@ size_t serial_write(const void *buf, size_t offset, size_t len) {
     putch(*p);
     p++;
   }
-  printf("write: %d\n", len);
+  putch(len % 10);
+  putch(len / 10);
   return len;
 }
 
