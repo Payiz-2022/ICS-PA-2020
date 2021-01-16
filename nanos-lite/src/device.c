@@ -20,8 +20,6 @@ size_t serial_write(const void *buf, size_t offset, size_t len) {
     putch(*p);
     p++;
   }
-  putch(len % 10);
-  putch(len / 10);
   return len;
 }
 
@@ -31,7 +29,7 @@ size_t events_read(void *buf, size_t offset, size_t len) {
   printf("len: %d\n", len);
   int ret = snprintf(buf, len, "%s %s", ev.keydown ? "kd" : "ku", keyname[ev.keycode]);
   printf("printed: %d\n", ret);
-  return ret;
+  return 20;
 }
 
 size_t dispinfo_read(void *buf, size_t offset, size_t len) {
