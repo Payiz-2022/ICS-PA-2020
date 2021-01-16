@@ -27,8 +27,9 @@ size_t events_read(void *buf, size_t offset, size_t len) {
   AM_INPUT_KEYBRD_T ev = io_read(AM_INPUT_KEYBRD);
   if (ev.keycode == AM_KEY_NONE) return 0;
   printf("len: %d\n", len);
-  snprintf(buf, len, "%s %s", ev.keydown ? "kd" : "ku", keyname[ev.keycode]);
-  return 1024;
+  int ret = snprintf(buf, len, "%s %s", ev.keydown ? "kd" : "ku", keyname[ev.keycode]);
+  printf("printed: %d\n", ret);
+  return ret;
 }
 
 size_t dispinfo_read(void *buf, size_t offset, size_t len) {
