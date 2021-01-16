@@ -48,7 +48,7 @@ void init_fs() {
 int fs_open(const char *pathname, int flags, int mode){
   for (int i = 0; i < FILES_CNT; i++) {
     if (strcmp(pathname, file_table[i].name) == 0) {
-      #ifdef DEBUG
+      #ifdef FS_DEBUG
         Log("[File System] fs_open (fd = %d): Opening file %s", i, pathname);
       #endif
       file_table[i].open_offset = 0;
@@ -64,7 +64,7 @@ size_t fs_read(int fd, void *buf, size_t len) {
   }
   size_t ret = CUR_FT.read ? CUR_FT.read(buf, CUR_FT.disk_offset + CUR_FT.open_offset, len) : ramdisk_read(buf, CUR_FT.disk_offset + CUR_FT.open_offset, len);
   CUR_FT.open_offset += ret;
-  #ifdef DEBUG
+  #ifdef FS_DEBUG
     Log("[File System] fs_read (fd = %d): Read %d bytes, offset %d, length %d", fd, ret, CUR_FT.open_offset, len);
   #endif
   return ret;
@@ -76,6 +76,9 @@ size_t fs_write(int fd, const void *buf, size_t len) {
   }
   size_t ret = CUR_FT.write ? CUR_FT.write(buf, CUR_FT.disk_offset + CUR_FT.open_offset, len) : ramdisk_write(buf, CUR_FT.disk_offset + CUR_FT.open_offset, len);
   CUR_FT.open_offset += ret;
+  #ifdef FS_DEBUG
+    Log("[File System] fs_write (fd = %d): Write %d bytes, offset %d, length %d", fd, ret, CUR_FT.open_offset, len);
+  #endif
   return ret;
 }
 
@@ -89,7 +92,7 @@ size_t fs_lseek(int fd, size_t offset, int whence) {
   } else {
     panic("Invalid parameter for fs_lseek");
   }
-  #ifdef DEBUG
+  #ifdef FS_DEBUG
     Log("[File System] fs_lseek (fd = %d): moving to %d", fd, CUR_FT.open_offset);
   #endif
   return CUR_FT.open_offset;
