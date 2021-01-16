@@ -18,7 +18,7 @@ int main() {
     current_msec = NDL_GetTicks();
     if (current_msec / 1000 != last_sec) {
       last_sec = current_msec / 1000;
-      printf("MilliSecond: %d\n", last_sec);
+      printf("MilliSecond: %d\n", current_msec);
     }
   }
   return 0;
