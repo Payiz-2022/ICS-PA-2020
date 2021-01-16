@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <sys/time.h>
 
 static int evtdev = -1;
 static int fbdev = -1;
@@ -18,7 +19,7 @@ int NDL_PollEvent(char *buf, int len) {
   FILE* evt_file = fopen("/dev/events", "r");
   char ch = -1;
   int i = 0;
-  while (i < len && ch = fgetc(evt_file) != EOF) {
+  while (i < len && (ch = fgetc(evt_file)) != EOF) {
     buf[i++] = ch;
   }
   return i ? 1 : 0;
