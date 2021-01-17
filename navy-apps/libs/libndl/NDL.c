@@ -68,11 +68,8 @@ int NDL_Init(uint32_t flags) {
     evtdev = 3;
   }
   FILE* dispinfo_file = fopen("/proc/dispinfo", "r");
-  // fscanf(dispinfo_file, "WIDTH : %d\nHEIGHT:%d", &screen_w, &screen_h);
-  // printf("width: %d, height: %d\n", screen_w, screen_h);
-  char ch[100];
-  fscanf(dispinfo_file, "%s", ch);
-  printf("%s\n", ch);
+  fscanf(dispinfo_file, "WIDTH : %d\nHEIGHT:%d", &screen_w, &screen_h);
+  printf("width: %d, height: %d\n", screen_w, screen_h);
   return 0;
 }
 
