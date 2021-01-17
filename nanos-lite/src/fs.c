@@ -63,7 +63,7 @@ int fs_open(const char *pathname, int flags, int mode){
 }
 
 size_t fs_read(int fd, void *buf, size_t len) {
-  if (CUR_FT.size == 0) {
+  if (CUR_FT.read) {
     return CUR_FT.read(buf, 0, len);
   }
   if (CUR_FT.open_offset + len > CUR_FT.size) {
@@ -78,7 +78,7 @@ size_t fs_read(int fd, void *buf, size_t len) {
 }
 
 size_t fs_write(int fd, const void *buf, size_t len) {
-  if (CUR_FT.size == 0) {
+  if (CUR_FT.write) {
     return CUR_FT.write(buf, 0, len);
   }
   if (CUR_FT.open_offset + len > CUR_FT.size) {
