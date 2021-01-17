@@ -27,8 +27,8 @@ static inline def_EHelper(pusha) {
 
 static inline def_EHelper(popa) {
   for (int i = R_EDI; i >= R_EAX; i--)
-    if (i != R_ESP)
-      rtl_pop(s, &reg_l(i));
+    if (i == R_ESP) rtl_pop(s, s0);
+    else rtl_pop(s, &reg_l(i));
 
   print_asm("popa");
 }
