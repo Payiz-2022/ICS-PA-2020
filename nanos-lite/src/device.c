@@ -27,7 +27,8 @@ size_t events_read(void *buf, size_t offset, size_t len) {
   AM_INPUT_KEYBRD_T ev = io_read(AM_INPUT_KEYBRD);
   if (ev.keycode == AM_KEY_NONE) return 0;
   // int ret = snprintf(buf, len, "%s %s", ev.keydown ? "kd" : "ku", keyname[ev.keycode]);
-  int ret = snprintf((char*)buf, len, "sdfa");
+  char ch[100];
+  int ret = snprintf(ch, len, "%s %s", ev.keydown ? "kd" : "ku", keyname[ev.keycode]);
   printf("count: %d\n", ret);
   return ret;
 }
