@@ -83,8 +83,8 @@ static inline def_EHelper(movzx) {
 }
 
 static inline def_EHelper(movsb) {
-  rtl_subi(s, &cpu.esi, &cpu.esi, 1);
-  rtl_subi(s, &cpu.edi, &cpu.edi, 1);
+  // rtl_subi(s, &cpu.esi, &cpu.esi, 1);
+  // rtl_subi(s, &cpu.edi, &cpu.edi, 1);
 
   print_asm_template1(movsb);
 }
