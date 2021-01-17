@@ -69,6 +69,7 @@ int NDL_Init(uint32_t flags) {
   }
   FILE* dispinfo_file = fopen("/proc/dispinfo", "r");
   fscanf(dispinfo_file, "WIDTH :%d\nHEIGHT:%d", &screen_w, &screen_h);
+  printf("width: %d, height: %d\n", screen_w, screen_h);
   return 0;
 }
 
