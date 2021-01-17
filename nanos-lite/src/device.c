@@ -26,13 +26,15 @@ size_t serial_write(const void *buf, size_t offset, size_t len) {
 size_t events_read(void *buf, size_t offset, size_t len) {
   AM_INPUT_KEYBRD_T ev = io_read(AM_INPUT_KEYBRD);
   if (ev.keycode == AM_KEY_NONE) return 0;
-  int ret = sprintf(buf, "%s %s", ev.keydown ? "kd" : "ku", keyname[ev.keycode]);
-  printf("count: %d buf: %p\n", ret, buf);
-  return ret;
+  return sprintf(buf, "%s %s", ev.keydown ? "kd" : "ku", keyname[ev.keycode]);
+  // TODO: snprintf is not working?
 }
 
 size_t dispinfo_read(void *buf, size_t offset, size_t len) {
-  return 0;
+  AM_GPU_CONFIG_T cfg;
+  ioe_read(AM_GPU_CONFIG, &cfg);
+  sprintf(buf, "WIDTH : %d\nHEIGHT:%d", cfg.width, cfg.height);
+  return len;
 }
 
 size_t fb_write(const void *buf, size_t offset, size_t len) {

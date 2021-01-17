@@ -8,7 +8,7 @@
 
 static int evtdev = -1;
 static int fbdev = -1;
-static int screen_w = 0, screen_h = 0;
+static int screen_w = 0, screen_h = 0, canvas_w = 0, canvas_h = 0;
 
 uint32_t NDL_GetTicks() {
   struct timeval current_time;
@@ -30,9 +30,9 @@ void NDL_OpenCanvas(int *w, int *h) {
   if (getenv("NWM_APP")) {
     int fbctl = 4;
     fbdev = 5;
-    screen_w = *w; screen_h = *h;
+    canvas_w = *w; canvas_h = *h;
     char buf[64];
-    int len = sprintf(buf, "%d %d", screen_w, screen_h);
+    int len = sprintf(buf, "%d %d", canvas_w, canvas_h);
     // let NWM resize the window and create the frame buffer
     write(fbctl, buf, len);
     while (1) {
@@ -67,6 +67,8 @@ int NDL_Init(uint32_t flags) {
   if (getenv("NWM_APP")) {
     evtdev = 3;
   }
+  FILE* dispinfo_file = fopen("/proc/dispinfo", "r");
+  fscanf(dispinfo_file, "WIDTH :%d\nHEIGHT:%d", &screen_w, &screen_h);
   return 0;
 }
 
