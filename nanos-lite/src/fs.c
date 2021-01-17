@@ -62,21 +62,6 @@ int fs_open(const char *pathname, int flags, int mode){
   panic("File %s not found", pathname);
 }
 
-size_t fs_read(int fd, void *buf, size_t len) {
-  if (CUR_FT.read) {
-    return CUR_FT.read(buf, 0, len);
-  }
-  if (CUR_FT.open_offset + len > CUR_FT.size) {
-    len = CUR_FT.size - CUR_FT.open_offset;
-  }
-  size_t ret = ramdisk_read(buf, CUR_FT.disk_offset + CUR_FT.open_offset, len);
-  CUR_FT.open_offset += ret;
-  #ifdef FS_DEBUG
-    Log("[File System] fs_read (fd = %d): Read %d bytes, offset %d, length %d", fd, ret, CUR_FT.open_offset, len);
-  #endif
-  return ret;
-}
-
 struct BitmapHeader {
   uint16_t type;
   uint32_t filesize;
@@ -93,6 +78,26 @@ struct BitmapHeader {
   uint32_t clrused, clrimportant;
 } __attribute__((packed));
 
+size_t fs_read(int fd, void *buf, size_t len) {
+  if (CUR_FT.read) {
+    return CUR_FT.read(buf, 0, len);
+  }
+  if (CUR_FT.open_offset + len > CUR_FT.size) {
+    len = CUR_FT.size - CUR_FT.open_offset;
+  }
+  size_t ret = ramdisk_read(buf, CUR_FT.disk_offset + CUR_FT.open_offset, len);
+  CUR_FT.open_offset += ret;
+  #ifdef FS_DEBUG
+    Log("[File System] fs_read (fd = %d): Read %d bytes, offset %d, length %d", fd, ret, CUR_FT.open_offset, len);
+    if (fd == 21) {
+      struct BitmapHeader *hdr;
+      hdr = (struct BitmapHeader*)buf;
+      Log("Header bitcount: %d, compression: %d\n", hdr->bitcount, hdr->compression);
+    }
+  #endif
+  return ret;
+}
+
 size_t fs_write(int fd, const void *buf, size_t len) {
   if (CUR_FT.write) {
     return CUR_FT.write(buf, 0, len);
@@ -104,11 +109,6 @@ size_t fs_write(int fd, const void *buf, size_t len) {
   CUR_FT.open_offset += ret;
   #ifdef FS_DEBUG
     Log("[File System] fs_write (fd = %d): Write %d bytes, offset %d, length %d", fd, ret, CUR_FT.open_offset, len);
-    if (fd == 21) {
-      struct BitmapHeader *hdr;
-      hdr = (struct BitmapHeader*)buf;
-      Log("Header bitcount: %d, compression: %d\n", hdr->bitcount, hdr->compression);
-    }
   #endif
   return ret;
 }
