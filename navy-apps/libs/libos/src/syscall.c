@@ -67,6 +67,7 @@ extern char end;
 intptr_t program_break = (intptr_t)&end;
 
 void *_sbrk(intptr_t increment) {
+  return (void*)-1;
   intptr_t target_brk = program_break + increment;
   intptr_t syscall_res = _syscall_(SYS_brk, target_brk, 0, 0);
   if (syscall_res == 0) {
@@ -75,7 +76,7 @@ void *_sbrk(intptr_t increment) {
     return ret;
   } else {
     return (void*)-1;
-  }  
+  }
 }
 
 int _read(int fd, void *buf, size_t count) {
