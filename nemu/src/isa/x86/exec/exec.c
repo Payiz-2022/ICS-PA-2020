@@ -242,6 +242,8 @@ again:
     EX   (0x98, cwtl)
     EX   (0x99, cltd)
 
+    EX   (0xa4, nop)
+
     IDEXW(0xa8, I2a, test, 1)
     IDEX (0xa9, I2a, test)
 
