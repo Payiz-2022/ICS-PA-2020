@@ -9,6 +9,7 @@
 static int evtdev = -1;
 static int fbdev = -1;
 static int screen_w = 0, screen_h = 0, canvas_w = 0, canvas_h = 0;
+static uint32_t* canvas;
 
 uint32_t NDL_GetTicks() {
   struct timeval current_time;
@@ -31,6 +32,8 @@ void NDL_OpenCanvas(int *w, int *h) {
     int fbctl = 4;
     fbdev = 5;
     canvas_w = *w; canvas_h = *h;
+    assert(canvas_w <= screen_w && canvas_h <= screen_h);
+    canvas = malloc(canvas_w * canvas_h * sizeof(uint32_t));
     char buf[64];
     int len = sprintf(buf, "%d %d", canvas_w, canvas_h);
     // let NWM resize the window and create the frame buffer
@@ -47,6 +50,22 @@ void NDL_OpenCanvas(int *w, int *h) {
 }
 
 void NDL_DrawRect(uint32_t *pixels, int x, int y, int w, int h) {
+  for (int i = 0; i < h; i++)
+    for (int j = 0; j < w; j++)
+      canvas[(y + i) * canvas_w + (x + j)] = pixels[i * w + j];
+  NDL_UpdateCanvas();
+}
+
+void NDL_UpdateCanvas() {
+  FILE* fb_file = fopen("/dev/fb", "w");
+  for (int i = 0; i < screen_h; i++)
+    for (int j = 0; j < screen_w; j++) {
+      if (i <= canvas_h && j <= canvas_w) {
+        fprintf(fb_file, "%08x", canvas[i * canvas_w + j]);
+      } else {
+        fprintf(fb_file, "00000000");
+      }
+    }
 }
 
 void NDL_OpenAudio(int freq, int channels, int samples) {
