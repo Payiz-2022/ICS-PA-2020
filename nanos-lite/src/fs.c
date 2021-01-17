@@ -62,22 +62,6 @@ int fs_open(const char *pathname, int flags, int mode){
   panic("File %s not found", pathname);
 }
 
-struct BitmapHeader {
-  uint16_t type;
-  uint32_t filesize;
-  uint32_t resv_1;
-  uint32_t offset;
-  uint32_t ih_size;
-  uint32_t width;
-  uint32_t height;
-  uint16_t planes;
-  uint16_t bitcount; // 1, 4, 8, or 24
-  uint32_t compression;
-  uint32_t sizeimg;
-  uint32_t xres, yres;
-  uint32_t clrused, clrimportant;
-} __attribute__((packed));
-
 size_t fs_read(int fd, void *buf, size_t len) {
   if (CUR_FT.read) {
     return CUR_FT.read(buf, 0, len);
@@ -89,11 +73,6 @@ size_t fs_read(int fd, void *buf, size_t len) {
   CUR_FT.open_offset += ret;
   #ifdef FS_DEBUG
     Log("[File System] fs_read (fd = %d): Read %d bytes, offset %d, length %d", fd, ret, CUR_FT.open_offset, len);
-    if (fd == 21) {
-      struct BitmapHeader *hdr;
-      hdr = (struct BitmapHeader*)buf;
-      Log("Header bitcount: %d, compression: %d\n", hdr->bitcount, hdr->compression);
-    }
   #endif
   return ret;
 }
