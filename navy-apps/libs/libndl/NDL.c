@@ -68,7 +68,8 @@ void NDL_UpdateCanvas() {
         fwrite(&canvas[i * canvas_w + j], sizeof(uint32_t), 1, fb_file);
       } else {
         // fprintf(fb_file, "00000000");
-        fwrite(NULL, sizeof(uint32_t), 1, fb_file);
+        uint32_t tmp0 = 0;
+        fwrite(&tmp0, sizeof(uint32_t), 1, fb_file);
       }
     }
 }
