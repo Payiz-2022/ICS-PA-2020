@@ -10,8 +10,8 @@ int vsprintf(char*, const char*, va_list);
 int printf(const char *fmt, ...) {
   va_list args;
   va_start(args, fmt);
-  // Maximum buffer: 10000
-  char s[10000];
+  // Maximum buffer: 65536
+  char s[65536];
   vsprintf(s, fmt, args);
   va_end(args);
   char *p = s;
@@ -176,7 +176,12 @@ int sprintf(char *out, const char *fmt, ...) {
 }
 
 int snprintf(char *out, size_t n, const char *fmt, ...) {
-  return 0;
+  // TODO: Limit output size
+  va_list args;
+  va_start(args, fmt);
+  int len = vsprintf(out, fmt, args);
+  va_end(args);
+  return len;
 }
 
 int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
