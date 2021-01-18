@@ -60,7 +60,6 @@ void NDL_OpenCanvas(int *w, int *h) {
 
 void NDL_UpdateCanvas() {
   FILE* fb_file = fopen("/dev/fb", "w");
-  printf("Info: screen %d*%d, canvas %d*%d\n", screen_w, screen_h, canvas_w, canvas_h);
   uint32_t tmp0 = 0;
   size_t h_offset = (screen_h - canvas_h) / 2, 
       w_offset = (screen_w - canvas_w) / 2;
