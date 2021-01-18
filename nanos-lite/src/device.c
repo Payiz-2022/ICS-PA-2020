@@ -36,21 +36,31 @@ size_t dispinfo_read(void *buf, size_t offset, size_t len) {
 }
 
 size_t fb_write(const void *buf, size_t offset, size_t len) {
-  // len = strlen(buf);
-  printf("len: %d, strlen: %d\n", len, strlen(buf));
+  size_t buf_len = strlen(buf);
+  if (len > buf_len) len = buf_len;
   AM_GPU_CONFIG_T cfg;
   ioe_read(AM_GPU_CONFIG, &cfg);
-  uint32_t start_x = offset / sizeof(uint32_t) % cfg.width;
-  uint32_t start_y = offset / sizeof(uint32_t) / cfg.width;
-  AM_GPU_FBDRAW_T ctl = {
-    .x = start_x,
-    .y = start_y,
-    .w = len / sizeof(uint32_t),
-    .h = 1,
-    .pixels = (uint32_t*)buf,
-    .sync = 1
-  };
-  ioe_read(AM_GPU_FBDRAW, &ctl);
+  uint32_t offset_x = offset / sizeof(uint32_t) % cfg.width;
+  uint32_t offset_y = offset / sizeof(uint32_t) / cfg.width;
+
+  offset = 0;
+  while (offset < len) {
+    AM_GPU_FBDRAW_T ctl = {
+      .x = offset_x,
+      .y = offset_y,
+      .w = 1,
+      .h = 1,
+      .pixels = (uint32_t*)buf + offset,
+      .sync = 1
+    };
+    ioe_read(AM_GPU_FBDRAW, &ctl);
+    offset++;
+    offset_x++;
+    if (offset_x >= cfg.width) {
+      offset_x = 0;
+      offset_y++;
+    }
+  }
   return len;
 }
 
