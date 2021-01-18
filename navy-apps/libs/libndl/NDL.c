@@ -51,6 +51,7 @@ void NDL_OpenCanvas(int *w, int *h) {
 
 void NDL_UpdateCanvas() {
   FILE* fb_file = fopen("/dev/fb", "w");
+  printf("Info: screen %d*%d, canvas %d*%d\n", screen_w, screen_h, canvas_w, canvas_h);
   for (int i = 0; i < screen_h; i++)
     for (int j = 0; j < screen_w; j++) {
       if (i <= canvas_h && j <= canvas_w) {
