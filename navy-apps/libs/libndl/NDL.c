@@ -51,13 +51,21 @@ void NDL_OpenCanvas(int *w, int *h) {
   }
 }
 
+#define BYTE_TO_BINARY_PATTERN "%c%c%c%c"
+#define BYTE_TO_BINARY(byte)  \
+  (byte >> 24) & 0xff, \
+  (byte >> 16) & 0xff, \
+  (byte >> 8) & 0xff, \
+  (byte) & 0xff
+
 void NDL_UpdateCanvas() {
   FILE* fb_file = fopen("/dev/fb", "w");
   printf("Info: screen %d*%d, canvas %d*%d\n", screen_w, screen_h, canvas_w, canvas_h);
   for (int i = 0; i < screen_h; i++)
     for (int j = 0; j < screen_w; j++) {
       if (i < canvas_h && j < canvas_w) {
-        fwrite(&canvas[i * canvas_w + j], sizeof(uint32_t), 1, fb_file);
+        fprintf(fb_file, BYTE_TO_BINARY_PATTERN, BYTE_TO_BINARY(canvas[i * canvas_w + j]));
+        // fwrite(&canvas[i * canvas_w + j], sizeof(uint32_t), 1, fb_file);
       } else {
         fprintf(fb_file, "0000");
       }
