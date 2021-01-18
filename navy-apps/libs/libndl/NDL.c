@@ -64,10 +64,11 @@ void NDL_UpdateCanvas() {
   for (int i = 0; i < screen_h; i++)
     for (int j = 0; j < screen_w; j++) {
       if (i < canvas_h && j < canvas_w) {
-        fprintf(fb_file, BYTE_TO_BINARY_PATTERN, BYTE_TO_BINARY(canvas[i * canvas_w + j]));
-        // fwrite(&canvas[i * canvas_w + j], sizeof(uint32_t), 1, fb_file);
+        // fprintf(fb_file, "%08x", canvas[i * canvas_w + j]);
+        fwrite(&canvas[i * canvas_w + j], sizeof(uint32_t), 1, fb_file);
       } else {
-        fprintf(fb_file, "0000");
+        // fprintf(fb_file, "00000000");
+        fwrite(NULL, sizeof(uint32_t), 1, fb_file);
       }
     }
 }
