@@ -61,14 +61,14 @@ void NDL_OpenCanvas(int *w, int *h) {
 void NDL_UpdateCanvas() {
   FILE* fb_file = fopen("/dev/fb", "w");
   printf("Info: screen %d*%d, canvas %d*%d\n", screen_w, screen_h, canvas_w, canvas_h);
-  for (int i = 0; i < screen_h; i++)
-    for (int j = 0; j < screen_w; j++) {
-      if (i < canvas_h && j < canvas_w) {
-        // fprintf(fb_file, "%08x", canvas[i * canvas_w + j]);
+  uint32_t tmp0 = 0;
+  size_t h_offset = (screen_h - canvas_h) / 2, 
+      w_offset = (screen_w - canvas_w) / 2;
+  for (int i = -h_offset; i < screen_h - h_offset; i++)
+    for (int j = -w_offset; j < screen_w - w_offset; j++) {
+      if (i >= 0 && j >= 0 && i < canvas_h && j < canvas_w) {
         fwrite(&canvas[i * canvas_w + j], sizeof(uint32_t), 1, fb_file);
       } else {
-        // fprintf(fb_file, "00000000");
-        uint32_t tmp0 = 0;
         fwrite(&tmp0, sizeof(uint32_t), 1, fb_file);
       }
     }
