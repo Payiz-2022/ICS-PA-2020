@@ -65,6 +65,7 @@ int fs_open(const char *pathname, int flags, int mode){
 size_t fs_read(int fd, void *buf, size_t len) {
   if (CUR_FT.size && CUR_FT.open_offset + len > CUR_FT.size) {
     len = CUR_FT.size - CUR_FT.open_offset;
+    if (len < 0) len = 0;
   }
   size_t offset = CUR_FT.disk_offset + CUR_FT.open_offset;
   size_t ret = 0;
@@ -83,6 +84,7 @@ size_t fs_read(int fd, void *buf, size_t len) {
 size_t fs_write(int fd, const void *buf, size_t len) {
   if (CUR_FT.size && CUR_FT.open_offset + len > CUR_FT.size) {
     len = CUR_FT.size - CUR_FT.open_offset;
+    if (len < 0) len = 0;
   }
   size_t offset = CUR_FT.disk_offset + CUR_FT.open_offset;
   size_t ret = 0;
