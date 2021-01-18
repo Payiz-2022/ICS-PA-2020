@@ -83,10 +83,12 @@ static inline def_EHelper(movzx) {
 }
 
 static inline def_EHelper(movsb) {
+  rtl_lm(s, s0, &cpu.esi, 0, 1);
+  rtl_sm(s, &cpu.edi, 0, s0, 1);
   rtl_addi(s, &cpu.esi, &cpu.esi, 1);
   rtl_addi(s, &cpu.edi, &cpu.edi, 1);
 
-  print_asm_template1(movsb);
+  print_asm("movsb");
 }
 
 static inline def_EHelper(lea) {
