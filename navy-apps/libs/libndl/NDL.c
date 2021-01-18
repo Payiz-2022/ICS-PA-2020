@@ -31,11 +31,9 @@ void NDL_OpenCanvas(int *w, int *h) {
   if (getenv("NWM_APP")) {
     int fbctl = 4;
     fbdev = 5;
-    canvas_w = *w; canvas_h = *h;
-    assert(canvas_w <= screen_w && canvas_h <= screen_h);
-    canvas = malloc(canvas_w * canvas_h * sizeof(uint32_t));
+    screen_w = *w; screen_h = *h;
     char buf[64];
-    int len = sprintf(buf, "%d %d", canvas_w, canvas_h);
+    int len = sprintf(buf, "%d %d", screen_w, screen_h);
     // let NWM resize the window and create the frame buffer
     write(fbctl, buf, len);
     while (1) {
@@ -46,6 +44,10 @@ void NDL_OpenCanvas(int *w, int *h) {
       if (strcmp(buf, "mmap ok") == 0) break;
     }
     close(fbctl);
+  } else {
+    canvas_w = *w; canvas_h = *h;
+    assert(canvas_w <= screen_w && canvas_h <= screen_h);
+    canvas = malloc(canvas_w * canvas_h * sizeof(uint32_t));
   }
 }
 
@@ -54,7 +56,7 @@ void NDL_UpdateCanvas() {
   printf("Info: screen %d*%d, canvas %d*%d\n", screen_w, screen_h, canvas_w, canvas_h);
   for (int i = 0; i < screen_h; i++)
     for (int j = 0; j < screen_w; j++) {
-      if (i <= canvas_h && j <= canvas_w) {
+      if (i < canvas_h && j < canvas_w) {
         fprintf(fb_file, "%08x", canvas[i * canvas_w + j]);
         printf("%08x", canvas[i * canvas_w + j]);
       } else {
