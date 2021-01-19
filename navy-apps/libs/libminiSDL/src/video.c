@@ -20,7 +20,7 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
   for (int i = 0; i < h; i++)
     for (int j = 0; j < w; j++) {
       ((uint32_t*)dst->pixels)[(dy+i) * dst->w + (dx+j)] = ((uint32_t*)src->pixels)[(sy+i) * src->w + (sx+j)];
-      printf("Copied RGB: %06x\n", ((uint32_t*)dst->pixels)[(dy+i) * dst->w + (dx+j)]);
+      printf("Copied RGB: %08x\n", ((uint32_t*)dst->pixels)[(dy+i) * dst->w + (dx+j)]);
     }
 
   SDL_UpdateRect(dst, dx, dy, w, h);
