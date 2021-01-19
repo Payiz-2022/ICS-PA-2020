@@ -13,13 +13,13 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
   int sy = (srcrect == NULL ? 0 : srcrect->y);
   int dx = (dstrect == NULL ? 0 : dstrect->x);
   int dy = (dstrect == NULL ? 0 : dstrect->y);
-  int w = (srcrect == NULL ? src->pitch : srcrect->w * 4);
+  int w = (srcrect == NULL ? src->w : srcrect->w);
   int h = (srcrect == NULL ? src->h : srcrect->h);
 
   printf("Blit surface w = %d, h = %d from (%d, %d) to (%d, %d)\n", w, h, sx, sy, dx, dy);
   for (int i = 0; i < h; i++)
     for (int j = 0; j < w; j++)
-      dst->pixels[(dy+i) * dst->pitch + (dx+j)] = src->pixels[(dy+i) * src->pitch + (dx+j)];
+      dst->pixels[(dy+i) * dst->w + (dx+j)] = src->pixels[(dy+i) * src->w + (dx+j)];
 
   SDL_UpdateRect(dst, dx, dy, w, h);
 }
