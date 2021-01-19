@@ -17,11 +17,10 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
   int h = (srcrect == NULL ? src->h : srcrect->h);
 
   printf("Blit surface w = %d, h = %d from (%d, %d) to (%d, %d)\n", w, h, sx, sy, dx, dy);
+  printf("src (w %d, h %d), dest (w %d, h %d)\n", src->w, src->h, dst->w, dst->h);
   for (int i = 0; i < h; i++)
-    for (int j = 0; j < w; j++) {
+    for (int j = 0; j < w; j++)
       ((uint32_t*)dst->pixels)[(dy+i) * dst->w + (dx+j)] = ((uint32_t*)src->pixels)[(sy+i) * src->w + (sx+j)];
-      printf("Copied RGB: %08x\n", ((uint32_t*)dst->pixels)[(dy+i) * dst->w + (dx+j)]);
-    }
 
   SDL_UpdateRect(dst, dx, dy, w, h);
 }
