@@ -15,8 +15,9 @@ int SDL_PushEvent(SDL_Event *ev) {
 
 int SDL_PollEvent(SDL_Event *ev) {
   char buf[1000] = {0};
+  char kd[4] = "kd ";
   if (NDL_PollEvent(buf, 1000)) {
-    if (memcmp(buf, "kd ", sizeof(char) * 3) == 0)
+    if (memcmp(buf, kd, sizeof(char) * 3) == 0)
       ev->key.type = SDL_KEYDOWN;
     else
       ev->key.type = SDL_KEYUP;
