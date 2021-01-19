@@ -9,27 +9,26 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
   assert(dst && src);
   assert(dst->format->BitsPerPixel == src->format->BitsPerPixel);
 
-  int x = 0, y = 0, w = 0, h = 0;
-  if (srcrect != NULL) {
-    w = srcrect->w, h = srcrect->h;
-  }
-  if (dstrect != NULL) {
-    x = dstrect->x, y = dstrect->y;
-  }
+  int sx = (srcrect == NULL ? 0 : srcrect->x);
+  int sy = (srcrect == NULL ? 0 : srcrect->y);
+  int dx = (dstrect == NULL ? 0 : dstrect->x);
+  int dy = (dstrect == NULL ? 0 : dstrect->y);
+  int w = (srcrect == NULL ? src->w : srcrect->w);
+  int h = (srcrect == NULL ? src->h : srcrect->h);
 
-  printf("Blit x = %d, y = %d, w = %d, h = %d\n", x, y, w, h);
-  for (int i = y; i < y + h; i++)
-    for (int j = x; j < x + w; j++)
-      ((uint32_t*)dst->pixels)[i * dst->w + j] = ((uint32_t*)src->pixels)[i * src->w + j];
+  printf("Blit surface w = %d, h = %d from (%d, %d) to (%d, %d)\n", w, h, sx, sy, dx, dy);
+  for (int i = 0; i < h; i++)
+    for (int j = 0; j < w; j++)
+      ((uint32_t*)dst->pixels)[(dy+i) * dst->w + (dx+j)] = ((uint32_t*)src->pixels)[(dy+i) * src->w + (dx+j)];
 
-  SDL_UpdateRect(dst, x, y, w, h);
+  SDL_UpdateRect(dst, dx, dy, w, h);
 }
 
 void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
-  int x = 0, y = 0, w = 0, h = 0;
-  if (dstrect != NULL) {
-    x = dstrect->x, y = dstrect->y, w = dstrect->w, h = dstrect->h;
-  }
+  int x = (dstrect == NULL ? 0 : dstrect->x);
+  int y = (dstrect == NULL ? 0 : dstrect->y);
+  int w = (dstrect == NULL ? dst->w : dstrect->w);
+  int h = (dstrect == NULL ? dst->h : dstrect->h);
 
   printf("Fill color %06x in x = %d, y = %d, w = %d, h = %d\n", color, x, y, w, h);
   for (int i = y; i < y + h; i++)
