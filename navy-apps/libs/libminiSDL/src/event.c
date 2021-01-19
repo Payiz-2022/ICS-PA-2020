@@ -25,9 +25,8 @@ int SDL_PollEvent(SDL_Event *ev) {
     for (int i = 0; i < 83; i++)
       if (strcmp(keyname[i], ev_key) == 0) {
         ev->key.keysym.sym = i;
-        printf("Recognize key %s [%d]\n", ev_key, i);
+        printf("Recognize key %s [%d] %s\n", ev_key, i, ev->key.type == SDL_KEYUP ? "up" : "down");
       }
-    printf("Get event %s\n", buf);
     return 1;
   } else {
     return 0;
