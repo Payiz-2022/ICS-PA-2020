@@ -45,6 +45,7 @@ void NDL_OpenCanvas(int *w, int *h) {
     }
     close(fbctl);
   } else {
+    if (*w == 0 && *h == 0) *w = screen_w, *h = screen_h;
     canvas_w = *w; canvas_h = *h;
     assert(canvas_w <= screen_w && canvas_h <= screen_h);
     canvas = malloc(canvas_w * canvas_h * sizeof(uint32_t));
@@ -74,6 +75,9 @@ void NDL_UpdateCanvas() {
 }
 
 void NDL_DrawRect(uint32_t *pixels, int x, int y, int w, int h) {
+  if (x == 0 && y == 0 && w == 0 && h == 0) {
+    w = canvas_w, h = canvas_h;
+  }
   for (int i = 0; i < h; i++)
     for (int j = 0; j < w; j++)
       canvas[(y + i) * canvas_w + (x + j)] = pixels[i * w + j];
