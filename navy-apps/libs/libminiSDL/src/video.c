@@ -8,7 +8,7 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
   assert(dst && src);
   assert(dst->format->BitsPerPixel == src->format->BitsPerPixel);
 
-  // int x = dstrect->x, y = dstrect->y, w = dstrect->w, h = dstrect->h;
+  // int x = dstrect->x, y = dstrect->y, w = dstrect->pitch, h = dstrect->h;
   // for (int i = y; i < y + h; i++)
   //   for (int j = x; j < x + w; j++)
   //     dst->pixels[i * dst->w + j] = src->pixels[i * src->w + j];
@@ -26,9 +26,9 @@ void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
 
 void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
   if (x == 0 && y == 0 && w == 0 && h == 0)
-    NDL_DrawRect(s->pixels, 0, 0, s->w, s->h);
+    NDL_DrawRect((uint32_t*)s->pixels, 0, 0, s->w, s->h);
   else
-    NDL_DrawRect(s->pixels, x, y, w, h);
+    NDL_DrawRect((uint32_t*)s->pixels, x, y, w, h);
 }
 
 // APIs below are already implemented.
