@@ -3,7 +3,6 @@
 #include <assert.h>
 #include <string.h>
 #include <stdlib.h>
-#include <stdio.h>
 
 void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_Rect *dstrect) {
   assert(dst && src);
@@ -16,8 +15,6 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
   int w = (srcrect == NULL ? src->w : srcrect->w);
   int h = (srcrect == NULL ? src->h : srcrect->h);
 
-  printf("Blit surface w = %d, h = %d from (%d, %d) to (%d, %d)\n", w, h, sx, sy, dx, dy);
-  printf("src (w %d, h %d), dest (w %d, h %d)\n", src->w, src->h, dst->w, dst->h);
   for (int i = 0; i < h; i++)
     for (int j = 0; j < w; j++)
       ((uint32_t*)dst->pixels)[(dy+i) * dst->w + (dx+j)] = ((uint32_t*)src->pixels)[(sy+i) * src->w + (sx+j)];
@@ -30,7 +27,6 @@ void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
   int w = (dstrect == NULL ? dst->w : dstrect->w);
   int h = (dstrect == NULL ? dst->h : dstrect->h);
 
-  printf("Fill color %06x in x = %d, y = %d, w = %d, h = %d\n", color, x, y, w, h);
   for (int i = y; i < y + h; i++)
     for (int j = x; j < x + w; j++)
       ((uint32_t*)dst->pixels)[i * dst->w + j] = color;
