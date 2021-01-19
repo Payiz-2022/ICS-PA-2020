@@ -243,6 +243,7 @@ again:
     EX   (0x99, cltd)
 
     EX   (0xa4, movsb)
+    EX   (0xa5, movsd)
 
     IDEXW(0xa8, I2a, test, 1)
     IDEX (0xa9, I2a, test)

@@ -91,6 +91,15 @@ static inline def_EHelper(movsb) {
   print_asm("movsb");
 }
 
+static inline def_EHelper(movsd) {
+  rtl_lm(s, s0, &cpu.esi, 0, 4);
+  rtl_sm(s, &cpu.edi, 0, s0, 4);
+  rtl_addi(s, &cpu.esi, &cpu.esi, 4);
+  rtl_addi(s, &cpu.edi, &cpu.edi, 4);
+
+  print_asm("movsd");
+}
+
 static inline def_EHelper(lea) {
   rtl_addi(s, ddest, s->isa.mbase, s->isa.moff);
   operand_write(s, id_dest, ddest);
