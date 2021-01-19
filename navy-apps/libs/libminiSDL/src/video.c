@@ -19,7 +19,7 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
   printf("Blit surface w = %d, h = %d from (%d, %d) to (%d, %d)\n", w, h, sx, sy, dx, dy);
   for (int i = 0; i < h; i++)
     for (int j = 0; j < w; j++)
-      dst->pixels[(dy+i) * dst->w + (dx+j)] = src->pixels[(dy+i) * src->w + (dx+j)];
+      dst->pixels[(dy+i) * dst->w + (dx+j)] = src->pixels[(sy+i) * src->w + (sx+j)];
 
   SDL_UpdateRect(dst, dx, dy, w, h);
 }
