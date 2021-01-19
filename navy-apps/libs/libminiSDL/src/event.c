@@ -16,7 +16,7 @@ int SDL_PushEvent(SDL_Event *ev) {
 int SDL_PollEvent(SDL_Event *ev) {
   char buf[1000] = {0};
   if (NDL_PollEvent(buf, 1000)) {
-    if (memcmp(buf, "kd ", sizeof("kd ")) == 0)
+    if (memcmp(buf, "kd ", sizeof(char) * 3) == 0)
       ev->key.type = SDL_KEYDOWN;
     else
       ev->key.type = SDL_KEYUP;
@@ -25,6 +25,7 @@ int SDL_PollEvent(SDL_Event *ev) {
     for (int i = 0; i < 83; i++)
       if (strcmp(keyname[i], ev_key) == 0) {
         ev->key.keysym.sym = i;
+        printf("Recognize key %s [%d] %s\n", ev_key, i, ev->key.type == SDL_KEYUP ? "up" : "down");
       }
     return 1;
   } else {
