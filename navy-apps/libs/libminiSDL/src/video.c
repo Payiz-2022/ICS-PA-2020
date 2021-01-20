@@ -4,7 +4,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-#define SDL_DEBUG
+// #define SDL_DEBUG
 #ifdef SDL_DEBUG
   #include <stdio.h>
 #endif
