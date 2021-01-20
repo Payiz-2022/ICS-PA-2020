@@ -76,11 +76,12 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
     uint32_t* buf = malloc(s->w * s->h * sizeof(uint32_t));
     for (int i = y; i < y + h; i++)
       for (int j = x; j < x + w; j++) {
-        if (h == 15) printf("%08x ", buf[i * s->w + j]);
         buf[i * s->w + j] = s->format->palette->colors[s->pixels[i * s->w + j]].val;
+        if (h == 15) printf("%08x ", buf[i * s->w + j]);
       }
     NDL_DrawRect(buf, x, y, w, h);
     free(buf);
+    if (h == 15) printf("s->w: %d, s->h: %d\n", s->w, s->h);
   }
 }
 
