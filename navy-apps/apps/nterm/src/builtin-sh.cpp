@@ -24,8 +24,12 @@ static void sh_prompt() {
 }
 
 static void sh_handle_cmd(const char *cmd) {
-  if (memcmp(cmd, "quit", sizeof(char) * 4) == 0) {
+  if (memcmp(cmd, "exit", sizeof(char) * 4) == 0) {
     exit(0);
+  } else {
+    char path[50];
+    sscanf(cmd, "%s", path);
+    execve(path, NULL, NULL);
   }
 }
 
