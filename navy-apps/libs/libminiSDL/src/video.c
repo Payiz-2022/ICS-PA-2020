@@ -17,8 +17,10 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
 
   for (int i = 0; i < h; i++)
     for (int j = 0; j < w; j++)
-      ((uint32_t*)dst->pixels)[(dy+i) * dst->w + (dx+j)] = ((uint32_t*)src->pixels)[(sy+i) * src->w + (sx+j)];
-      // printf("Copied RGB %08x from %d to %d\n", ((uint32_t*)dst->pixels)[(dy+i) * dst->w + (dx+j)], (sy+i) * src->w + (sx+j), (dy+i) * dst->w + (dx+j));
+      if (dst->format->BytesPerPixel == 4)
+        ((uint32_t*)dst->pixels)[(dy+i) * dst->w + (dx+j)] = ((uint32_t*)src->pixels)[(sy+i) * src->w + (sx+j)];
+      else
+        dst->pixels[(dy+i) * dst->w + (dx+j)] = src->pixels[(sy+i) * src->w + (sx+j)];
 }
 
 void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
@@ -29,11 +31,23 @@ void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
 
   for (int i = y; i < y + h; i++)
     for (int j = x; j < x + w; j++)
-      ((uint32_t*)dst->pixels)[i * dst->w + j] = color;
+      if (dst->format->BytesPerPixel == 4)
+        ((uint32_t*)dst->pixels)[i * dst->w + j] = color;
+      else
+        dst->pixels[i * dst->w + j] = (uint8_t)color;
 }
 
 void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
-  NDL_DrawRect((uint32_t*)s->pixels, x, y, w, h);
+  if (s->format->BytesPerPixel == 4) {
+    NDL_DrawRect((uint32_t*)s->pixels, x, y, w, h);
+  } else {
+    uint32_t* buf = malloc(s->w * s->h * sizeof(uint32_t));
+    for (int i = y; i < y + h; i++)
+      for (int j = x; j < x + w; j++)
+        buf[i * s->w + j] = s->format->palette->colors[s->pixels[i * s->w + j]].val;
+    NDL_DrawRect(buf, x, y, w, h);
+    free(buf);
+  }
 }
 
 // APIs below are already implemented.
