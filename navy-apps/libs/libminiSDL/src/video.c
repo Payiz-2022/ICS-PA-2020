@@ -50,7 +50,7 @@ void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
 
 void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
   #ifdef SDL_DEBUG
-    printf("Update Rect bpp[%d] w = %d, h = %d from (%d, %d)", s->format->BytesPerPixel, w, h, x, y);
+    printf("Update Rect bpp[%d] w = %d, h = %d from (%d, %d)\n", s->format->BytesPerPixel, w, h, x, y);
   #endif
   if (s->format->BytesPerPixel == 4) {
     NDL_DrawRect((uint32_t*)s->pixels, x, y, w, h);
