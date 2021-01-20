@@ -39,14 +39,14 @@ static void sh_handle_cmd(const char *cmd) {
       } else if (*idx == '$') {
         sscanf(idx, "%s", env_name);
         sh_printf("%s", getenv(env_name));
+        idx--;
       } else {
         sh_printf("%c", idx);
       }
       idx++;
     }
     sh_printf("\n");
-  }
-  if (sscanf(cmd, "%s=%s", env_name, env_val) == 2) {
+  } else if (sscanf(cmd, "%s=%s", env_name, env_val) == 2) {
     setenv(env_name, env_val, true);
   } else {
     sscanf(cmd, "%s", env_val);
