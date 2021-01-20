@@ -27,7 +27,6 @@ int SDL_PollEvent(SDL_Event *ev) {
       if (strcmp(keyname[i], ev_key) == 0) {
         ev->key.keysym.sym = i;
       }
-    printf("Get keybaord event: %s\n", ev_key);
     return 1;
   } else {
     return 0;
