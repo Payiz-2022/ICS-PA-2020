@@ -46,7 +46,7 @@ static void sh_handle_cmd(const char *cmd) {
       }
       idx++;
     }
-  } else if (sscanf(cmd, "%s=%s", env_name, env_val) == 2) {
+  } else if (sscanf(cmd, "%[^=]=%s", env_name, env_val) == 2) {
     setenv(env_name, env_val, true);
   } else {
     sscanf(cmd, "%s", env_val);
