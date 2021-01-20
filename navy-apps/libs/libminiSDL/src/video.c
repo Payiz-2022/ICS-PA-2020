@@ -3,7 +3,11 @@
 #include <assert.h>
 #include <string.h>
 #include <stdlib.h>
-#include <stdio.h>
+
+// #define SDL_DEBUG
+#ifdef SDL_DEBUG
+  #include <stdio.h>
+#endif
 
 void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_Rect *dstrect) {
   assert(dst && src);
@@ -15,7 +19,9 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
   int dy = (dstrect == NULL ? 0 : dstrect->y);
   int w = (srcrect == NULL ? src->w : srcrect->w);
   int h = (srcrect == NULL ? src->h : srcrect->h);
-  printf("Blit Surface (w = %d, h = %d) from (%d, %d) to (%d, %d)\n", w, h, sx, sy, dx, dy);
+  #ifdef SDL_DEBUG
+    printf("Blit Surface (w = %d, h = %d) from (%d, %d) to (%d, %d)\n", w, h, sx, sy, dx, dy);
+  #endif
 
   for (int i = 0; i < h; i++)
     for (int j = 0; j < w; j++)
@@ -30,7 +36,9 @@ void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
   int y = (dstrect == NULL ? 0 : dstrect->y);
   int w = (dstrect == NULL ? dst->w : dstrect->w);
   int h = (dstrect == NULL ? dst->h : dstrect->h);
-  printf("FillRect color: %08x\n", color);
+  #ifdef SDL_DEBUG
+    printf("FillRect color: %08x\n", color);
+  #endif
 
   for (int i = y; i < y + h; i++)
     for (int j = x; j < x + w; j++)
@@ -41,7 +49,9 @@ void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
 }
 
 void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
-  printf("Update Rect bpp[%d] w = %d, h = %d from (%d, %d)", s->format->BytesPerPixel, w, h, x, y);
+  #ifdef SDL_DEBUG
+    printf("Update Rect bpp[%d] w = %d, h = %d from (%d, %d)", s->format->BytesPerPixel, w, h, x, y);
+  #endif
   if (s->format->BytesPerPixel == 4) {
     NDL_DrawRect((uint32_t*)s->pixels, x, y, w, h);
   } else {
