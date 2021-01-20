@@ -65,7 +65,9 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
     for (int i = y; i < y + h; i++)
       for (int j = x; j < x + w; j++) {
         buf[i * s->w + j] = s->format->palette->colors[s->pixels[i * s->w + j]].val;
-        assert((buf[i * s->w + j] & 0xff000000) == 0);
+        if (buf[i * s->w + j] & 0xff000000) {
+          printf("Alpha: 0x%x\n", (buf[i * s->w + j] & 0xff000000) >> 24);
+        }
       }
     NDL_DrawRect(buf, x, y, w, h);
     free(buf);
