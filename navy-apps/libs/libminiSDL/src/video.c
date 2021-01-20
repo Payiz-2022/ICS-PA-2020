@@ -47,7 +47,7 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
       else
         dst->pixels[(dy+i) * dst->w + (dx+j)] = src->pixels[(sy+i) * src->w + (sx+j)];
     }
-    putchar('\n');
+    if (h == 15) putchar('\n');
   }
 }
 
