@@ -12,7 +12,6 @@ static void sh_printf(const char *format, ...) {
   va_start(ap, format);
   int len = vsnprintf(buf, 256, format, ap);
   va_end(ap);
-  printf("%s", buf);
   term->write(buf, len);
 }
 
@@ -39,9 +38,10 @@ static void sh_handle_cmd(const char *cmd) {
       } else if (*idx == '\\') {
         bslash = true;
       } else if (*idx == '$') {
-        sscanf(idx, "%s", env_name);
-        sh_printf("%s", getenv(env_name));
-        idx--;
+        sscanf(idx + 1, "%s", env_name);
+        printf("Env: %s, val: %s\n", env_name, getenv(env_name));
+        // sh_printf("%s", getenv(env_name));
+        idx += strlen(env_name);
       } else {
         sh_printf("%c", *idx);
       }
