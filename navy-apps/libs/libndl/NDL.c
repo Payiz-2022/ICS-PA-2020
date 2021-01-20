@@ -64,15 +64,15 @@ void NDL_UpdateCanvas() {
   uint32_t tmp0 = 0;
   int h_offset = (screen_h - canvas_h) / 2, 
       w_offset = (screen_w - canvas_w) / 2;
-  for (int i = -h_offset; i < screen_h - h_offset - 1; i++)
+  for (int i = -h_offset; i < screen_h - h_offset; i++)
     for (int j = -w_offset; j < screen_w - w_offset; j++) {
       if (i >= 0 && j >= 0 && i < canvas_h && j < canvas_w) {
         fwrite(&canvas[i * canvas_w + j], sizeof(uint32_t), 1, fb_file);
-        printf("Writing (%d, %d) into screen color 0x%06x\n", i, j, canvas[i * canvas_w + j]);
       } else {
         fwrite(&tmp0, sizeof(uint32_t), 1, fb_file);
       }
     }
+  fclose(fb_file);
 }
 
 void NDL_DrawRect(uint32_t *pixels, int x, int y, int w, int h) {
