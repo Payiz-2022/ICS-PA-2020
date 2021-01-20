@@ -4,10 +4,10 @@
 #include <string.h>
 #include <stdlib.h>
 
-#define SDL_DEBUG
-#ifdef SDL_DEBUG
+// #define SDL_DEBUG
+// #ifdef SDL_DEBUG
   #include <stdio.h>
-#endif
+// #endif
 
 // fixedpt toAlpha(uint8_t alpha) {
 //   return fixedpt_fromint(0xff - alpha) / fixedpt_fromint(0xff);
@@ -39,12 +39,16 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
     printf("Blit Surface (w = %d, h = %d) from (%d, %d) to (%d, %d)\n", w, h, sx, sy, dx, dy);
   #endif
 
-  for (int i = 0; i < h; i++)
-    for (int j = 0; j < w; j++)
+  for (int i = 0; i < h; i++) {
+    for (int j = 0; j < w; j++) {
+      if (h == 15) printf("%08x ", src->format->palette->colors[src->pixels[(sy+i) * src->w + (sx+j)]].val);
       if (dst->format->BytesPerPixel == 4)
         ((uint32_t*)dst->pixels)[(dy+i) * dst->w + (dx+j)] = ((uint32_t*)src->pixels)[(sy+i) * src->w + (sx+j)];
       else
         dst->pixels[(dy+i) * dst->w + (dx+j)] = src->pixels[(sy+i) * src->w + (sx+j)];
+    }
+    printf('\n');
+  }
 }
 
 void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
