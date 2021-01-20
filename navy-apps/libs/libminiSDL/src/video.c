@@ -41,13 +41,11 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
 
   for (int i = 0; i < h; i++) {
     for (int j = 0; j < w; j++) {
-      if (h == 15) printf("%08x ", src->format->palette->colors[src->pixels[(sy+i) * src->w + (sx+j)]].val);
       if (dst->format->BytesPerPixel == 4)
         ((uint32_t*)dst->pixels)[(dy+i) * dst->w + (dx+j)] = ((uint32_t*)src->pixels)[(sy+i) * src->w + (sx+j)];
       else
         dst->pixels[(dy+i) * dst->w + (dx+j)] = src->pixels[(sy+i) * src->w + (sx+j)];
     }
-    if (h == 15) putchar('\n');
   }
 }
 
@@ -77,8 +75,10 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
   } else {
     uint32_t* buf = malloc(s->w * s->h * sizeof(uint32_t));
     for (int i = y; i < y + h; i++)
-      for (int j = x; j < x + w; j++)
+      for (int j = x; j < x + w; j++) {
+        if (h == 15) printf("%08x ", buf[i * s->w + j]);
         buf[i * s->w + j] = s->format->palette->colors[s->pixels[i * s->w + j]].val;
+      }
     NDL_DrawRect(buf, x, y, w, h);
     free(buf);
   }
