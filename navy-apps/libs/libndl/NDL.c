@@ -68,6 +68,7 @@ void NDL_UpdateCanvas() {
     for (int j = -w_offset; j < screen_w - w_offset; j++) {
       if (i >= 0 && j >= 0 && i < canvas_h && j < canvas_w) {
         fwrite(&canvas[i * canvas_w + j], sizeof(uint32_t), 1, fb_file);
+        printf("Writing (%d, %d) into screen\n", i, j);
       } else {
         fwrite(&tmp0, sizeof(uint32_t), 1, fb_file);
       }
@@ -79,8 +80,11 @@ void NDL_DrawRect(uint32_t *pixels, int x, int y, int w, int h) {
     w = canvas_w, h = canvas_h;
   }
   for (int i = 0; i < h; i++)
-    for (int j = 0; j < w; j++)
+    for (int j = 0; j < w; j++) {
       canvas[(y + i) * canvas_w + (x + j)] = pixels[i * w + j];
+      printf("Updating canvas (%d, %d) from (%d, %d)\n", (y + i), (x + j), i, j);
+    }
+
   NDL_UpdateCanvas();
 }
 
