@@ -15,6 +15,7 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
   int dy = (dstrect == NULL ? 0 : dstrect->y);
   int w = (srcrect == NULL ? src->w : srcrect->w);
   int h = (srcrect == NULL ? src->h : srcrect->h);
+  printf("Blit Surface (w = %d, h = %d) from (%d, %d) to (%d, %d)\n", w, h, sx, sy, dx, dy);
 
   for (int i = 0; i < h; i++)
     for (int j = 0; j < w; j++)
