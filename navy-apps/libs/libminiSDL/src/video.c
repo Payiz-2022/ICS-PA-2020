@@ -4,10 +4,10 @@
 #include <string.h>
 #include <stdlib.h>
 
-// #define SDL_DEBUG
-// #ifdef SDL_DEBUG
+#define SDL_DEBUG
+#ifdef SDL_DEBUG
   #include <stdio.h>
-// #endif
+#endif
 
 // fixedpt toAlpha(uint8_t alpha) {
 //   return fixedpt_fromint(0xff - alpha) / fixedpt_fromint(0xff);
@@ -47,7 +47,7 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
       else
         dst->pixels[(dy+i) * dst->w + (dx+j)] = src->pixels[(sy+i) * src->w + (sx+j)];
     }
-    printf('\n');
+    putchar('\n');
   }
 }
 
