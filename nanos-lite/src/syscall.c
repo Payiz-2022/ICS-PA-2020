@@ -1,6 +1,7 @@
 #include <common.h>
 #include <fs.h>
 #include "syscall.h"
+#include "proc.h"
 
 #define set_return(val) c->GPRx = val;
 
@@ -16,7 +17,8 @@ void do_syscall(Context *c) {
 
   switch (a[0]) {
     case SYS_exit:
-      halt(0);
+      naive_uload(NULL, "/bin/menu");
+      // halt(0);
       break;
 
     case SYS_yield:
@@ -57,6 +59,10 @@ void do_syscall(Context *c) {
       ((struct timeval*)a[1])->tv_usec = io_read(AM_TIMER_UPTIME).us;
       ((struct timeval*)a[1])->tv_sec = ((struct timeval*)a[1])->tv_usec / 1000000;
       set_return(0);
+      break;
+
+    case SYS_execve:
+      naive_uload(NULL, (char*)a[1]);
       break;
 
     default: panic("Unhandled syscall ID = %d", a[0]);
