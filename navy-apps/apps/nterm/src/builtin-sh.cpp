@@ -12,6 +12,7 @@ static void sh_printf(const char *format, ...) {
   va_start(ap, format);
   int len = vsnprintf(buf, 256, format, ap);
   va_end(ap);
+  printf("%s", buf);
   term->write(buf, len);
 }
 
