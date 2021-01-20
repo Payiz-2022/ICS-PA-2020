@@ -15,4 +15,8 @@ uint32_t SDL_GetTicks() {
 }
 
 void SDL_Delay(uint32_t ms) {
+  uint32_t begin = SDL_GetTicks();
+  while (1) {
+    if (SDL_GetTicks() >= begin + ms) break;
+  }
 }
