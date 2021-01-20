@@ -31,9 +31,10 @@ static void sh_handle_cmd(const char *cmd) {
     const char* idx = cmd + 5;
     bool bslash = false;
     while (*idx) {
-      if (bslash && (*idx == '\\' || *idx == '$')) {
+      if (bslash) {
         bslash = false;
-        sh_printf("%c", idx);
+        if (*idx == '\\' || *idx == '$')
+          sh_printf("%c", *idx);
       } else if (*idx == '\\') {
         bslash = true;
       } else if (*idx == '$') {
@@ -41,7 +42,7 @@ static void sh_handle_cmd(const char *cmd) {
         sh_printf("%s", getenv(env_name));
         idx--;
       } else {
-        sh_printf("%c", idx);
+        sh_printf("%c", *idx);
       }
       idx++;
     }
