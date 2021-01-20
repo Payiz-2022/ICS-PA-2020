@@ -39,8 +39,7 @@ static void sh_handle_cmd(const char *cmd) {
         bslash = true;
       } else if (*idx == '$') {
         sscanf(idx + 1, "%s", env_name);
-        printf("Env: %s, val: %s\n", env_name, getenv(env_name));
-        // sh_printf("%s", getenv(env_name));
+        sh_printf("%s", getenv(env_name));
         idx += strlen(env_name);
       } else {
         sh_printf("%c", *idx);
