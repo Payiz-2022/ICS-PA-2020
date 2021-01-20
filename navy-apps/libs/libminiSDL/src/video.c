@@ -9,10 +9,20 @@
   #include <stdio.h>
 #endif
 
+// fixedpt toAlpha(uint8_t alpha) {
+//   return fixedpt_fromint(0xff - alpha) / fixedpt_fromint(0xff);
+// }
+
+// uint8_t fromAlpha(fixedpt alpha) {
+//   return fixedpt_toint((fixedpt_fromint(1) - alpha) * fixedpt_fromint(0xff));
+// }
+
 // void SDL_MixColor(SDL_Color* dst, SDL_Color* src) {
 //   // co = Cs * αs + Cb * αb * (1 - αs)
-//   dst->r = src->r * src->a + dst->r * dst->a * (0xff - src->a);
-//   dst->alpha
+//   dst->r = fixedpt_toint(fixedpt_fromint(src->r) * toAlpha(0xff - src->a) + fixedpt_fromint(dst->r) * toAlpha(0xff - dst->a) * toAlpha(src->a));
+//   dst->g = fixedpt_toint(fixedpt_fromint(src->g) * toAlpha(0xff - src->a) + fixedpt_fromint(dst->g) * toAlpha(0xff - dst->a) * toAlpha(src->a));
+//   dst->b = fixedpt_toint(fixedpt_fromint(src->b) * toAlpha(0xff - src->a) + fixedpt_fromint(dst->b) * toAlpha(0xff - dst->a) * toAlpha(src->a));
+//   dst->a = fromAlpha(toAlpha(dst->a) + toAlpha(src->a) - toAlpha(dst->a) * toAlpha(src->a));
 // }
 
 void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_Rect *dstrect) {
@@ -63,12 +73,8 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
   } else {
     uint32_t* buf = malloc(s->w * s->h * sizeof(uint32_t));
     for (int i = y; i < y + h; i++)
-      for (int j = x; j < x + w; j++) {
+      for (int j = x; j < x + w; j++)
         buf[i * s->w + j] = s->format->palette->colors[s->pixels[i * s->w + j]].val;
-        if (buf[i * s->w + j] & 0xff000000) {
-          printf("Alpha: 0x%x\n", (buf[i * s->w + j] & 0xff000000) >> 24);
-        }
-      }
     NDL_DrawRect(buf, x, y, w, h);
     free(buf);
   }
