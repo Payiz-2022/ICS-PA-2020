@@ -9,6 +9,12 @@
   #include <stdio.h>
 #endif
 
+// void SDL_MixColor(SDL_Color* dst, SDL_Color* src) {
+//   // co = Cs * αs + Cb * αb * (1 - αs)
+//   dst->r = src->r * src->a + dst->r * dst->a * (0xff - src->a);
+//   dst->alpha
+// }
+
 void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_Rect *dstrect) {
   assert(dst && src);
   assert(dst->format->BitsPerPixel == src->format->BitsPerPixel);
@@ -57,8 +63,10 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
   } else {
     uint32_t* buf = malloc(s->w * s->h * sizeof(uint32_t));
     for (int i = y; i < y + h; i++)
-      for (int j = x; j < x + w; j++)
+      for (int j = x; j < x + w; j++) {
         buf[i * s->w + j] = s->format->palette->colors[s->pixels[i * s->w + j]].val;
+        assert((buf[i * s->w + j] & 0xff000000) == 0);
+      }
     NDL_DrawRect(buf, x, y, w, h);
     free(buf);
   }
