@@ -24,7 +24,9 @@ static void sh_prompt() {
 }
 
 static void sh_handle_cmd(const char *cmd) {
-  printf("cmd: %s\n", cmd);
+  if (memcmp(cmd, "quit", sizeof(char) * 4) == 0) {
+    exit(0);
+  }
 }
 
 void builtin_sh_run() {
