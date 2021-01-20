@@ -24,12 +24,33 @@ static void sh_prompt() {
 }
 
 static void sh_handle_cmd(const char *cmd) {
-  if (memcmp(cmd, "exit", sizeof(char) * 4) == 0) {
+  char env_name[30], env_val[80];
+  if (memcmp(cmd, "exit\n", sizeof(char) * 5) == 0) {
     exit(0);
+  } else if (memcmp(cmd, "echo ", sizeof(char) * 5) == 0) {
+    const char* idx = cmd + 5;
+    bool bslash = false;
+    while (*idx) {
+      if (bslash && (*idx == '\\' || *idx == '$')) {
+        bslash = false;
+        sh_printf("%c", idx);
+      } else if (*idx == '\\') {
+        bslash = true;
+      } else if (*idx == '$') {
+        sscanf(idx, "%s", env_name);
+        sh_printf("%s", getenv(env_name));
+      } else {
+        sh_printf("%c", idx);
+      }
+      idx++;
+    }
+    sh_printf("\n");
+  }
+  if (sscanf(cmd, "%s=%s", env_name, env_val) == 2) {
+    setenv(env_name, env_val, true);
   } else {
-    char path[50];
-    sscanf(cmd, "%s", path);
-    execve(path, NULL, NULL);
+    sscanf(cmd, "%s", env_val);
+    execvp(env_val, NULL);
   }
 }
 
