@@ -28,13 +28,13 @@ void init_proc() {
   // naive_uload(NULL, "/bin/menu");
 
   context_kload(&pcb[0], hello_fun, (void*)0xf);
-  context_kload(&pcb[1], hello_fun, (void*)0xd);
+  context_kload(&pcb[2], hello_fun, (void*)0xd);
   switch_boot_pcb();
 }
 
 Context* schedule(Context *prev) {
   current->cp = prev;
-  current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
+  current = (current == &pcb[0] ? &pcb[2] : &pcb[0]);
   printf("Current cp: 0x%08x\n", current->cp);
   return current->cp;
 }
