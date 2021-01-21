@@ -54,7 +54,7 @@ void context_kload(PCB *pcb, const void* entry, void* arg) {
   pcb->cp = kcontext(stack, entry, arg);
 }
 
-void context_uload(PCB *pcb, const char* filename) {
+void context_uload(PCB *pcb, const char *filename, char *const argv[], char *const envp[]) {
   uintptr_t entry = loader(pcb, filename);
 
   Area stack;
@@ -62,5 +62,5 @@ void context_uload(PCB *pcb, const char* filename) {
   stack.end = stack.start + sizeof(PCB);
 
   pcb->cp = ucontext(NULL, stack, (void*)entry);
-  pcb->cp->GPRx = (uintptr_t)stack.start;
+  pcb->cp->GPRx = (uintptr_t)heap.end;
 }

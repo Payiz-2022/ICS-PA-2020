@@ -28,7 +28,8 @@ void init_proc() {
   // naive_uload(NULL, "/bin/menu");
 
   context_kload(&pcb[0], hello_fun, (void*)0xeeeee);
-  context_uload(&pcb[3], "/bin/pal");
+  char* args[] = {"--skip", NULL};
+  context_uload(&pcb[3], "/bin/pal", args, NULL);
   switch_boot_pcb();
 }
 
