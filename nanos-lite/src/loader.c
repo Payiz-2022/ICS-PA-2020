@@ -45,3 +45,11 @@ void naive_uload(PCB *pcb, const char *filename) {
   Log("Jump to entry = %p", entry);
   ((void(*)())entry) ();
 }
+
+void context_kload(PCB *pcb, const void* entry) {
+  Area stack;
+  stack.start = (void*)pcb;
+  stack.end = stack.start + sizeof(PCB);
+
+  pcb->cp = kcontext(stack, entry, NULL);
+}
