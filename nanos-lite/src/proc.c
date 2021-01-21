@@ -36,6 +36,6 @@ bool which = 0;
 Context* schedule(Context *prev) {
   current->cp = prev;
   current = &pcb[which];
-  // which = 1 - which;
+  which = 1 - which;
   return current->cp;
 }
