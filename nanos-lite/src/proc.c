@@ -37,5 +37,6 @@ Context* schedule(Context *prev) {
   current->cp = prev;
   current = &pcb[which];
   which = !which;
+  printf("Current cp: 0x%08x\n", current->cp);
   return current->cp;
 }
