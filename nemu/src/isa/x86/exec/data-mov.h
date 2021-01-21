@@ -18,6 +18,7 @@ static inline def_EHelper(pop) {
 
 static inline def_EHelper(pusha) {
   rtl_mv(s, s0, &reg_l(R_ESP));
+  printf("[pusha] eip: 0x%08x\n", cpu.eip);
   for (int i = R_EAX; i <= R_EDI; i++)
     if (i == R_ESP) rtl_push(s, s0);
     else rtl_push(s, &reg_l(i));
@@ -26,6 +27,7 @@ static inline def_EHelper(pusha) {
 }
 
 static inline def_EHelper(popa) {
+  printf("[popa] eip: 0x%08x\n", cpu.eip);
   for (int i = R_EDI; i >= R_EAX; i--)
     if (i == R_ESP) rtl_pop(s, s0);
     else rtl_pop(s, &reg_l(i));
