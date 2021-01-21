@@ -27,7 +27,7 @@ void init_proc() {
   // load program here
   // naive_uload(NULL, "/bin/menu");
 
-  context_kload(&pcb[0], hello_fun);
+  context_kload(&pcb[0], hello_fun, NULL);
   switch_boot_pcb();
 }
 
