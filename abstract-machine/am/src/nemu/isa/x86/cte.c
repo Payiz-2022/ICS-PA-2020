@@ -57,7 +57,7 @@ Context* kcontext(Area kstack, void (*entry)(void *), void *arg) {
   printf("Stack: 0x%08x - 0x%08x\n", kstack.start, kstack.end);
   Context *c = (Context*)kstack.end - 1;
   c->eip = (uintptr_t)entry;
-  c->esp = (uintptr_t)c;
+  printf("esp: 0x%x\n", c->esp);
   *((uintptr_t*)c) = (uintptr_t)arg;
   *((uintptr_t*)c - 4) = (uintptr_t)arg;
   *((uintptr_t*)c - 3) = (uintptr_t)arg;
