@@ -9,7 +9,6 @@
 typedef union {
   uint8_t stack[STACK_SIZE] PG_ALIGN;
   struct {
-    int nop[100];
     Context *cp;
     AddrSpace as;
     // we do not free memory, so use `max_brk' to determine when to call _map()
