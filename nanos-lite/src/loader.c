@@ -62,5 +62,22 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   stack.end = stack.start + sizeof(PCB);
 
   pcb->cp = ucontext(NULL, stack, (void*)entry);
-  pcb->cp->GPRx = (uintptr_t)heap.end;
+
+  int argc = 0;
+  void* mem_top = heap.end;
+  char*const* p = argv;
+  while (*p != NULL) {
+    mem_top -= strlen(*p) + 1;
+    strcpy(mem_top, *p);
+    argc++; p++;
+  }
+  mem_top -= 4;
+  *(uintptr_t*)mem_top = 0;
+  mem_top -= 4;
+  *(uintptr_t*)mem_top = 0;
+  mem_top -= argc * sizeof(char*);
+  memcpy(mem_top, argv, sizeof(argc * sizeof(char*)));
+  mem_top -= 4;
+  *(intptr_t*)mem_top = argc;
+  pcb->cp->GPRx = (uintptr_t)mem_top;
 }
