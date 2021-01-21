@@ -13,6 +13,7 @@ void raise_intr(DecodeExecState *s, uint32_t NO, vaddr_t ret_addr) {
   rtl_push(s, &cpu.eflags.val);
 
   rtl_li(s, s0, cpu.cs);
+  printf("[raise_intr] cs: 0x%08x\n", cpu.cs);
   rtl_push(s, s0);
 
   rtl_li(s, s0, ret_addr);
@@ -28,6 +29,7 @@ void query_intr(DecodeExecState *s) {
   rtl_jr(s, s0);
 
   rtl_pop(s, s0);
+  printf("[iret] cs: 0x%08x\n", *s0);
   cpu.cs = *s0;
 
   rtl_pop(s, &cpu.eflags.val);
