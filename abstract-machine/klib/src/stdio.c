@@ -7,14 +7,15 @@
 
 int vsprintf(char*, const char*, va_list);
 
+// Maximum buffer: 65536
+char printf_buf[65536];
+
 int printf(const char *fmt, ...) {
   va_list args;
   va_start(args, fmt);
-  // Maximum buffer: 65536
-  char s[65536];
-  vsprintf(s, fmt, args);
+  vsprintf(printf_buf, fmt, args);
   va_end(args);
-  char *p = s;
+  char *p = printf_buf;
   while (*p) {
     putch(*p);
     p++;
