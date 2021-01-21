@@ -34,6 +34,7 @@ void init_proc() {
 
 Context* schedule(Context *prev) {
   current->cp = prev;
+  printf("Saved current cp: 0x%08x\n", current->cp);
   current = (current == &pcb[0] ? &pcb[2] : &pcb[0]);
   printf("Current cp: 0x%08x\n", current->cp);
   return current->cp;
