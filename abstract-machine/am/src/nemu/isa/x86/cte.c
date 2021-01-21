@@ -54,7 +54,7 @@ bool cte_init(Context*(*handler)(Event, Context*)) {
 
 
 Context* kcontext(Area kstack, void (*entry)(void *), void *arg) {
-  printf("Stack: %d - %d\n", kstack.start, kstack.end);
+  printf("Stack: 0x%08x - 0x%08x\n", kstack.start, kstack.end);
   Context *c = (Context*)kstack.end - 1;
   c->eip = (uintptr_t)entry;
   c->esp = (uintptr_t)c;
