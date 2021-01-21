@@ -27,15 +27,15 @@ void init_proc() {
   // load program here
   // naive_uload(NULL, "/bin/menu");
 
-  context_kload(&pcb[0], hello_fun, (void*)0xf);
+  context_kload(&pcb[1], hello_fun, (void*)0xf);
   context_kload(&pcb[2], hello_fun, (void*)0xd);
   switch_boot_pcb();
 }
 
-bool which = 0;
+bool which = 1;
 Context* schedule(Context *prev) {
   current->cp = prev;
   current = &pcb[which];
-  which = 2 - which;
+  which = 3 - which;
   return current->cp;
 }
