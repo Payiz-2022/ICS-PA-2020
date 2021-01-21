@@ -57,6 +57,8 @@ Context* kcontext(Area kstack, void (*entry)(void *), void *arg) {
   Context *c = (Context*)kstack.end - 1;
   c->eip = (uintptr_t)entry;
   c->esp = (uintptr_t)c;
+  *((uintptr_t*)c) = (uintptr_t)arg;
+  *((uintptr_t*)c - 4) = (uintptr_t)arg;
   *((uintptr_t*)c - 3) = (uintptr_t)arg;
   *((uintptr_t*)c - 2) = (uintptr_t)arg;
   *((uintptr_t*)c - 1) = (uintptr_t)arg;
