@@ -14,6 +14,8 @@ void hello_fun(void *arg) {
   int j = 1;
   while (1) {
     printf("bef: 0x02a4efe4: 0x%08x\n", *(uint32_t*)0x02a4efe4);
+    register uintptr_t esp asm ("esp");
+    printf("esp: 0x%08x\n", esp);
     Log("Hello World from Nanos-lite with arg '%p' for the %dth time!", (uintptr_t)arg, j);
     printf("aft: 0x02a4efe4: 0x%08x\n", *(uint32_t*)0x02a4efe4);
     j ++;
