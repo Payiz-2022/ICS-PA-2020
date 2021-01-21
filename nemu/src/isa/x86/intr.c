@@ -16,7 +16,7 @@ void raise_intr(DecodeExecState *s, uint32_t NO, vaddr_t ret_addr) {
   rtl_push(s, s0);
 
   rtl_li(s, s0, ret_addr);
-  printf("[raise_intr] eip: 0x%08x\n", *s0);
+  printf("[raise_intr] eip: 0x%08x\n", ret_addr);
   rtl_push(s, s0);
 
   rtl_j(s, intr_addr);
