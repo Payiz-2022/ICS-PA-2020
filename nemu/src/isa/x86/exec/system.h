@@ -38,6 +38,7 @@ static inline def_EHelper(int) {
 
 static inline def_EHelper(iret) {
   query_intr(s);
+  printf("[popa] eip: 0x%08x\n", cpu.eip);
 
   print_asm("iret");
 
