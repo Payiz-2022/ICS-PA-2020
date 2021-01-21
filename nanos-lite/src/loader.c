@@ -79,5 +79,6 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   memcpy(mem_top, argv, sizeof(argc * sizeof(char*)));
   mem_top -= 4;
   *(intptr_t*)mem_top = argc;
+  printf("mem_top: 0x%08x argc: %d\n", (uintptr_t)mem_top, argc);
   pcb->cp->GPRx = (uintptr_t)mem_top;
 }
