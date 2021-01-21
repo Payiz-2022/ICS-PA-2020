@@ -25,7 +25,6 @@ static inline def_rtl(sr, int r, const rtlreg_t* src1, int width) {
 }
 
 static inline def_rtl(push, const rtlreg_t* src1) {
-  printf("[push] prev esp: 0x%x\n", cpu.esp);
   rtl_subi(s, t0, &cpu.esp, 4);
   rtl_sm(s, t0, 0, src1, 4);
   rtl_mv(s, &cpu.esp, t0);
