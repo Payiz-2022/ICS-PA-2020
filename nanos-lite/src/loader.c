@@ -53,3 +53,13 @@ void context_kload(PCB *pcb, const void* entry, void* arg) {
 
   pcb->cp = kcontext(stack, entry, arg);
 }
+
+void context_uload(PCB *pcb, const char* filename) {
+  uintptr_t entry = loader(pcb, filename);
+
+  Area stack;
+  stack.start = (void*)pcb;
+  stack.end = stack.start + sizeof(PCB);
+
+  pcb->cp = ucontext(NULL, stack, (void*)entry);
+}
