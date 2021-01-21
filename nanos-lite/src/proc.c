@@ -28,11 +28,14 @@ void init_proc() {
   // naive_uload(NULL, "/bin/menu");
 
   context_kload(&pcb[0], hello_fun, (void*)0xf);
+  context_kload(&pcb[1], hello_fun, (void*)0xc);
   switch_boot_pcb();
 }
 
+bool which = 0;
 Context* schedule(Context *prev) {
   current->cp = prev;
-  current = &pcb[0];
+  current = &pcb[which];
+  which = !which;
   return current->cp;
 }
