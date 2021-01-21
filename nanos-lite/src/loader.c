@@ -62,4 +62,5 @@ void context_uload(PCB *pcb, const char* filename) {
   stack.end = stack.start + sizeof(PCB);
 
   pcb->cp = ucontext(NULL, stack, (void*)entry);
+  pcb->cp->GPRx = (uintptr_t)stack.start;
 }
