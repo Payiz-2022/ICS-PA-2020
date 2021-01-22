@@ -55,8 +55,10 @@ static void sh_handle_cmd(const char *cmd) {
     char argv[30][80];
     int offset = strlen(env_val), i = 0;
     argv_list[0] = env_val;
+    printf("offset: %d\n", offset);
     while (*(cmd + offset)) {
       while (*(cmd + offset++) == ' ') ;
+      printf("offset: %d\n", offset);
       sscanf(cmd + offset, "%s", argv[i]);
       offset += strlen(argv[i]);
       argv_list[i] = argv[i];
