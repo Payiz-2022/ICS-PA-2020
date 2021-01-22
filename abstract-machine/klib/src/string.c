@@ -13,6 +13,7 @@ char *strcpy(char* dst, const char* src) {
   size_t n = strlen(src);
   for (unsigned int i = 0; i < n; i++)
     dst[i] = src[i];
+  dst[n] = 0;
   return dst;
 }
 
