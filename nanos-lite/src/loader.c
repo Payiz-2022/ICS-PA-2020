@@ -76,6 +76,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
     mem_top -= strlen(*p) + 1;
     strcpy(mem_top, *p);
     *((void**)cpy_argv + (p - argv)) = mem_top;
+    printf("arg: 0x%08x %s\n", ((void**)cpy_argv)[p - argv], *((char**)cpy_argv)[p - argv]);
     p++;
   }
   mem_top -= 4;
