@@ -63,7 +63,7 @@ static void sh_handle_cmd(const char *cmd) {
       argv_list[i] = argv[i];
       while (*(cmd + offset) == ' ') offset++;
     }
-    printf("Loading program %s with %d arg(s)\n", env_val, i);
+    // printf("Loading program %s with %d arg(s)\n", env_val, i);
     execvp(env_val, argv_list);
   }
 }
