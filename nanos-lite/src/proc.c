@@ -31,9 +31,10 @@ void init_proc() {
   switch_boot_pcb();
 }
 
-int pcb_id = 2;
+int pcb_id = 1;
 PCB* get_free_pcb() {
   pcb_id++;
+  printf("Goto PCB: %d\n", pcb_id);
   if (pcb_id == MAX_NR_PROC) panic("No free PCB available");
   return &pcb[pcb_id];
 }
@@ -41,6 +42,7 @@ PCB* get_free_pcb() {
 PCB* get_last_pcb() {
   pcb_id--;
   if (pcb_id < 0) pcb_id = 0;
+  printf("Goto PCB: %d\n", pcb_id);
   return &pcb[pcb_id];
 }
 
