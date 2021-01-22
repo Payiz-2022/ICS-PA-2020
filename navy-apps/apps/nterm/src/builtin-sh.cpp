@@ -57,11 +57,11 @@ static void sh_handle_cmd(const char *cmd) {
 
     // Read args
     while (*(cmd + offset) && *(cmd + offset) != '\n') {
-      while (*(cmd + offset++) == ' ') ;
+      while (*(cmd + offset) == ' ') offset++;
       sscanf(cmd + offset, "%s", argv[++i]);
       offset += strlen(argv[i]);
       argv_list[i] = argv[i];
-      while (*(cmd + offset++) == ' ') ;
+      while (*(cmd + offset) == ' ') offset++;
     }
     printf("Loading program %s with %d arg(s)\n", env_val, i);
     execvp(env_val, argv_list);
