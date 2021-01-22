@@ -17,8 +17,7 @@ void do_syscall(Context *c) {
 
   switch (a[0]) {
     case SYS_exit:
-      ; char* args[] = {"/bin/menu", NULL};
-      context_uload(get_last_pcb(), "/bin/menu", args, NULL);
+      get_last_pcb();
       yield();
       // halt(0);
       break;
