@@ -62,18 +62,7 @@ void do_syscall(Context *c) {
       break;
 
     case SYS_execve:
-      ; int i = 0;
-      for (int i = 0; i < 4; i++)
-        printf("#%d: 0x%08x ", i, &pcb[i]);
-      printf("execve\n");
-      for (i = 0; i < MAX_NR_PROC; i++) {
-        if (pcb[i].cp == NULL) {
-          printf("Using PCB #%d: 0x%08x\n", i, &pcb[i]);
-          context_uload(&pcb[i], (char*)a[1], (char**)a[2], (char**)a[3]);
-          break;
-        }
-      }
-      if (i == MAX_NR_PROC) panic("No PCB available");
+      context_uload(get_free_pcb(), (char*)a[1], (char**)a[2], (char**)a[3]);
       // naive_uload(NULL, (char*)a[1], a[2], a[3]);
       break;
 

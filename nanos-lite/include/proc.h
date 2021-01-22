@@ -18,11 +18,11 @@ typedef union {
 } PCB;
 
 extern PCB *current;
-static PCB pcb[MAX_NR_PROC] __attribute__((used)) = {};
 
 void naive_uload(PCB*, const char*);
 void context_kload(PCB*, const void*, void*);
 void context_uload(PCB*, const char*, char*const*, char*const*);
 Context* schedule(Context*);
+PCB* get_free_pcb();
 
 #endif

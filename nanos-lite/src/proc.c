@@ -1,6 +1,7 @@
 #include <proc.h>
 
 static PCB pcb_boot = {};
+static PCB pcb[MAX_NR_PROC] __attribute__((used)) = {};
 PCB *current = NULL;
 
 void switch_boot_pcb() {
@@ -14,6 +15,14 @@ void hello_fun(void *arg) {
     j ++;
     yield();
   }
+}
+
+PCB* get_free_pcb() {
+  for (int i = 0; i < MAX_NR_PROC; i++)
+    if (pcb[i].cp == NULL)
+      return &pcb[i];
+  panic("No free PCB available");
+  return NULL;
 }
 
 void init_proc() {
