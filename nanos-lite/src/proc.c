@@ -27,6 +27,8 @@ void init_proc() {
   // context_kload(&pcb[0], hello_fun, (void*)0xeeeee);
   char* args[] = {"/bin/exec-test", NULL};
   context_uload(&pcb[0], "/bin/exec-test", args, NULL);
+  for (int i = 0; i < 4; i++)
+    printf("#%d: 0x%08x ", i, &pcb[i]);
   switch_boot_pcb();
 }
 
