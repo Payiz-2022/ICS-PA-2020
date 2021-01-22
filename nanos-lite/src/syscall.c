@@ -62,7 +62,6 @@ void do_syscall(Context *c) {
       break;
 
     case SYS_execve:
-      printf("execve\n");
       ; int i = 0;
       for (i = 0; i < MAX_NR_PROC; i++) {
         if (pcb[i].cp == NULL) {
