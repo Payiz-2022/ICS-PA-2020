@@ -63,6 +63,7 @@ void do_syscall(Context *c) {
 
     case SYS_execve:
       ; int i = 0;
+      printf("execve\n");
       for (i = 0; i < MAX_NR_PROC; i++) {
         if (pcb[i].cp == NULL) {
           context_uload(&pcb[i], (char*)a[1], NULL, NULL);
