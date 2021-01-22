@@ -59,9 +59,7 @@ int fs_open(const char *pathname, int flags, int mode){
       return i;
     }
   }
-  #ifdef FS_DEBUG
-    Log("File %s not found", pathname);
-  #endif
+  Log("File %s not found", pathname);
   return 0;
 }
 
