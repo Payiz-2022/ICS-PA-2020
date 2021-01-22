@@ -55,6 +55,7 @@ void context_kload(PCB *pcb, const void* entry, void* arg) {
 }
 
 void context_uload(PCB *pcb, const char *filename, char *const argv[], char *const envp[]) {
+  printf("Loading user process [%s] at pcb 0x%08x\n", filename, pcb);
   uintptr_t entry = loader(pcb, filename);
 
   Area stack;
