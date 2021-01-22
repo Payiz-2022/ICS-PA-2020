@@ -55,7 +55,7 @@ void context_kload(PCB *pcb, const void* entry, void* arg) {
 }
 
 void context_uload(PCB *pcb, const char *filename, char *const argv[], char *const envp[]) {
-  printf("Loading user process [%s] at pcb 0x%08x\n", filename, pcb);
+  // Log("Loading user process [%s] at pcb 0x%08x\n", filename, pcb);
   uintptr_t entry = loader(pcb, filename);
 
   Area stack;
@@ -74,14 +74,12 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   }
   argv_start -= 8;
   argv_start -= argc * sizeof(char*);
-  printf("calc argv start: 0x%08x\n", argv_start);
 
   p = argv;
   while (p && *p) {
     mem_top -= strlen(*p) + 1;
     strcpy(mem_top, *p);
     *(uintptr_t*)argv_start = (uintptr_t)mem_top;
-    printf("+args: %c %d %d\n", *(char*)(mem_top + 13), *(char*)(mem_top + 14), *(*p + 14));
     argv_start += sizeof(uintptr_t);
     p++;
   }
@@ -90,8 +88,6 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   mem_top -= 4;
   *(uintptr_t*)mem_top = 0;
   mem_top -= argc * sizeof(char*);
-  printf("ref memtop: 0x%08x\n", mem_top);
-  // memcpy(mem_top, argv, sizeof(argc * sizeof(char*)));
   mem_top -= 4;
   *(intptr_t*)mem_top = argc;
 

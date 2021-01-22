@@ -43,7 +43,6 @@ PCB* get_free_pcb() {
 }
 
 Context* schedule(Context *prev) {
-  printf("schedule PCB %d eip = 0x%08x\n", pcb_id, pcb[pcb_id].cp->eip);
   current->cp = prev;
   current = &pcb[pcb_id];
   return current->cp;
