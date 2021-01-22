@@ -25,8 +25,8 @@ void init_proc() {
   // naive_uload(NULL, "/bin/menu");
 
   // context_kload(&pcb[0], hello_fun, (void*)0xeeeee);
-  // char* args[] = {"--skip", NULL};
-  context_uload(&pcb[0], "/bin/exec-test", NULL, NULL);
+  char* args[] = {"/bin/exec-test", NULL};
+  context_uload(&pcb[0], "/bin/exec-test", args, NULL);
   switch_boot_pcb();
 }
 
