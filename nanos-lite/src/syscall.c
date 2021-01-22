@@ -65,7 +65,8 @@ void do_syscall(Context *c) {
       ; int i = 0;
       for (i = 0; i < MAX_NR_PROC; i++) {
         if (pcb[i].cp == NULL) {
-          context_uload(&pcb[i], (char*)a[1], (char**)a[2], (char**)a[3]);
+          context_uload(&pcb[i], (char*)a[1], NULL, NULL);
+          // context_uload(&pcb[i], (char*)a[1], (char**)a[2], (char**)a[3]);
           break;
         }
       }
