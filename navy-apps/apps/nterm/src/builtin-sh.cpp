@@ -53,11 +53,12 @@ static void sh_handle_cmd(const char *cmd) {
     printf("Program name: %s\n", env_val);
     char* argv_list[30] = {0};
     char argv[30][80];
-    int offset = strlen(env_val) + 1, i = 0;
+    int offset = strlen(env_val), i = 0;
     argv_list[0] = env_val;
-    while (sscanf(cmd + offset, "%s", argv[++i])) {
-      printf("Current offset: %d\n", offset);
-      offset += strlen(argv[i]) + 1;
+    while (*(cmd + offset)) {
+      while (*(cmd + offset++) == ' ') ;
+      sscanf(cmd + offset, "%s", argv[i]);
+      offset += strlen(argv[i]);
       argv_list[i] = argv[i];
     }
     printf("Detected args: %d\n", i);
