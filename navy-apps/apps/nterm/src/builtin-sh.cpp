@@ -58,6 +58,7 @@ static void sh_handle_cmd(const char *cmd) {
       offset += strlen(argv[i]) + 1;
       argv_list[i] = argv[i];
     }
+    printf("Detected args: %d\n", i);
     execvp(env_val, argv_list);
   }
 }
