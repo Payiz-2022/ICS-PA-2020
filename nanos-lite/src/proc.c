@@ -52,6 +52,9 @@ PCB* get_last_pcb() {
 
 Context* schedule(Context *prev) {
   current->cp = prev;
+  #ifdef DEBUG
+    printf("Saved current context pointer to 0x%08x\n", prev);
+  #endif
   current = (current == &pcb[0] ? &pcb[pcb_id] : &pcb[0]);
   return current->cp;
 }
