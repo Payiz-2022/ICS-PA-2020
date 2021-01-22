@@ -68,19 +68,25 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   void* mem_top = heap.end;
   char*const* p = argv;
   while (p && *p) {
+    argc++; p++;
+  }
+  void* cpy_argv = malloc(argc * sizeof(char*));
+  p = argv;
+  while (p && *p) {
     mem_top -= strlen(*p) + 1;
     strcpy(mem_top, *p);
-    printf("arg: %s\n", *p);
-    argc++; p++;
+    *((void**)cpy_argv + (p - argv)) = mem_top;
+    p++;
   }
   mem_top -= 4;
   *(uintptr_t*)mem_top = 0;
   mem_top -= 4;
   *(uintptr_t*)mem_top = 0;
   mem_top -= argc * sizeof(char*);
-  memcpy(mem_top, argv, sizeof(argc * sizeof(char*)));
+  memcpy(mem_top, cpy_argv, sizeof(argc * sizeof(char*)));
   mem_top -= 4;
   *(intptr_t*)mem_top = argc;
 
   pcb->cp->GPRx = (uintptr_t)mem_top;
+  free(cpy_argv);
 }
