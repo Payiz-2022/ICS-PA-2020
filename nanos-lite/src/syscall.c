@@ -17,7 +17,7 @@ void do_syscall(Context *c) {
 
   switch (a[0]) {
     case SYS_exit:
-      get_last_pcb();
+      get_current_pcb();
       yield();
       // halt(0);
       break;
@@ -63,7 +63,7 @@ void do_syscall(Context *c) {
       break;
 
     case SYS_execve:
-      context_uload(get_free_pcb(), (char*)a[1], (char**)a[2], (char**)a[3]);
+      context_uload(get_current_pcb(), (char*)a[1], (char**)a[2], (char**)a[3]);
       if (get_current_pcb()->cp == NULL) {
         get_last_pcb();
         set_return(-2);
