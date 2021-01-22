@@ -31,8 +31,9 @@ void init_proc() {
   switch_boot_pcb();
 }
 
-int pcb_id = 1;
+int pcb_id = 0;
 PCB* get_free_pcb() {
+  pcb_id = (pcb_id + 1) % MAX_NR_PROC;
   return &pcb[pcb_id];
   for (int i = 0; i < MAX_NR_PROC; i++)
     if (pcb[i].cp == NULL)
@@ -45,6 +46,5 @@ Context* schedule(Context *prev) {
   printf("schedule PCB %d\n", pcb_id);
   current->cp = prev;
   current = &pcb[pcb_id];
-  pcb_id = (pcb_id + 1) % MAX_NR_PROC;
   return current->cp;
 }
