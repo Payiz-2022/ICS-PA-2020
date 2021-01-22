@@ -11,7 +11,7 @@ void switch_boot_pcb() {
 void hello_fun(void *arg) {
   int j = 1;
   while (1) {
-    // Log("Hello World from Nanos-lite with arg '%p' for the %dth time!", (uintptr_t)arg, j);
+    Log("Hello World from Nanos-lite with arg '%p' for the %dth time!", (uintptr_t)arg, j);
     j ++;
     yield();
   }
@@ -46,7 +46,9 @@ PCB* get_current_pcb() {
 PCB* get_last_pcb() {
   pcb_id--;
   if (pcb_id < 0) pcb_id = 0;
-  printf("Goto PCB: %d (0x%08x) cp: 0x%08x\n", pcb_id, &pcb[pcb_id], pcb[pcb_id].cp);
+  #ifdef DEBUG
+    printf("Goto PCB: %d (0x%08x) cp: 0x%08x\n", pcb_id, &pcb[pcb_id], pcb[pcb_id].cp);
+  #endif
   return &pcb[pcb_id];
 }
 

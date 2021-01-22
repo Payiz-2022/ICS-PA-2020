@@ -6,9 +6,9 @@ void* new_page(size_t nr_page) {
   void *p = pf;
   pf += PGSIZE * nr_page;
   assert(pf < (void*)heap.end);
-  // #ifdef DEBUG
+  #ifdef DEBUG
     Log("New page allocated at 0x%08x", p);
-  // #endif
+  #endif
   return p;
 }
 
