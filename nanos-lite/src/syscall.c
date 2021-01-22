@@ -62,7 +62,14 @@ void do_syscall(Context *c) {
       break;
 
     case SYS_execve:
-      naive_uload(NULL, (char*)a[1]);
+      for (int i = 0; i < MAX_NR_PROC; i++) {
+        if (pcb[i].cp == NULL) {
+          context_uload(&pcb[i], (char*)a[1], (char**)a[2], (char**)a[3]);
+          break;
+        }
+      }
+      
+      // naive_uload(NULL, (char*)a[1], a[2], a[3]);
       break;
 
     default: panic("Unhandled syscall ID = %d", a[0]);
