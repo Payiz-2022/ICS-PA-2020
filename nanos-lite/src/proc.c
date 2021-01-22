@@ -17,15 +17,6 @@ void hello_fun(void *arg) {
   }
 }
 
-PCB* get_free_pcb() {
-  return current;
-  for (int i = 0; i < MAX_NR_PROC; i++)
-    if (pcb[i].cp == NULL)
-      return &pcb[i];
-  panic("No free PCB available");
-  return NULL;
-}
-
 void init_proc() {
   // switch_boot_pcb();
 
@@ -40,9 +31,20 @@ void init_proc() {
   switch_boot_pcb();
 }
 
+int pcb_id = 1;
+PCB* get_free_pcb() {
+  return &pcb[pcb_id];
+  for (int i = 0; i < MAX_NR_PROC; i++)
+    if (pcb[i].cp == NULL)
+      return &pcb[i];
+  panic("No free PCB available");
+  return NULL;
+}
+
 Context* schedule(Context *prev) {
   printf("schedule\n");
   current->cp = prev;
-  current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
+  current = &pcb[pcb_id];
+  pcb_id = (pcb_id + 1) % MAX_NR_PROC;
   return current->cp;
 }
