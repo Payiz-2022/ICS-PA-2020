@@ -50,21 +50,20 @@ static void sh_handle_cmd(const char *cmd) {
     setenv(env_name, env_val, true);
   } else {
     sscanf(cmd, "%s", env_val);
-    printf("Command: %s\n", cmd);
-    printf("Program name: %s\n", env_val);
     char* argv_list[30] = {0};
     char argv[30][80];
     int offset = strlen(env_val), i = 0;
     argv_list[0] = env_val;
     printf("offset: %d\n", offset);
-    while (*(cmd + offset)) {
+    while (*(cmd + offset) && *(cmd + offset) != '\n') {
       while (*(cmd + offset++) == ' ') ;
       printf("offset: %d\n", offset);
-      sscanf(cmd + offset, "%s", argv[i]);
+      sscanf(cmd + offset, "%s", argv[++i]);
       offset += strlen(argv[i]);
       argv_list[i] = argv[i];
+      while (*(cmd + offset++) == ' ') ;
     }
-    printf("Detected args: %d\n", i);
+    printf("Loading program %s with %d arg(s)\n", env_val, i);
     execvp(env_val, argv_list);
   }
 }
