@@ -34,7 +34,7 @@ void init_proc() {
 int pcb_id = 1;
 PCB* get_free_pcb() {
   pcb_id++;
-  printf("Goto PCB: %d\n", pcb_id);
+  printf("Goto PCB: %d (0x%08x) cp: 0x%08x\n", pcb_id, &pcb[pcb_id], pcb[pcb_id].cp);
   if (pcb_id == MAX_NR_PROC) panic("No free PCB available");
   return &pcb[pcb_id];
 }
@@ -46,7 +46,7 @@ PCB* get_current_pcb() {
 PCB* get_last_pcb() {
   pcb_id--;
   if (pcb_id < 0) pcb_id = 0;
-  printf("Goto PCB: %d\n", pcb_id);
+  printf("Goto PCB: %d (0x%08x) cp: 0x%08x\n", pcb_id, &pcb[pcb_id], pcb[pcb_id].cp);
   return &pcb[pcb_id];
 }
 
