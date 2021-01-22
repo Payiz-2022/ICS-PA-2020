@@ -39,6 +39,10 @@ PCB* get_free_pcb() {
   return &pcb[pcb_id];
 }
 
+PCB* get_current_pcb() {
+  return &pcb[pcb_id];
+}
+
 PCB* get_last_pcb() {
   pcb_id--;
   if (pcb_id < 0) pcb_id = 0;

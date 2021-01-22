@@ -64,7 +64,12 @@ void do_syscall(Context *c) {
 
     case SYS_execve:
       context_uload(get_free_pcb(), (char*)a[1], (char**)a[2], (char**)a[3]);
-      yield();
+      if (get_current_pcb()->cp == NULL) {
+        set_return(-2);
+      } else {
+        yield();
+      }
+      set_return(0);
       // naive_uload(NULL, (char*)a[1], a[2], a[3]);
       break;
 
