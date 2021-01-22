@@ -67,7 +67,6 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   void* mem_top = heap.end;
   char*const* p = argv;
   while (p && *p) {
-    printf("strlen of %s: %lu\n", *p, strlen(*p));
     mem_top -= strlen(*p) + 1;
     strcpy(mem_top, *p);
     argc++; p++;
@@ -82,4 +81,5 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   *(intptr_t*)mem_top = argc;
 
   pcb->cp->GPRx = (uintptr_t)mem_top;
+  printf("uload complete\n");
 }
