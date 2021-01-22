@@ -25,13 +25,13 @@ void init_proc() {
   // naive_uload(NULL, "/bin/menu");
 
   context_kload(&pcb[0], hello_fun, (void*)0xeeeee);
-  char* args[] = {"--skip", NULL};
-  context_uload(&pcb[3], "/bin/pal", args, NULL);
+  // char* args[] = {"--skip", NULL};
+  context_uload(&pcb[1], "/bin/exec-test", NULL, NULL);
   switch_boot_pcb();
 }
 
 Context* schedule(Context *prev) {
   current->cp = prev;
-  current = (current == &pcb[0] ? &pcb[3] : &pcb[0]);
+  current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
   return current->cp;
 }
