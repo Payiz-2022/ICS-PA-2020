@@ -66,7 +66,7 @@ void do_syscall(Context *c) {
       printf("execve\n");
       for (i = 0; i < MAX_NR_PROC; i++) {
         if (pcb[i].cp == NULL) {
-          printf("Using PCB #%d\n", i);
+          printf("Using PCB #%d: 0x%08x\n", i, &pcb[i]);
           context_uload(&pcb[i], (char*)a[1], (char**)a[2], (char**)a[3]);
           break;
         }
