@@ -63,6 +63,8 @@ void do_syscall(Context *c) {
 
     case SYS_execve:
       ; int i = 0;
+      for (int i = 0; i < 4; i++)
+        printf("#%d: 0x%08x ", i, &pcb[i]);
       printf("execve\n");
       for (i = 0; i < MAX_NR_PROC; i++) {
         if (pcb[i].cp == NULL) {
