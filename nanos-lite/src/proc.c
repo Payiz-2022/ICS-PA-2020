@@ -33,6 +33,8 @@ void init_proc() {
 }
 
 Context* schedule(Context *prev) {
+  for (int i = 0; i < 4; i++)
+    printf("#%d: 0x%08x ", i, &pcb[i]);
   printf("schedule\n");
   current->cp = prev;
   current = &pcb[0];
