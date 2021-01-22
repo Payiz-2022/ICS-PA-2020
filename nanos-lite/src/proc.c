@@ -48,6 +48,6 @@ PCB* get_last_pcb() {
 
 Context* schedule(Context *prev) {
   current->cp = prev;
-  current = &pcb[pcb_id];
+  current = (current == &pcb[0] ? &pcb[pcb_id] : &pcb[0]);
   return current->cp;
 }
