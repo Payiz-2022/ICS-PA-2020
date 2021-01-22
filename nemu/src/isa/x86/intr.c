@@ -19,11 +19,9 @@ void raise_intr(DecodeExecState *s, uint32_t NO, vaddr_t ret_addr) {
   rtl_push(s, s0);
 
   rtl_j(s, intr_addr);
-  printf("saved eax: 0x%08x\n", cpu.eax);
 }
 
 void query_intr(DecodeExecState *s) {
-  printf("retrieved eax: 0x%08x\n", cpu.eax);
   rtl_pop(s, s0);
   rtl_jr(s, s0);
 
