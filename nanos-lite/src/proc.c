@@ -42,7 +42,7 @@ PCB* get_free_pcb() {
 }
 
 Context* schedule(Context *prev) {
-  printf("schedule\n");
+  printf("schedule PCB %d\n", pcb_id);
   current->cp = prev;
   current = &pcb[pcb_id];
   pcb_id = (pcb_id + 1) % MAX_NR_PROC;
