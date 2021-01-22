@@ -18,7 +18,7 @@ void hello_fun(void *arg) {
 }
 
 PCB* get_free_pcb() {
-  return current == &pcb[0] ? &pcb[1] : &pcb[0];
+  return current;
   for (int i = 0; i < MAX_NR_PROC; i++)
     if (pcb[i].cp == NULL)
       return &pcb[i];
