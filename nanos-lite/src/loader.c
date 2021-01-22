@@ -81,7 +81,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
     mem_top -= strlen(*p) + 1;
     strcpy(mem_top, *p);
     *(uintptr_t*)argv_start = (uintptr_t)mem_top;
-    printf("+args: %s\n", (char*)mem_top);
+    printf("+args: %c\n", *(char*)mem_top);
     argv_start += sizeof(uintptr_t);
     p++;
   }
