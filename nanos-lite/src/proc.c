@@ -18,6 +18,7 @@ void hello_fun(void *arg) {
 }
 
 PCB* get_free_pcb() {
+  return current == &pcb[0] ? &pcb[1] : &pcb[0];
   for (int i = 0; i < MAX_NR_PROC; i++)
     if (pcb[i].cp == NULL)
       return &pcb[i];
@@ -42,6 +43,6 @@ void init_proc() {
 Context* schedule(Context *prev) {
   printf("schedule\n");
   current->cp = prev;
-  current = &pcb[0];
+  current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
   return current->cp;
 }
