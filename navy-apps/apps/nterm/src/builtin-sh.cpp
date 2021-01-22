@@ -50,6 +50,7 @@ static void sh_handle_cmd(const char *cmd) {
     setenv(env_name, env_val, true);
   } else {
     sscanf(cmd, "%s", env_val);
+    printf("Command: %s\n", cmd);
     printf("Program name: %s\n", env_val);
     char* argv_list[30] = {0};
     char argv[30][80];
