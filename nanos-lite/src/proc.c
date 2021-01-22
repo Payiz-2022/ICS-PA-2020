@@ -42,6 +42,11 @@ PCB* get_free_pcb() {
   return NULL;
 }
 
+PCB* get_last_pcb() {
+  pcb_id = (pcb_id - 1) % MAX_NR_PROC;
+  return &pcb[pcb_id];
+}
+
 Context* schedule(Context *prev) {
   current->cp = prev;
   current = &pcb[pcb_id];
