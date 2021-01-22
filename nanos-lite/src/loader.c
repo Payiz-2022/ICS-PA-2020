@@ -67,8 +67,8 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   pcb->cp = ucontext(NULL, stack, (void*)entry);
 
   int argc = 0;
-  void* mem_top = heap.end;
-  void* argv_start = heap.end;
+  void* mem_top = new_page(8);
+  void* argv_start = mem_top;
   char*const* p = argv;
   while (p && *p) {
     argv_start -= strlen(*p) + 1;
