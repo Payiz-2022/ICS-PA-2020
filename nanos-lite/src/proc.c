@@ -25,25 +25,22 @@ void init_proc() {
   // load program here
   // naive_uload(NULL, "/bin/menu");
 
-  // context_kload(&pcb[0], hello_fun, (void*)0xeeeee);
+  context_kload(&pcb[0], hello_fun, (void*)0xeeeee);
   char* args[] = {"/bin/nterm", NULL};
-  context_uload(&pcb[0], "/bin/nterm", args, NULL);
+  context_uload(&pcb[1], "/bin/nterm", args, NULL);
   switch_boot_pcb();
 }
 
-int pcb_id = 0;
+int pcb_id = 2;
 PCB* get_free_pcb() {
-  pcb_id = (pcb_id + 1) % MAX_NR_PROC;
+  pcb_id++;
+  if (pcb_id == MAX_NR_PROC) panic("No free PCB available");
   return &pcb[pcb_id];
-  for (int i = 0; i < MAX_NR_PROC; i++)
-    if (pcb[i].cp == NULL)
-      return &pcb[i];
-  panic("No free PCB available");
-  return NULL;
 }
 
 PCB* get_last_pcb() {
-  pcb_id = (pcb_id - 1) % MAX_NR_PROC;
+  pcb_id--;
+  if (pcb_id < 0) pcb_id = 0;
   return &pcb[pcb_id];
 }
 
