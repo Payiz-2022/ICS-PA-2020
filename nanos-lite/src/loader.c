@@ -66,17 +66,22 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 
   int argc = 0;
   void* mem_top = heap.end;
+  void* argv_start = heap.end;
   char*const* p = argv;
   while (p && *p) {
+    argv_start -= strlen(*p) + 1;
     argc++; p++;
   }
-  void* cpy_argv = malloc(argc * sizeof(char*));
+  argv_start -= 8;
+  argv_start -= argc * sizeof(char*);
+  printf("calc argv start: 0x%08x\n", argv_start);
+
   p = argv;
   while (p && *p) {
     mem_top -= strlen(*p) + 1;
     strcpy(mem_top, *p);
-    *((void**)cpy_argv + (p - argv)) = mem_top;
-    printf("arg: 0x%08x %s\n", ((void**)cpy_argv)[p - argv], *((char**)cpy_argv)[p - argv]);
+    *(uintptr_t*)argv_start = (uintptr_t)mem_top;
+    argv_start += sizeof(uintptr_t);
     p++;
   }
   mem_top -= 4;
@@ -84,10 +89,10 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   mem_top -= 4;
   *(uintptr_t*)mem_top = 0;
   mem_top -= argc * sizeof(char*);
-  memcpy(mem_top, cpy_argv, sizeof(argc * sizeof(char*)));
+  printf("ref memtop: 0x%08x\n", mem_top);
+  // memcpy(mem_top, argv, sizeof(argc * sizeof(char*)));
   mem_top -= 4;
   *(intptr_t*)mem_top = argc;
 
   pcb->cp->GPRx = (uintptr_t)mem_top;
-  free(cpy_argv);
 }
