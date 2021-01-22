@@ -70,6 +70,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   while (p && *p) {
     mem_top -= strlen(*p) + 1;
     strcpy(mem_top, *p);
+    printf("arg: %s ", *p);
     argc++; p++;
   }
   mem_top -= 4;
