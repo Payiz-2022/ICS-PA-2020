@@ -1,12 +1,12 @@
 #ifndef __COMMON_H__
 #define __COMMON_H__
 
-#define DEBUG
+// #define DEBUG
 // #define FS_DEBUG
 
 /* Uncomment these macros to enable corresponding functionality. */
 #define HAS_CTE
-#define HAS_VME
+// #define HAS_VME
 //#define MULTIPROGRAM
 //#define TIME_SHARING
 

@@ -75,6 +75,5 @@ Context* ucontext(AddrSpace *as, Area kstack, void *entry) {
   Context *c = (Context*)kstack.end - 1;
   c->eip = (uintptr_t)entry;
   c->cr3 = as->ptr;
-  printf("as->ptr: 0x%08x\n", as->ptr);
   return c;
 }
