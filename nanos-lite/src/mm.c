@@ -26,6 +26,7 @@ void free_page(void *p) {
 
 /* The brk() system call handler. */
 int mm_brk(uintptr_t brk) {
+#ifdef HAS_VME
   PCB* pcb = get_current_pcb();
   #ifdef DEBUG
     Log("[MM] Memory brk increased from 0x%08x to 0x%08x\n", pcb->max_brk, brk);
@@ -37,6 +38,7 @@ int mm_brk(uintptr_t brk) {
     pcb->max_brk = brk;
   }
   pcb->max_brk = brk;
+#endif
   return 0;
 }
 
