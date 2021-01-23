@@ -21,6 +21,7 @@ bool vme_init(void* (*pgalloc_f)(int), void (*pgfree_f)(void*)) {
 
   int i;
   for (i = 0; i < LENGTH(segments); i ++) {
+    printf("Mapping segment #%d: (0x%08x, 0x%08x)\n", i, segments[i].start, segments[i].end);
     void *va = segments[i].start;
     for (; va < segments[i].end; va += PGSIZE) {
       map(&kas, va, va, 0);
@@ -57,7 +58,6 @@ void __am_switch(Context *c) {
 }
 
 void map(AddrSpace *as, void *va, void *pa, int prot) {
-  printf("map va 0x%08x to pa 0x%08x\n", va, pa);
   uint32_t dir = (((uint32_t)(va) >> 22) & 0x3ff);
   uint32_t page = (((uint32_t)(va) >> 12) & 0x3ff);
 
