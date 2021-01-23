@@ -11,7 +11,7 @@ void switch_boot_pcb() {
 void hello_fun(void *arg) {
   int j = 1;
   while (1) {
-    Log("Hello World from Nanos-lite with arg '%p' for the %dth time!", (uintptr_t)arg, j);
+    // Log("Hello World from Nanos-lite with arg '%p' for the %dth time!", (uintptr_t)arg, j);
     j ++;
     yield();
   }
@@ -34,7 +34,9 @@ void init_proc() {
 int pcb_id = 1;
 PCB* get_free_pcb() {
   pcb_id++;
-  printf("Goto PCB: %d (0x%08x) cp: 0x%08x\n", pcb_id, &pcb[pcb_id], pcb[pcb_id].cp);
+  #ifdef DEBUG
+    printf("Goto PCB: %d (0x%08x) cp: 0x%08x\n", pcb_id, &pcb[pcb_id], pcb[pcb_id].cp);
+  #endif
   if (pcb_id == MAX_NR_PROC) panic("No free PCB available");
   return &pcb[pcb_id];
 }
