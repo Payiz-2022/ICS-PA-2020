@@ -7,6 +7,9 @@ paddr_t isa_mmu_translate(vaddr_t vaddr, int type, int len) {
   assert(pg_table & 0x1);
   paddr_t pg_base = paddr_read((pg_table & ADDRMASK) + ((vaddr >> 12) & 0x3ff) * sizeof(paddr_t), sizeof(paddr_t));
   assert(pg_base & 0x1);
+  if ((pg_base & 0x1) == 0) {
+    printf("pbase: 0x%08x, vaddr: 0x%08x, type: %d, len: %d\n", pg_base, vaddr, type, len);
+  }
   pg_base = pg_base & ADDRMASK;
   // if (vaddr >= 0x40000000)
   //   printf("Translating 0x%08x to 0x%08x\n", vaddr, pg_base);
