@@ -63,7 +63,6 @@ word_t vaddr_mmu_read(vaddr_t addr, int len, int type) {
   paddr_t pg_base = isa_mmu_translate(addr, type, len);
   if ((pg_base & FLAGMASK) == MEM_RET_OK) {
     paddr_t paddr = (pg_base & ADDRMASK) | (addr & FLAGMASK);
-    if (addr == 0x02e9b000) printf("res: 0x%08x\n", paddr_read(paddr, len));
     return paddr_read(paddr, len);
   } else {
     printf("Handling cross-page read\n");
