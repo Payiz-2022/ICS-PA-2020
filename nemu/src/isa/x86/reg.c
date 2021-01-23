@@ -53,6 +53,8 @@ void isa_reg_display() {
     printf("%10s: 0x%02x        %-u\n", regsb[i], reg_b(i), reg_b(i));
   }
   printf("       eip: 0x%08x\n", cpu.eip);
+  printf("       cr0: 0x%08x\n", cpu.cr0);
+  printf("       cr3: 0x%08x\n", cpu.cr3);
 }
 
 word_t isa_reg_str2val(const char *s, bool *success) {
