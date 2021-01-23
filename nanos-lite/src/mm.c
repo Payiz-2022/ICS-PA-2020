@@ -31,10 +31,13 @@ int mm_brk(uintptr_t brk) {
   #ifdef DEBUG
     Log("[MM] Memory brk increased from 0x%08x to 0x%08x\n", pcb->max_brk, brk);
   #endif
-  if (brk > pcb->max_brk) {
-    int pg_cnt = (brk - pcb->max_brk) / PGSIZE + 1;
-    void* pg_addr = new_page(pg_cnt);
-    map(&pcb->as, (void*)pcb->max_brk, pg_addr, 0);
+
+  if (pcb->max_brk < brk) {
+    uintptr_t begin = pcb->max_brk >> 12;
+    uintptr_t end = brk >> 12;
+    for (uintptr_t i = begin + 1; i <= end; i++) {
+      map(&pcb->as, (void*)(i << 12), pg_alloc(PGSIZE), 0);
+    }
     pcb->max_brk = brk;
   }
 #endif
