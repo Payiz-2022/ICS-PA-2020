@@ -75,7 +75,9 @@ void context_kload(PCB *pcb, const void* entry, void* arg) {
 
 void context_uload(PCB *pcb, const char *filename, char *const argv[], char *const envp[]) {
   // Log("Loading user process [%s] at pcb 0x%08x\n", filename, pcb);
+#ifdef HAS_VME
   protect(&pcb->as);
+#endif
   uintptr_t entry = loader(pcb, filename);
   if (entry == 0) {pcb->cp = NULL; return;}
 
@@ -83,10 +85,16 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   stack.start = (void*)pcb;
   stack.end = stack.start + sizeof(PCB);
 
+#ifdef HAS_VME
   pcb->cp = ucontext(&pcb->as, stack, (void*)entry);
+#else
+  pcb->cp = ucontext(NULL, stack, (void*)entry);
+#endif
 
   void* mem_top = new_page(8);
+#ifdef HAS_VME
   map(&pcb->as, pcb->as.area.end - 8 * PGSIZE, mem_top, 0);
+#endif
 
   int argc = 0;
   void* argv_start = mem_top;
