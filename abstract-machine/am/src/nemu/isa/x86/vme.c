@@ -27,7 +27,6 @@ bool vme_init(void* (*pgalloc_f)(int), void (*pgfree_f)(void*)) {
     }
   }
 
-  printf("kas.ptr: 0x%08x\n", kas.ptr);
   set_cr3(kas.ptr);
   set_cr0(get_cr0() | CR0_PG);
   vme_enable = 1;

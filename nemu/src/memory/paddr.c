@@ -60,11 +60,9 @@ inline void paddr_write(paddr_t addr, word_t data, int len) {
 }
 
 word_t vaddr_mmu_read(vaddr_t addr, int len, int type) {
-  printf("[MMU] Reading vaddr 0x%08x, ", addr);
   paddr_t pg_base = isa_mmu_translate(addr, type, len);
   if ((pg_base & MEM_RET_OK) == MEM_RET_OK) {
     paddr_t paddr = pg_base | (addr & 0xfff);
-    printf("converted to paddr 0x%08x\n", paddr);
     return paddr_read(paddr, len);
   }
   assert(false);
@@ -72,11 +70,9 @@ word_t vaddr_mmu_read(vaddr_t addr, int len, int type) {
 }
 
 void vaddr_mmu_write(vaddr_t addr, word_t data, int len) {
-  printf("[MMU] Writing vaddr 0x%08x, ", addr);
   paddr_t pg_base = isa_mmu_translate(addr, MEM_TYPE_WRITE, len);
   if ((pg_base & MEM_RET_OK) == MEM_RET_OK) {
     paddr_t paddr = pg_base | (addr & 0xfff);
-    printf("converted to paddr 0x%08x\n", paddr);
     return paddr_write(paddr, data, len);
   }
   assert(false);
