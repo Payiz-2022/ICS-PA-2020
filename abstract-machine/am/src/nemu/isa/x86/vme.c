@@ -57,6 +57,17 @@ void __am_switch(Context *c) {
 }
 
 void map(AddrSpace *as, void *va, void *pa, int prot) {
+  uint32_t dir = (((uint32_t)(va) >> 22) & 0x3ff);
+  uint32_t page = (((uint32_t)(va) >> 12) & 0x3ff);
+
+  if ((((PTE*)as->ptr)[dir] & PTE_P) == 0) {
+    ((PTE*)as->ptr)[dir] = (PTE)pgalloc_usr(PGSIZE) | PTE_P;
+  }
+
+  PTE* pg_table = (PTE*)(((PTE*)as->ptr)[dir] & 0xfffff000);
+  if ((pg_table[page] & PTE_P) == 0) {
+    pg_table[page] = (uint32_t)pa | PTE_P;
+  }
 }
 
 Context* ucontext(AddrSpace *as, Area kstack, void *entry) {

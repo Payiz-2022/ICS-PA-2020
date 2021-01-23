@@ -7,13 +7,15 @@ void* new_page(size_t nr_page) {
   pf += PGSIZE * nr_page;
   assert(pf < (void*)heap.end);
   #ifdef DEBUG
-    Log("New page allocated at 0x%08x", p);
+    Log("[MM] New page allocated at 0x%08x", p);
   #endif
   return p;
 }
 
 static inline void* pg_alloc(int n) {
-  return NULL;
+  void* ret = new_page(n / PGSIZE);
+  memset(ret, 0, n);
+  return ret;
 }
 
 void free_page(void *p) {

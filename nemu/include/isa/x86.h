@@ -73,6 +73,8 @@ typedef struct {
     uint16_t limit;
     vaddr_t base;
   } idtr;
+
+  uintptr_t cr0, cr1, cr2, cr3;
 } x86_CPU_state;
 
 // decode
@@ -85,7 +87,7 @@ typedef struct {
 } x86_ISADecodeInfo;
 
 #define suffix_char(width) ((width) == 4 ? 'l' : ((width) == 1 ? 'b' : ((width) == 2 ? 'w' : '?')))
-#define isa_vaddr_check(vaddr, type, len) (MEM_RET_OK)
+#define isa_vaddr_check(vaddr, type, len) (MEM_RET_NEED_TRANSLATE)
 #define x86_has_mem_exception() (false)
 
 #endif
