@@ -57,7 +57,7 @@ void __am_switch(Context *c) {
 }
 
 void map(AddrSpace *as, void *va, void *pa, int prot) {
-  printf("Mapping vaddr 0x%08x to 0x%08x\n", va, pa);
+  // printf("Mapping vaddr 0x%08x to 0x%08x\n", va, pa);
   uint32_t dir = (((uint32_t)(va) >> 22) & 0x3ff);
   uint32_t page = (((uint32_t)(va) >> 12) & 0x3ff);
 
