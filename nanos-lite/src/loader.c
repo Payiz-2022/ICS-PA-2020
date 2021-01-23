@@ -80,7 +80,6 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   protect(&pcb->as);
 #endif
   uintptr_t entry = loader(pcb, filename);
-  printf("max-brk: 0x%08x\n", pcb->max_brk);
   if (entry == 0) {pcb->cp = NULL; return;}
 
   Area stack;

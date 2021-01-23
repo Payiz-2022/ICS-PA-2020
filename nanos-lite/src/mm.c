@@ -37,7 +37,6 @@ int mm_brk(uintptr_t brk) {
     map(&pcb->as, (void*)pcb->max_brk, pg_addr, 0);
     pcb->max_brk = brk;
   }
-  pcb->max_brk = brk;
 #endif
   return 0;
 }
