@@ -32,6 +32,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 
   for (int i = 0; i < buf_Eheader.e_phnum; i++) {
     fs_lseek(fd, buf_Pheader[i].p_offset, SEEK_SET);
+    
     #ifndef HAS_VME
       fs_read(fd, (void*)buf_Pheader[i].p_vaddr, buf_Pheader[i].p_filesz);
       memset((void*)(buf_Pheader[i].p_vaddr + buf_Pheader[i].p_filesz), 0, buf_Pheader[i].p_memsz - buf_Pheader[i].p_filesz);
@@ -42,7 +43,9 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
         if (load_size < 0) load_size = 0;
 
         void* paddr = pg_alloc(PGSIZE);
-        printf("Loaded new page 0x%08x (0x%08x Bytes loaded)\n", paddr, loaded_mem);
+        #ifdef DEBUG
+          printf("[Loader] Loading new page 0x%08x (0x%08x bytes loaded)\n", paddr, loaded_mem);
+        #endif
         fs_read(fd, paddr, load_size);
         map(&pcb->as, (void*)buf_Pheader[i].p_vaddr + loaded_mem, paddr, 0);
 

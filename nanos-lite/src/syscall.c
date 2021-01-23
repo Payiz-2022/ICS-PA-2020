@@ -1,4 +1,5 @@
 #include <common.h>
+#include <memory.h>
 #include <fs.h>
 #include "syscall.h"
 #include "proc.h"
@@ -49,7 +50,7 @@ void do_syscall(Context *c) {
       break;
 
     case SYS_brk:
-      set_return(0);
+      set_return(mm_brk(a[1]));
       break;
 
     case SYS_gettimeofday:

@@ -1,4 +1,5 @@
 #include <memory.h>
+#include <proc.h>
 
 static void *pf = NULL;
 
@@ -25,6 +26,14 @@ void free_page(void *p) {
 
 /* The brk() system call handler. */
 int mm_brk(uintptr_t brk) {
+  PCB* cpcb = get_current_pcb();
+  if (brk > cpcb->max_brk) {
+    int pg_cnt = (brk - cpcb->max_brk) / PGSIZE + 1;
+    void* pg_addr = new_page(pg_cnt);
+    map(&cpcb->as, (void*)cpcb->max_brk, pg_addr, 0);
+    cpcb->max_brk = brk;
+  }
+  cpcb->max_brk = brk;
   return 0;
 }
 
