@@ -33,27 +33,27 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   for (int i = 0; i < buf_Eheader.e_phnum; i++) {
     fs_lseek(fd, buf_Pheader[i].p_offset, SEEK_SET);
     
-  #ifndef HAS_VME
-    fs_read(fd, (void*)buf_Pheader[i].p_vaddr, buf_Pheader[i].p_filesz);
-    memset((void*)(buf_Pheader[i].p_vaddr + buf_Pheader[i].p_filesz), 0, buf_Pheader[i].p_memsz - buf_Pheader[i].p_filesz);
-  #else
-    uint32_t loaded_mem = 0;
-    while (loaded_mem < buf_Pheader[i].p_memsz) {
-      int32_t load_size = min(buf_Pheader[i].p_filesz - loaded_mem, PGSIZE);
-      if (load_size < 0) load_size = 0;
+    #ifndef HAS_VME
+      fs_read(fd, (void*)buf_Pheader[i].p_vaddr, buf_Pheader[i].p_filesz);
+      memset((void*)(buf_Pheader[i].p_vaddr + buf_Pheader[i].p_filesz), 0, buf_Pheader[i].p_memsz - buf_Pheader[i].p_filesz);
+    #else
+      uint32_t loaded_mem = 0;
+      while (loaded_mem < buf_Pheader[i].p_memsz) {
+        int32_t load_size = min(buf_Pheader[i].p_filesz - loaded_mem, PGSIZE);
+        if (load_size < 0) load_size = 0;
 
-      void* paddr = pg_alloc(PGSIZE);
-      #ifdef DEBUG
-        Log("[Loader] Loading new page 0x%08x (0x%08x bytes loaded)\n", paddr, loaded_mem);
-      #endif
-      fs_read(fd, paddr, load_size);
-      map(&pcb->as, (void*)buf_Pheader[i].p_vaddr + loaded_mem, paddr, 0);
+        void* paddr = pg_alloc(PGSIZE);
+        #ifdef DEBUG
+          Log("[Loader] Loading new page 0x%08x (0x%08x bytes loaded)\n", paddr, loaded_mem);
+        #endif
+        fs_read(fd, paddr, load_size);
+        map(&pcb->as, (void*)buf_Pheader[i].p_vaddr + loaded_mem, paddr, 0);
 
-      loaded_mem += PGSIZE;
-      pcb->max_brk = (uintptr_t)buf_Pheader[i].p_vaddr + loaded_mem;
+        loaded_mem += PGSIZE;
+        pcb->max_brk = (uintptr_t)buf_Pheader[i].p_vaddr + loaded_mem;
+      }
+    #endif
     }
-  #endif
-  }
   
   fs_lseek(fd, 0, SEEK_SET);
 
@@ -80,6 +80,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   protect(&pcb->as);
 #endif
   uintptr_t entry = loader(pcb, filename);
+  printf("max-brk: 0x%08x\n", pcb->max_brk);
   if (entry == 0) {pcb->cp = NULL; return;}
 
   Area stack;
