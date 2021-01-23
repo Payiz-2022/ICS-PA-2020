@@ -63,6 +63,7 @@ void map(AddrSpace *as, void *va, void *pa, int prot) {
 
   if ((((PTE*)as->ptr)[dir] & PTE_P) == 0) {
     ((PTE*)as->ptr)[dir] = (PTE)pgalloc_usr(PGSIZE) | PTE_P;
+    assert((((PTE*)as->ptr)[dir] & 0xfff) == PTE_P);
   }
 
   PTE* pg_table = (PTE*)(((PTE*)as->ptr)[dir] & 0xfffff000);
