@@ -64,12 +64,13 @@ word_t vaddr_mmu_read(vaddr_t addr, int len, int type) {
   if ((pg_base & FLAGMASK) == MEM_RET_OK) {
     paddr_t paddr = (pg_base & ADDRMASK) | (addr & FLAGMASK);
     return paddr_read(paddr, len);
-  // } else {
-  //   paddr_t paddr = (pg_base & ADDRMASK) | (addr & FLAGMASK);
-  //   return paddr_read(paddr, );
+  } else {
+    paddr_t paddr = (pg_base & ADDRMASK) | (addr & FLAGMASK);
+    // TODO: May cause memory overflow under edge conditions
+    int prev_len = ((addr & FLAGMASK) + FLAGMASK + 1 - addr);
+    uint32_t prev_mask = (1 << prev_len * 8) - 1, next_mask = (1 << (len - prev_len) * 8) - 1;
+    return ((paddr_read(paddr, len) & prev_mask) << (len - prev_len) * 8) | (vaddr_mmu_read(paddr, len, type) & next_mask);
   }
-  assert(false);
-  return 0;
 }
 
 void vaddr_mmu_write(vaddr_t addr, word_t data, int len) {
@@ -77,9 +78,10 @@ void vaddr_mmu_write(vaddr_t addr, word_t data, int len) {
   if ((pg_base & FLAGMASK) == MEM_RET_OK) {
     paddr_t paddr = (pg_base & ADDRMASK) | (addr & FLAGMASK);
     paddr_write(paddr, data, len);
-    return;
+  } else {
+    for (int i = 0; i < len; i++)
+      vaddr_mmu_write(addr + i, ((data >> 8 * i) & 0xff), 1);
   }
-  assert(false);
 }
 
 
