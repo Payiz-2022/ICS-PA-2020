@@ -19,6 +19,7 @@ static void restart() {
 
   cpu.cs = 8;
   cpu.eflags.val = 0x2;
+  cpu.cr0 = 0x60000011;
 }
 
 void init_isa() {
