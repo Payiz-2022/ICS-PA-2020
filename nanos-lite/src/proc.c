@@ -11,7 +11,7 @@ void switch_boot_pcb() {
 void hello_fun(void *arg) {
   int j = 1;
   while (1) {
-    // Log("Hello World from Nanos-lite with arg '%p' for the %dth time!", (uintptr_t)arg, j);
+    Log("Hello World from Nanos-lite with arg '%p' for the %dth time!", (uintptr_t)arg, j);
     j ++;
     yield();
   }
@@ -57,7 +57,7 @@ PCB* get_last_pcb() {
 Context* schedule(Context *prev) {
   current->cp = prev;
   #ifdef DEBUG
-    printf("Saved current context pointer to 0x%08x\n", prev);
+    Log("[Schedule] Saved current context pointer to 0x%08x\n", prev);
   #endif
   current = (current == &pcb[0] ? &pcb[0] : &pcb[0]);
   return current->cp;
