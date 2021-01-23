@@ -46,7 +46,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
       
       for (int j = buf_Pheader[i].p_vaddr >> 12; j <= (buf_Pheader[i].p_vaddr + buf_Pheader[i].p_memsz - 1) >> 12; j++) {
         uintptr_t next_mem_top = min(buf_Pheader[i].p_vaddr + buf_Pheader[i].p_memsz, (mem_top & ADDRMASK) + PGSIZE);
-        // pcb->max_brk = next_mem_top;
+        pcb->max_brk = max(pcb->max_brk, next_mem_top);
 
         void* paddr = pg_alloc(PGSIZE);
         map(&pcb->as, (void*)mem_top, paddr, 0);
