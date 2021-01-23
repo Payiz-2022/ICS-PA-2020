@@ -63,6 +63,7 @@ word_t vaddr_mmu_read(vaddr_t addr, int len, int type) {
   paddr_t pg_base = isa_mmu_translate(addr, type, len);
   if ((pg_base & MEM_RET_OK) == MEM_RET_OK) {
     paddr_t paddr = pg_base | (addr & 0xfff);
+    assert(paddr == addr);
     return paddr_read(paddr, len);
   }
   assert(false);
