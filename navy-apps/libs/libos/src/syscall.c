@@ -4,6 +4,7 @@
 #include <sys/time.h>
 #include <assert.h>
 #include <time.h>
+#include <stdio.h>
 #include "syscall.h"
 
 // helper macros
@@ -67,8 +68,8 @@ extern char end;
 intptr_t program_break = (intptr_t)&end;
 
 void *_sbrk(intptr_t increment) {
+  printf("cur: 0x%08x, inc: 0x%x\n", program_break, increment);
   intptr_t target_brk = program_break + increment;
-  assert(0);
   intptr_t syscall_res = _syscall_(SYS_brk, target_brk, 0, 0);
   if (syscall_res == 0) {
     void *ret = (void*)program_break;
