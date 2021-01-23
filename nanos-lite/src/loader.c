@@ -46,7 +46,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
         fs_read(fd, paddr, load_size);
         map(&pcb->as, (void*)buf_Pheader[i].p_vaddr + loaded_mem, paddr, 0);
 
-        loaded_mem += load_size;
+        loaded_mem += PGSIZE;
       }
     #endif
   }
