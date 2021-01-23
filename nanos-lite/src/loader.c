@@ -44,7 +44,8 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 
         void* paddr = pg_alloc(PGSIZE);
         map(&pcb->as, (void*)mem_top, paddr, 0);
-        fs_read(fd, paddr + (mem_top & FLAGMASK), next_mem_top - mem_top);
+        fs_read(fd, paddr + (mem_top & FLAGMASK), 
+            max(0, min(next_mem_top - mem_top, buf_Pheader[i].p_vaddr + buf_Pheader[i].p_filesz - mem_top)));
 
         #ifdef DEBUG
           Log("[Loader] Loading new page 0x%08x (from 0x%08x)", paddr, mem_top);
