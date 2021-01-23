@@ -75,6 +75,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   protect(&pcb->as);
   uintptr_t entry = loader(pcb, filename);
   if (entry == 0) {pcb->cp = NULL; return;}
+  printf("Program entry: 0x%08x\n", entry);
 
   Area stack;
   stack.start = (void*)pcb;
