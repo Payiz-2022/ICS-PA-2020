@@ -60,6 +60,5 @@ Context* schedule(Context *prev) {
     Log("[Schedule] Saved current context pointer to 0x%08x\n", prev);
   #endif
   current = (current == &pcb[0] ? &pcb[pcb_id] : &pcb[0]);
-  printf("Entry: 0x%08x\n", current->cp->eip);
   return current->cp;
 }
