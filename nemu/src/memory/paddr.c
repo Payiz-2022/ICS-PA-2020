@@ -67,10 +67,10 @@ word_t vaddr_mmu_read(vaddr_t addr, int len, int type) {
   } else {
     printf("Handling cross-page read\n");
     paddr_t paddr = (pg_base & ADDRMASK) | (addr & FLAGMASK);
-    // TODO: May cause memory overflow under edge conditions
-    int prev_len = ((paddr & FLAGMASK) + FLAGMASK + 1 - paddr);
-    uint32_t prev_mask = (1 << prev_len * 8) - 1, next_mask = (1 << (len - prev_len) * 8) - 1;
-    return ((paddr_read(paddr, len) & prev_mask) << (len - prev_len) * 8) | (vaddr_mmu_read((paddr & FLAGMASK) + FLAGMASK + 1, len, type) & next_mask);
+    uint32_t ans = 0;
+    for (int i = 0; i < len; i++)
+      ans |= (vaddr_mmu_read(paddr, 1, type) & 0xff) << 8 * i;
+    return ans;
   }
 }
 
