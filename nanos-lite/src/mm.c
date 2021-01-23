@@ -26,14 +26,17 @@ void free_page(void *p) {
 
 /* The brk() system call handler. */
 int mm_brk(uintptr_t brk) {
-  PCB* cpcb = get_current_pcb();
-  if (brk > cpcb->max_brk) {
-    int pg_cnt = (brk - cpcb->max_brk) / PGSIZE + 1;
+  PCB* pcb = get_current_pcb();
+  #ifdef DEBUG
+    printf("Memory brk increased from 0x%08x to 0x%08x\n", pcb->max_brk, brk);
+  #endif
+  if (brk > pcb->max_brk) {
+    int pg_cnt = (brk - pcb->max_brk) / PGSIZE + 1;
     void* pg_addr = new_page(pg_cnt);
-    map(&cpcb->as, (void*)cpcb->max_brk, pg_addr, 0);
-    cpcb->max_brk = brk;
+    map(&pcb->as, (void*)pcb->max_brk, pg_addr, 0);
+    pcb->max_brk = brk;
   }
-  cpcb->max_brk = brk;
+  pcb->max_brk = brk;
   return 0;
 }
 
