@@ -62,7 +62,7 @@ static inline def_EHelper(2byte_esc) {
   uint8_t opcode = instr_fetch(&s->seq_pc, 1);
   s->opcode = opcode;
   switch (opcode) {
-    IDEX (0x20, mov_E2G, mov_cr2r)
+    IDEX (0x20, mov_G2E, mov_cr2r)
     IDEX (0x22, mov_E2G, mov_r2cr)
 
     IDEX (0x80, J, jcc)
