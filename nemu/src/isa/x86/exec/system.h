@@ -11,18 +11,16 @@ static inline def_EHelper(lidt) {
 }
 
 static inline def_EHelper(mov_r2cr) {
-  printf("mov_r2cr: dsrc1 0x%08x, dest operand reg: %d\n", *dsrc1, id_dest->reg);
-  operand_write(s, id_dest, dsrc1);
-  printf("cr3: 0x%08lx\n", cpu.cr3);
+  cpu._cr[id_dest->reg] = id_src1->val;
 
-  printf("movl %%%s,%%cr%d", reg_name(id_src1->reg, 4), id_dest->reg);
+  print_asm("movl %%%s,%%cr%d", reg_name(id_src1->reg, 4), id_dest->reg);
 }
 
 static inline def_EHelper(mov_cr2r) {
-  printf("mov_cr2r: dsrc1 0x%08x, dest 0x%08x\n", *dsrc1, *ddest);
-  operand_write(s, id_dest, dsrc1);
+  rtl_li(s, s0, cpu._cr[id_src1->reg]);
+  operand_write(s, id_dest, s0);
 
-  printf("movl %%cr%d,%%%s", id_src1->reg, reg_name(id_dest->reg, 4));
+  print_asm("movl %%cr%d,%%%s", id_src1->reg, reg_name(id_dest->reg, 4));
 
 #ifndef __DIFF_REF_NEMU__
   difftest_skip_ref();

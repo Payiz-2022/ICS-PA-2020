@@ -74,7 +74,10 @@ typedef struct {
     vaddr_t base;
   } idtr;
 
-  uintptr_t cr0, cr1, cr2, cr3;
+  union {
+    uintptr_t _cr[4];
+    uintptr_t cr0, cr1, cr2, cr3;
+  };
 } x86_CPU_state;
 
 // decode
