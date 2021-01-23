@@ -9,5 +9,6 @@ paddr_t isa_mmu_translate(vaddr_t vaddr, int type, int len) {
     printf("Translating 0x%08x to 0x%08x\n", vaddr, pg_base);
   if ((vaddr & ADDRMASK) != ((vaddr + len) & ADDRMASK))
     return (pg_base & ADDRMASK) | MEM_RET_CROSS_PAGE;
+  assert(0);
   return (pg_base & ADDRMASK) | MEM_RET_OK;
 }
