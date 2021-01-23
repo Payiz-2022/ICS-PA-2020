@@ -4,6 +4,8 @@
 #include <common.h>
 
 #define PMEM_SIZE (128 * 1024 * 1024)
+#define ADDRMASK 0xfffff000
+#define FLAGMASK 0x00000fff
 
 /* convert the guest physical address in the guest program to host virtual address in NEMU */
 void* guest_to_host(paddr_t addr);

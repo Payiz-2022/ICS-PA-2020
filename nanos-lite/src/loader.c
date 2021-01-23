@@ -32,8 +32,22 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 
   for (int i = 0; i < buf_Eheader.e_phnum; i++) {
     fs_lseek(fd, buf_Pheader[i].p_offset, SEEK_SET);
-    fs_read(fd, (void*)buf_Pheader[i].p_vaddr, buf_Pheader[i].p_filesz);
-    memset((void*)(buf_Pheader[i].p_vaddr + buf_Pheader[i].p_filesz), 0, buf_Pheader[i].p_memsz - buf_Pheader[i].p_filesz);
+    #ifndef HAS_VME
+      fs_read(fd, (void*)buf_Pheader[i].p_vaddr, buf_Pheader[i].p_filesz);
+      memset((void*)(buf_Pheader[i].p_vaddr + buf_Pheader[i].p_filesz), 0, buf_Pheader[i].p_memsz - buf_Pheader[i].p_filesz);
+    #else
+      uint32_t loaded_mem = 0;
+      while (loaded_mem < buf_Pheader[i].p_memsz) {
+        int32_t load_size = min(buf_Pheader[i].p_filesz - loaded_mem, PGSIZE);
+        if (load_size < 0) load_size = 0;
+
+        void* paddr = pg_alloc(PGSIZE);
+        fs_read(fd, paddr, load_size);
+        map(&pcb->as, (void*)buf_Pheader[i].p_vaddr + loaded_mem, paddr, 0);
+
+        loaded_mem += load_size;
+      }
+    #endif
   }
   
   fs_lseek(fd, 0, SEEK_SET);
@@ -57,6 +71,7 @@ void context_kload(PCB *pcb, const void* entry, void* arg) {
 
 void context_uload(PCB *pcb, const char *filename, char *const argv[], char *const envp[]) {
   // Log("Loading user process [%s] at pcb 0x%08x\n", filename, pcb);
+  protect(&pcb->as);
   uintptr_t entry = loader(pcb, filename);
   if (entry == 0) {pcb->cp = NULL; return;}
 
@@ -64,10 +79,12 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   stack.start = (void*)pcb;
   stack.end = stack.start + sizeof(PCB);
 
-  pcb->cp = ucontext(NULL, stack, (void*)entry);
+  pcb->cp = ucontext(&pcb->as, stack, (void*)entry);
+
+  void* mem_top = new_page(8);
+  map(&pcb->as, pcb->as.area.end - 8 * PGSIZE, mem_top, 0);
 
   int argc = 0;
-  void* mem_top = new_page(8);
   void* argv_start = mem_top;
   char*const* p = argv;
   while (p && *p) {

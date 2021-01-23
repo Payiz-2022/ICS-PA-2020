@@ -12,7 +12,8 @@ void* new_page(size_t nr_page) {
   return p;
 }
 
-static inline void* pg_alloc(int n) {
+void* pg_alloc(int n) {
+  assert(n % PGSIZE == 0);
   void* ret = new_page(n / PGSIZE);
   memset(ret, 0, n);
   return ret;

@@ -25,9 +25,9 @@ void init_proc() {
   // load program here
   // naive_uload(NULL, "/bin/menu");
 
-  context_kload(&pcb[0], hello_fun, (void*)0xeeeee);
-  char* args[] = {"/bin/pal", NULL};
-  context_uload(&pcb[1], "/bin/pal", args, NULL);
+  // context_kload(&pcb[0], hello_fun, (void*)0xeeeee);
+  char* args[] = {"/bin/dummy", NULL};
+  context_uload(&pcb[0], "/bin/dummy", args, NULL);
   switch_boot_pcb();
 }
 
@@ -59,6 +59,6 @@ Context* schedule(Context *prev) {
   #ifdef DEBUG
     printf("Saved current context pointer to 0x%08x\n", prev);
   #endif
-  current = (current == &pcb[0] ? &pcb[pcb_id] : &pcb[0]);
+  current = (current == &pcb[0] ? &pcb[0] : &pcb[0]);
   return current->cp;
 }
