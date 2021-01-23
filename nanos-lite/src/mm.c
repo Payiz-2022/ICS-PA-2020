@@ -28,7 +28,7 @@ void free_page(void *p) {
 int mm_brk(uintptr_t brk) {
   PCB* pcb = get_current_pcb();
   #ifdef DEBUG
-    printf("Memory brk increased from 0x%08x to 0x%08x\n", pcb->max_brk, brk);
+    Log("[MM] Memory brk increased from 0x%08x to 0x%08x\n", pcb->max_brk, brk);
   #endif
   if (brk > pcb->max_brk) {
     int pg_cnt = (brk - pcb->max_brk) / PGSIZE + 1;

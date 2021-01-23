@@ -44,7 +44,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 
         void* paddr = pg_alloc(PGSIZE);
         #ifdef DEBUG
-          printf("[Loader] Loading new page 0x%08x (0x%08x bytes loaded)\n", paddr, loaded_mem);
+          Log("[Loader] Loading new page 0x%08x (0x%08x bytes loaded)\n", paddr, loaded_mem);
         #endif
         fs_read(fd, paddr, load_size);
         map(&pcb->as, (void*)buf_Pheader[i].p_vaddr + loaded_mem, paddr, 0);
