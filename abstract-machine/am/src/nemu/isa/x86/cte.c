@@ -16,7 +16,6 @@ void __am_vecnull();
 
 Context* __am_irq_handle(Context *c) {
   __am_get_cur_as(c);
-  printf("irq: 0x%x", c->irq);
   if (user_handler) {
     Event ev = {0};
     switch (c->irq) {
