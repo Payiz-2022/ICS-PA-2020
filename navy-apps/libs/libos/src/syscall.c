@@ -72,7 +72,7 @@ void *_sbrk(intptr_t increment) {
   intptr_t syscall_res = _syscall_(SYS_brk, target_brk, 0, 0);
   if (syscall_res == 0) {
     void *ret = (void*)program_break;
-    program_break = program_break + increment;
+    program_break = target_brk;
     return ret;
   } else {
     return (void*)-1;
