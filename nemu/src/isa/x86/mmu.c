@@ -12,7 +12,7 @@ paddr_t isa_mmu_translate(vaddr_t vaddr, int type, int len) {
   assert(pg_base & 0x1);
   pg_base = pg_base & ADDRMASK;
   // if (vaddr >= 0x40000000)
-  //   printf("Translating 0x%08x to 0x%08x\n", vaddr, pg_base);
+    printf("Translating 0x%08x to 0x%08x\n", vaddr, pg_base);
   if ((vaddr & FLAGMASK) + len - 1 > FLAGMASK)
     return pg_base | MEM_RET_CROSS_PAGE;
   return pg_base | MEM_RET_OK;
