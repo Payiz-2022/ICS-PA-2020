@@ -6,6 +6,8 @@
 
 #define STACK_SIZE (8 * PGSIZE)
 #define MAX_NR_PROC 4
+#define ADDRMASK 0xfffff000
+#define FLAGMASK 0x00000fff
 
 typedef union {
   uint8_t stack[STACK_SIZE] PG_ALIGN;

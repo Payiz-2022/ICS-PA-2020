@@ -37,20 +37,20 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
       fs_read(fd, (void*)buf_Pheader[i].p_vaddr, buf_Pheader[i].p_filesz);
       memset((void*)(buf_Pheader[i].p_vaddr + buf_Pheader[i].p_filesz), 0, buf_Pheader[i].p_memsz - buf_Pheader[i].p_filesz);
     #else
-      uint32_t loaded_mem = 0;
-      while (loaded_mem < buf_Pheader[i].p_memsz) {
-        int32_t load_size = min(buf_Pheader[i].p_filesz - loaded_mem, PGSIZE);
-        if (load_size < 0) load_size = 0;
+      uintptr_t mem_top = buf_Pheader[i].p_vaddr;
+      for (int j = buf_Pheader[i].p_vaddr >> 12; j <= ((buf_Pheader[i].p_vaddr + buf_Pheader[i].p_memsz - 1) >> 12); j++) {
+        uintptr_t next_mem_top = min(buf_Pheader[i].p_vaddr, (mem_top & ADDRMASK) + PGSIZE);
+        pcb->max_brk = next_mem_top;
 
         void* paddr = pg_alloc(PGSIZE);
-        #ifdef DEBUG
-          Log("[Loader] Loading new page 0x%08x (0x%08x bytes loaded)\n", paddr, loaded_mem);
-        #endif
-        fs_read(fd, paddr, load_size);
-        map(&pcb->as, (void*)buf_Pheader[i].p_vaddr + loaded_mem, paddr, 0);
+        map(&pcb->as, (void*)mem_top, paddr, 0);
+        fs_read(fd, paddr + (mem_top & FLAGMASK), next_mem_top - mem_top);
 
-        loaded_mem += PGSIZE;
-        pcb->max_brk = (uintptr_t)buf_Pheader[i].p_vaddr + loaded_mem;
+        #ifdef DEBUG
+          Log("[Loader] Loading new page 0x%08x (from 0x%08x)", paddr, mem_top);
+        #endif
+
+        mem_top = next_mem_top;
       }
     #endif
     }
