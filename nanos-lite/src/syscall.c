@@ -31,6 +31,7 @@ void do_syscall(Context *c) {
 
     case SYS_open:
       set_return(fs_open((const char*)a[1], a[2], a[3]));
+      printf("return from sys_open: %d\n", c->GPRx);
       break;
 
     case SYS_read:
