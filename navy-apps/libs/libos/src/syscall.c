@@ -68,6 +68,7 @@ intptr_t program_break = (intptr_t)&end;
 
 void *_sbrk(intptr_t increment) {
   intptr_t target_brk = program_break + increment;
+  assert(0);
   intptr_t syscall_res = _syscall_(SYS_brk, target_brk, 0, 0);
   if (syscall_res == 0) {
     void *ret = (void*)program_break;
