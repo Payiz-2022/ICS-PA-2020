@@ -11,13 +11,13 @@ static inline def_EHelper(lidt) {
 }
 
 static inline def_EHelper(mov_r2cr) {
-  TODO();
+  operand_write(s, id_dest, dsrc1);
 
   print_asm("movl %%%s,%%cr%d", reg_name(id_src1->reg, 4), id_dest->reg);
 }
 
 static inline def_EHelper(mov_cr2r) {
-  TODO();
+  operand_write(s, id_dest, dsrc1);
 
   print_asm("movl %%cr%d,%%%s", id_src1->reg, reg_name(id_dest->reg, 4));
 
