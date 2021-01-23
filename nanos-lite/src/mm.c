@@ -38,8 +38,8 @@ int mm_brk(uintptr_t brk) {
     for (uintptr_t i = begin + 1; i <= end; i++) {
       map(&pcb->as, (void*)(i << 12), pg_alloc(PGSIZE), 0);
     }
-    pcb->max_brk = brk;
   }
+  pcb->max_brk = max(pcb->max_brk, brk);
 #endif
   return 0;
 }
