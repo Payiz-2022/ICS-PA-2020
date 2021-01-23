@@ -61,9 +61,12 @@ inline void paddr_write(paddr_t addr, word_t data, int len) {
 
 word_t vaddr_mmu_read(vaddr_t addr, int len, int type) {
   paddr_t pg_base = isa_mmu_translate(addr, type, len);
-  if ((pg_base & MEM_RET_OK) == MEM_RET_OK) {
+  if ((pg_base & FLAGMASK) == MEM_RET_OK) {
     paddr_t paddr = (pg_base & ADDRMASK) | (addr & FLAGMASK);
     return paddr_read(paddr, len);
+  // } else {
+  //   paddr_t paddr = (pg_base & ADDRMASK) | (addr & FLAGMASK);
+  //   return paddr_read(paddr, );
   }
   assert(false);
   return 0;
@@ -71,7 +74,7 @@ word_t vaddr_mmu_read(vaddr_t addr, int len, int type) {
 
 void vaddr_mmu_write(vaddr_t addr, word_t data, int len) {
   paddr_t pg_base = isa_mmu_translate(addr, MEM_TYPE_WRITE, len);
-  if ((pg_base & MEM_RET_OK) == MEM_RET_OK) {
+  if ((pg_base & FLAGMASK) == MEM_RET_OK) {
     paddr_t paddr = (pg_base & ADDRMASK) | (addr & FLAGMASK);
     paddr_write(paddr, data, len);
     return;
