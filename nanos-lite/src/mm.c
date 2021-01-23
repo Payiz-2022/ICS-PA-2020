@@ -29,7 +29,7 @@ int mm_brk(uintptr_t brk) {
 #ifdef HAS_VME
   PCB* pcb = get_current_pcb();
   #ifdef DEBUG
-    Log("[MM] Memory brk increased from 0x%08x to 0x%08x\n", pcb->max_brk, brk);
+    Log("[MM] Memory brk increased from 0x%08x to 0x%08x", pcb->max_brk, brk);
   #endif
 
   if (pcb->max_brk && pcb->max_brk < brk) {
