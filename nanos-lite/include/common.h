@@ -2,7 +2,7 @@
 #define __COMMON_H__
 
 #define DEBUG
-#define FS_DEBUG
+// #define FS_DEBUG
 
 /* Uncomment these macros to enable corresponding functionality. */
 #define HAS_CTE
