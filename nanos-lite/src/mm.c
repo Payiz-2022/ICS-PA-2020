@@ -26,6 +26,7 @@ void free_page(void *p) {
 
 /* The brk() system call handler. */
 int mm_brk(uintptr_t brk) {
+  printf("brk: 0x%08x\n", brk);
 #ifdef HAS_VME
   PCB* pcb = get_current_pcb();
   #ifdef DEBUG
