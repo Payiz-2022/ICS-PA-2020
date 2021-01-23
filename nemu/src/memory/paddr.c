@@ -74,6 +74,7 @@ void vaddr_mmu_write(vaddr_t addr, word_t data, int len) {
   if ((pg_base & MEM_RET_OK) == MEM_RET_OK) {
     paddr_t paddr = pg_base | (addr & 0xfff);
     paddr_write(paddr, data, len);
+    return;
   }
   assert(false);
 }
