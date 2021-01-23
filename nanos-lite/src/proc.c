@@ -26,8 +26,8 @@ void init_proc() {
   // naive_uload(NULL, "/bin/menu");
 
   // context_kload(&pcb[0], hello_fun, (void*)0xeeeee);
-  char* args[] = {"/bin/pal", NULL};
-  context_uload(&pcb[0], "/bin/pal", args, NULL);
+  char* args[] = {"/bin/dummy", NULL};
+  context_uload(&pcb[0], "/bin/dummy", args, NULL);
   switch_boot_pcb();
 }
 
@@ -35,7 +35,7 @@ int pcb_id = 0;
 PCB* get_free_pcb() {
   pcb_id++;
   #ifdef DEBUG
-    printf("Goto PCB: %d (0x%08x) cp: 0x%08x\n", pcb_id, &pcb[pcb_id], pcb[pcb_id].cp);
+    Log("Goto PCB: %d (0x%08x) cp: 0x%08x", pcb_id, &pcb[pcb_id], pcb[pcb_id].cp);
   #endif
   if (pcb_id == MAX_NR_PROC) panic("No free PCB available");
   return &pcb[pcb_id];
@@ -49,7 +49,7 @@ PCB* get_last_pcb() {
   pcb_id--;
   if (pcb_id < 0) pcb_id = 0;
   #ifdef DEBUG
-    printf("Goto PCB: %d (0x%08x) cp: 0x%08x\n", pcb_id, &pcb[pcb_id], pcb[pcb_id].cp);
+    Log("Goto PCB: %d (0x%08x) cp: 0x%08x", pcb_id, &pcb[pcb_id], pcb[pcb_id].cp);
   #endif
   return &pcb[pcb_id];
 }
@@ -57,7 +57,7 @@ PCB* get_last_pcb() {
 Context* schedule(Context *prev) {
   current->cp = prev;
   #ifdef DEBUG
-    Log("[Schedule] Saved current context pointer to 0x%08x\n", prev);
+    Log("[Schedule] Saved current context pointer to 0x%08x", prev);
   #endif
   current = (current == &pcb[0] ? &pcb[pcb_id] : &pcb[0]);
   return current->cp;
