@@ -25,13 +25,13 @@ void init_proc() {
   // load program here
   // naive_uload(NULL, "/bin/menu");
 
-  // context_kload(&pcb[0], hello_fun, (void*)0xeeeee);
+  context_kload(&pcb[0], hello_fun, (void*)0xeeeee);
   char* args[] = {"/bin/pal", NULL};
-  context_uload(&pcb[0], "/bin/pal", args, NULL);
+  context_uload(&pcb[1], "/bin/pal", args, NULL);
   switch_boot_pcb();
 }
 
-int pcb_id = 0;
+int pcb_id = 1;
 PCB* get_free_pcb() {
   pcb_id++;
   #ifdef DEBUG
