@@ -68,6 +68,8 @@ void map(AddrSpace *as, void *va, void *pa, int prot) {
   PTE* pg_table = (PTE*)(((PTE*)as->ptr)[dir] & 0xfffff000);
   if ((pg_table[page] & PTE_P) == 0) {
     pg_table[page] = (uint32_t)pa | PTE_P;
+  } else {
+    printf("Mapping from vaddr 0x%08x to 0x%08x already exists\n", va, pa);
   }
 }
 
