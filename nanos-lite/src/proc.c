@@ -26,7 +26,7 @@ void init_proc() {
   // naive_uload(NULL, "/bin/menu");
 
   // context_kload(&pcb[0], hello_fun, (void*)0xeeeee);
-  char* args[] = {"/bin/pal",  NULL};
+  char* args[] = {"/bin/pal", "--skip", NULL};
   context_uload(&pcb[0], "/bin/pal", args, NULL);
   args[0] = "/bin/hello";
   context_uload(&pcb[1], "/bin/hello", args, NULL);
