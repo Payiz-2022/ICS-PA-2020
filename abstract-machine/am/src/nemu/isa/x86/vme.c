@@ -78,5 +78,6 @@ Context* ucontext(AddrSpace *as, Area kstack, void *entry) {
   c->eip = (uintptr_t)entry;
   c->IF = 1;
   c->cr3 = as->ptr;
+  c->cs = USEL(3);
   return c;
 }

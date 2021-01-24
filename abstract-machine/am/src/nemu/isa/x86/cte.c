@@ -48,8 +48,20 @@ bool cte_init(Context*(*handler)(Event, Context*)) {
 
   set_idt(idt, sizeof(idt));
 
-  // register event handler
-  user_handler = handler;
+  // // register event handler
+  // user_handler = handler;
+
+  // // initialize GDT
+  // gdt[1] = SEG32(STA_X | STA_R,   0,      0xffffffff, DPL_KERN);
+  // gdt[2] = SEG32(STA_W,           0,      0xffffffff, DPL_KERN);
+  // gdt[3] = SEG32(STA_X | STA_R,   0,      0xffffffff, DPL_USER);
+  // gdt[4] = SEG32(STA_W,           0,      0xffffffff, DPL_USER);
+  // gdt[5] = SEG16(STS_T32A,     &tss, sizeof(tss) - 1, DPL_KERN);
+  // set_gdt(gdt, sizeof(gdt[0]) * NR_SEG);
+
+  // // initialize TSS
+  // tss.ss0 = KSEL(2);
+  // set_tr(KSEL(5));
 
   return true;
 }
@@ -59,6 +71,7 @@ Context* kcontext(Area kstack, void (*entry)(void *), void *arg) {
   Context *c = (Context*)kstack.end - 1;
   c->eip = (uintptr_t)entry;
   c->IF = 1;
+  c->cs = KSEL(1);
   *((uintptr_t*)(c + 1) + 1) = (uintptr_t)arg;
   return c;
 }
