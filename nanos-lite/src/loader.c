@@ -108,6 +108,10 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
     map(&pcb->as, pcb->as.area.end - i * PGSIZE, mem_top + (8-i) * PGSIZE, 0);
 #endif
 
+#ifdef DEBUG
+  Log("[uload] Initiating user stack at 0x%08x", mem_top);
+#endif
+
   mem_top += 8 * PGSIZE;
   int argc = 0;
   void* argv_start = mem_top;
