@@ -26,6 +26,7 @@ void context_kload(PCB*, const void*, void*);
 void context_uload(PCB*, const char*, char*const*, char*const*);
 Context* schedule(Context*);
 void switch_boot_pcb();
+void set_pcb(int);
 PCB* get_free_pcb();
 PCB* get_current_pcb();
 PCB* get_last_pcb();
