@@ -56,6 +56,7 @@ void restore_intr(DecodeExecState *s) {
     cpu.ss = *s1;
 
     vaddr_t gdtr_gate = cpu.gdtr.base + 5 * 8; // TODO: turn 5 to TR register
+    printf("gdtr gate address: 0x%08x\n", gdtr_gate);
     vaddr_t gdtr_addr = (vaddr_read(gdtr_gate + 2, 4) << 8) | vaddr_read(gdtr_gate + 7, 1); // Address of TSS32
     printf("gdtr address: 0x%08x\n", gdtr_addr);
     vaddr_write(gdtr_addr + 4, cpu.esp, 4); // tss.esp0
