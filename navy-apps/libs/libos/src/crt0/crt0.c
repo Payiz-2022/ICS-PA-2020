@@ -6,7 +6,7 @@
 int main(int argc, char *argv[], char *envp[]);
 extern char **environ;
 void call_main(uintptr_t *args) {
-  printf("Hello world\n");
+  // printf("Hello world\n");
   char *empty[] =  {NULL };
   environ = empty;
   printf("args addr: 0x%08x value %d\n", args, *args);
