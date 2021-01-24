@@ -42,7 +42,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
       pcb->max_brk = max(pcb->max_brk, buf_Pheader[i].p_vaddr + buf_Pheader[i].p_memsz);
 
       #ifdef DEBUG
-        Log("[Loader] Generating pages from 0x%08x to 0x%08x", buf_Pheader[i].p_vaddr >> 12, (buf_Pheader[i].p_vaddr + buf_Pheader[i].p_memsz - 1) >> 12);
+        Log("[Loader] Generating pages from 0x%08x to 0x%08x", buf_Pheader[i].p_vaddr & ADDRMASK, (buf_Pheader[i].p_vaddr + buf_Pheader[i].p_memsz - 1) & ADDRMASK);
       #endif
       
       for (int j = buf_Pheader[i].p_vaddr >> 12; j <= (buf_Pheader[i].p_vaddr + buf_Pheader[i].p_memsz - 1) >> 12; j++) {
