@@ -1,7 +1,7 @@
 #include <cpu/exec.h>
 #include "local-include/rtl.h"
 
-#define IRQ_TIMER 32
+#define IRQ_TIMER 0x20
 
 void raise_intr(DecodeExecState *s, uint32_t NO, vaddr_t ret_addr) {
   vaddr_t intr_gate = cpu.idtr.base + NO * 8;
