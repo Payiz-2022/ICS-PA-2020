@@ -37,12 +37,12 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
       fs_read(fd, (void*)buf_Pheader[i].p_vaddr, buf_Pheader[i].p_filesz);
       memset((void*)(buf_Pheader[i].p_vaddr + buf_Pheader[i].p_filesz), 0, buf_Pheader[i].p_memsz - buf_Pheader[i].p_filesz);
     #else
-      if (buf_Pheader[i].p_memsz == 0) continue;
+      if (buf_Pheader[i].p_memsz == 0 || buf_Pheader[i].p_vaddr < pcb->max_brk) continue;
       uintptr_t mem_top = buf_Pheader[i].p_vaddr;
       pcb->max_brk = max(pcb->max_brk, buf_Pheader[i].p_vaddr + buf_Pheader[i].p_memsz);
 
       #ifdef DEBUG
-        Log("Generating pages from 0x%08x to 0x%08x", buf_Pheader[i].p_vaddr >> 12, (buf_Pheader[i].p_vaddr + buf_Pheader[i].p_memsz - 1) >> 12);
+        Log("[Loader] Generating pages from 0x%08x to 0x%08x", buf_Pheader[i].p_vaddr >> 12, (buf_Pheader[i].p_vaddr + buf_Pheader[i].p_memsz - 1) >> 12);
       #endif
       
       for (int j = buf_Pheader[i].p_vaddr >> 12; j <= (buf_Pheader[i].p_vaddr + buf_Pheader[i].p_memsz - 1) >> 12; j++) {
