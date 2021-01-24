@@ -1,7 +1,7 @@
 #ifndef __COMMON_H__
 #define __COMMON_H__
 
-#define DEBUG
+// #define DEBUG
 // #define FS_DEBUG
 
 /* Uncomment these macros to enable corresponding functionality. */
