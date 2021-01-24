@@ -48,8 +48,8 @@ bool cte_init(Context*(*handler)(Event, Context*)) {
 
   set_idt(idt, sizeof(idt));
 
-  // // register event handler
-  // user_handler = handler;
+  // register event handler
+  user_handler = handler;
 
   // // initialize GDT
   // gdt[1] = SEG32(STA_X | STA_R,   0,      0xffffffff, DPL_KERN);
