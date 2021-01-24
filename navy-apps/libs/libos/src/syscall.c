@@ -70,7 +70,7 @@ char sbrk_buf[40];
 void *_sbrk(intptr_t increment) {
   sprintf(sbrk_buf, "cur: 0x%08x, inc: 0x%x\n", program_break, increment);
   _write(1, sbrk_buf, 33);
-  if (increment > 0x200000) return (void*)-1;
+  if (increment > 0x200000 || increment < 0) return (void*)-1;
   intptr_t target_brk = program_break + increment;
   intptr_t syscall_res = _syscall_(SYS_brk, target_brk, 0, 0);
   if (syscall_res == 0) {
