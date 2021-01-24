@@ -35,7 +35,7 @@ int mm_brk(uintptr_t brk) {
 
   if (pcb->max_brk && pcb->max_brk < brk) {
     uintptr_t begin = pcb->max_brk >> 12;
-    uintptr_t end = brk >> 12;
+    uintptr_t end = (brk - 1) >> 12;
     for (uintptr_t i = begin + 1; i <= end; i++) {
       map(&pcb->as, (void*)(i << 12), pg_alloc(PGSIZE), 0);
     }
