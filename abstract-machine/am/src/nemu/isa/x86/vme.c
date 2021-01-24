@@ -76,8 +76,9 @@ void map(AddrSpace *as, void *va, void *pa, int prot) {
 Context* ucontext(AddrSpace *as, Area kstack, void *entry) {
   Context *c = (Context*)kstack.end - 1;
   c->eip = (uintptr_t)entry;
-  c->IF = 1;
+  c->eflags.IF = 1;
   c->cr3 = as->ptr;
   c->cs = USEL(3);
+  c->ss3 = USEL(4);
   return c;
 }

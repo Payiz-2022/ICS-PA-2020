@@ -7,7 +7,7 @@ struct Context {
   int irq;
   uintptr_t eip, cs;
   union {
-    uint32_t eflags;
+    uint32_t val;
     struct {
       uint32_t CF :1;
       unsigned    :1;
@@ -23,7 +23,8 @@ struct Context {
       uint32_t OF :1;
       unsigned    :20;
     };
-  };
+  } eflags;
+  uint32_t esp3, ss3;
 };
 
 #define GPR1 eax

@@ -25,9 +25,11 @@ void init_proc() {
   // load program here
   // naive_uload(NULL, "/bin/menu");
 
-  context_kload(&pcb[0], hello_fun, (void*)0xeeeee);
-  char* args[] = {"/bin/pal", NULL};
+  // context_kload(&pcb[0], hello_fun, (void*)0xeeeee);
+  char* args[] = {"/bin/pal", "--skip", NULL};
   context_uload(&pcb[1], "/bin/pal", args, NULL);
+  args[0] = "/bin/hello";
+  context_uload(&pcb[2], "/bin/hello", args, NULL);
   switch_boot_pcb();
 }
 
@@ -59,7 +61,7 @@ Context* schedule(Context *prev) {
   #ifdef DEBUG
     Log("[Schedule] Saved current context pointer to 0x%08x", prev);
   #endif
-  current = (current == &pcb[0] ? &pcb[pcb_id] : &pcb[0]);
+  current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
   #ifdef DEBUG
     Log("[Schedule] Switched to 0x%08x, entry 0x%08x", current, current->cp->eip);
   #endif

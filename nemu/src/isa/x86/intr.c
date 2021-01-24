@@ -4,13 +4,27 @@
 #define IRQ_TIMER 0x20
 
 void raise_intr(DecodeExecState *s, uint32_t NO, vaddr_t ret_addr) {
-  vaddr_t intr_gate = cpu.idtr.base + NO * 8;
+  vaddr_t idtr_gate = cpu.idtr.base + NO * 8;
 
-  uint32_t gate_l = vaddr_read(intr_gate, 2);
-  uint32_t gate_h = vaddr_read(intr_gate + 4, 4);
+  uint32_t gate_l = vaddr_read(idtr_gate, 2);
+  uint32_t gate_h = vaddr_read(idtr_gate + 4, 4);
   if ((gate_h & 0x8000) == 0) return;
 
-  vaddr_t intr_addr = ((gate_h >> 16) << 16) | gate_l;
+  // Push ss, esp into TSS.esp0 if in user privilege
+  if ((cpu.cs & 0x3) == 0x3) {
+    vaddr_t gdtr_gate = cpu.gdtr.base + 5 * 8; // TODO: turn 5 to TR register
+    vaddr_t gdtr_addr = (vaddr_read(gdtr_gate + 2, 4) << 8) | vaddr_read(gdtr_gate + 7, 1); // Address of TSS32
+    vaddr_t ksp = vaddr_read(gdtr_addr + 4, 4); // tss.esp0
+    // Push ss and esp
+    rtl_mv(s, s0, &cpu.esp);
+    rtl_li(s, &cpu.esp, ksp);
+    rtl_li(s, s1, cpu.ss);
+    rtl_push(s, s1);
+    rtl_push(s, s0);
+  }
+
+  // Push eflags, cs, eip
+  vaddr_t idtr_addr = ((gate_h >> 16) << 16) | gate_l;
 
   rtl_push(s, &cpu.eflags.val);
   cpu.eflags.IF = 0;
@@ -21,7 +35,7 @@ void raise_intr(DecodeExecState *s, uint32_t NO, vaddr_t ret_addr) {
   rtl_li(s, s0, ret_addr);
   rtl_push(s, s0);
 
-  rtl_j(s, intr_addr);
+  rtl_j(s, idtr_addr);
 }
 
 void restore_intr(DecodeExecState *s) {
@@ -32,6 +46,19 @@ void restore_intr(DecodeExecState *s) {
   cpu.cs = *s0;
 
   rtl_pop(s, &cpu.eflags.val);
+
+  // Returning to user privilege
+  if ((cpu.cs & 0x3) == 0x3) {
+    rtl_pop(s, s0); // esp
+    rtl_pop(s, s1); // ss
+    cpu.ss = *s1;
+
+    vaddr_t gdtr_gate = cpu.gdtr.base + 5 * 8; // TODO: turn 5 to TR register
+    vaddr_t gdtr_addr = (vaddr_read(gdtr_gate + 2, 4) << 8) | vaddr_read(gdtr_gate + 7, 1); // Address of TSS32
+    vaddr_write(gdtr_addr + 4, cpu.esp, 4); // tss.esp0
+
+    rtl_mv(s, &cpu.esp, s0);
+  }
 }
 
 void query_intr(DecodeExecState *s) {

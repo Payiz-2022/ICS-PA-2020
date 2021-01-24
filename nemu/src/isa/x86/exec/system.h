@@ -11,6 +11,13 @@ static inline def_EHelper(lidt) {
   print_asm_template1(lidt);
 }
 
+static inline def_EHelper(lgdt) {
+  cpu.gdtr.limit = vaddr_read(*s->isa.mbase, 2);
+  cpu.gdtr.base = vaddr_read(*s->isa.mbase + 2, 4);
+  
+  print_asm_template1(lgdt);
+}
+
 static inline def_EHelper(mov_r2cr) {
   cpu._cr[id_dest->reg] = id_src1->val;
 

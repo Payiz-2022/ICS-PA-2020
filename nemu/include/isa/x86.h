@@ -74,6 +74,11 @@ typedef struct {
     vaddr_t base;
   } idtr;
 
+  struct {
+    uint16_t limit;
+    vaddr_t base;
+  } gdtr;
+
   union {
     uint32_t _cr[4];
     struct {
