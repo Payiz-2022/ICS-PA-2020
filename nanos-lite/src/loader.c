@@ -53,8 +53,9 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
         // #ifdef DEBUG
           Log("[Loader] Mapping address 0x%08x to 0x%08x", mem_top, paddr);
         // #endif
-        fs_read(fd, paddr + (mem_top & FLAGMASK), 
-            max(0, min(next_mem_top - mem_top, buf_Pheader[i].p_vaddr + buf_Pheader[i].p_filesz - mem_top)));
+        if (mem_top < buf_Pheader[i].p_vaddr + buf_Pheader[i].p_filesz)
+          fs_read(fd, paddr + (mem_top & FLAGMASK), 
+              min(next_mem_top - mem_top, buf_Pheader[i].p_vaddr + buf_Pheader[i].p_filesz - mem_top));
 
         #ifdef DEBUG
           Log("[Loader] Loading new page 0x%08x (from 0x%08x)", paddr, mem_top);
