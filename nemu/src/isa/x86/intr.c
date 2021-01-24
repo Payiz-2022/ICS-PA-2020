@@ -13,7 +13,7 @@ void raise_intr(DecodeExecState *s, uint32_t NO, vaddr_t ret_addr) {
   // Push ss, esp into TSS.esp0 if in user privilege
   if ((cpu.cs & 0x3) == 0x3) {
     vaddr_t gdtr_gate = cpu.gdtr.base + 5 * 8; // TODO: turn 5 to TR register
-    vaddr_t gdtr_addr = vaddr_read(gdtr_gate + 2, 4) | (vaddr_read(gdtr_gate + 7, 1) << 24); // Address of TSS32
+    vaddr_t gdtr_addr = (vaddr_read(gdtr_gate + 2, 4) & 0xffffff) | (vaddr_read(gdtr_gate + 7, 1) << 24); // Address of TSS32
     printf("gdtr address: 0x%08x\n", gdtr_addr);
     vaddr_t ksp = vaddr_read(gdtr_addr + 4, 4); // tss.esp0
     printf("Read ksp 0x%08x from tss 0x%08x\n", ksp, gdtr_addr);
@@ -57,8 +57,7 @@ void restore_intr(DecodeExecState *s) {
 
     vaddr_t gdtr_gate = cpu.gdtr.base + 5 * 8; // TODO: turn 5 to TR register
     printf("gdtr gate address: 0x%08x\n", gdtr_gate);
-    //vaddr_t gdtr_addr = vaddr_read(gdtr_gate + 2, 4) | (vaddr_read(gdtr_gate + 7, 1) << 24); // Address of TSS32
-    vaddr_t gdtr_addr = vaddr_read(gdtr_gate + 2, 4) | (vaddr_read(gdtr_gate + 7, 1) << 24);
+    vaddr_t gdtr_addr = (vaddr_read(gdtr_gate + 2, 4) & 0xffffff) | (vaddr_read(gdtr_gate + 7, 1) << 24); // Address of TSS32
     printf("TSS address: 0x%08x\n", gdtr_addr);
     vaddr_write(gdtr_addr + 4, cpu.esp, 4); // tss.esp0
     printf("Write ksp 0x%08x to tss 0x%08x\n", cpu.esp, gdtr_addr);
