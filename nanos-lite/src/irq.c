@@ -4,12 +4,12 @@
 static Context* do_event(Event e, Context* c) {
   switch (e.event) {
     case EVENT_IRQ_TIMER: 
-      // #ifdef DEBUG
+      #ifdef DEBUG
         Log("Received a timer event");
-      // #endif
-      return schedule(c, 0);
+      #endif
+      return schedule(c);
     case EVENT_YIELD:
-      return schedule(c, 1);
+      return schedule(c);
     case EVENT_SYSCALL:
       do_syscall(c);
       break;

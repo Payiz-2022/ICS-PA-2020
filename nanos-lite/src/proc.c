@@ -33,7 +33,7 @@ void init_proc() {
   switch_boot_pcb();
 }
 
-int pcb_id = 1;
+int pcb_id = 0;
 PCB* get_free_pcb() {
   pcb_id++;
   #ifdef DEBUG
@@ -56,13 +56,13 @@ PCB* get_last_pcb() {
   return &pcb[pcb_id];
 }
 
-Context* schedule(Context *prev, int force) {
-  if (!force && current == &pcb_boot) return prev;
+Context* schedule(Context *prev) {
   current->cp = prev;
   #ifdef DEBUG
     Log("[Schedule] Saved current context pointer to 0x%08x", prev);
   #endif
-  current = (current == &pcb[1] ? &pcb[2] : &pcb[1]);
+  pcb_id = (pcb_id == 1 ? 2 : 1);
+  current = &pcb[pcb_id];
   #ifdef DEBUG
     Log("[Schedule] Switched to 0x%08x, context 0x%08x, entry 0x%08x", current, current->cp, current->cp->eip);
   #endif
