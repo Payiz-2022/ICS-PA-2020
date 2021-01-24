@@ -50,9 +50,9 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 
         void* paddr = pg_alloc(PGSIZE);
         map(&pcb->as, (void*)mem_top, paddr, 0);
-        #ifdef DEBUG
+        // #ifdef DEBUG
           Log("[Loader] Mapping address 0x%08x to 0x%08x", mem_top, paddr);
-        #endif
+        // #endif
         fs_read(fd, paddr + (mem_top & FLAGMASK), 
             max(0, min(next_mem_top - mem_top, buf_Pheader[i].p_vaddr + buf_Pheader[i].p_filesz - mem_top)));
 
