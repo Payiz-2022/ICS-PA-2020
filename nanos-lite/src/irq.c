@@ -4,7 +4,7 @@ static int times = 0;
 static Context* do_event(Event e, Context* c) {
   switch (e.event) {
     case EVENT_IRQ_TIMER: Log("Received a timer event"); 
-      return ++times > 1 ? c : schedule(c);
+      return ++times > 0 ? c : schedule(c);
     case EVENT_YIELD: return schedule(c);
     case EVENT_SYSCALL: do_syscall(c); break;
     default: panic("Unhandled event ID = %d", e.event);
