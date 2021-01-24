@@ -68,8 +68,8 @@ extern char end;
 char sbrk_buf[40];
 void *_sbrk(intptr_t increment) {
   intptr_t program_break = (intptr_t)&end;
-  if (increment > 0x10000000) return (void*)program_break;
   sprintf(sbrk_buf, "cur: 0x%08x, inc: 0x%x\n", program_break, increment);
+  if (increment > 0x10000000) return (void*)program_break;
   _write(1, sbrk_buf, 33);
   intptr_t target_brk = program_break + increment;
   intptr_t syscall_res = _syscall_(SYS_brk, target_brk, 0, 0);
