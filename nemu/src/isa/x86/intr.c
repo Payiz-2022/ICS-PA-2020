@@ -35,7 +35,6 @@ void restore_intr(DecodeExecState *s) {
 }
 
 void query_intr(DecodeExecState *s) {
-  if (cpu.eflags.IF) printf("IF: %d", cpu.eflags.IF);
   if (cpu.INTR & cpu.eflags.IF) {
     cpu.INTR = false;
     raise_intr(s, IRQ_TIMER, cpu.pc);
