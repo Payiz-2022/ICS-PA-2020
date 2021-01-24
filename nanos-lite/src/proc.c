@@ -56,7 +56,8 @@ PCB* get_last_pcb() {
   return &pcb[pcb_id];
 }
 
-Context* schedule(Context *prev) {
+Context* schedule(Context *prev, int force) {
+  if (!force && current == &pcb_boot) return prev;
   current->cp = prev;
   #ifdef DEBUG
     Log("[Schedule] Saved current context pointer to 0x%08x", prev);

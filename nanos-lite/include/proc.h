@@ -24,7 +24,7 @@ extern PCB *current;
 void naive_uload(PCB*, const char*);
 void context_kload(PCB*, const void*, void*);
 void context_uload(PCB*, const char*, char*const*, char*const*);
-Context* schedule(Context*);
+Context* schedule(Context*, int);
 void switch_boot_pcb();
 PCB* get_free_pcb();
 PCB* get_current_pcb();
