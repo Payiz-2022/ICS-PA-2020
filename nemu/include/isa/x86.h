@@ -80,6 +80,8 @@ typedef struct {
       uint32_t cr0, cr1, cr2, cr3;
     };
   };
+
+  bool INTR;
 } x86_CPU_state;
 
 // decode

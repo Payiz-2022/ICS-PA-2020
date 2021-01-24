@@ -1,6 +1,7 @@
 #include <monitor/difftest.h>
 
 void raise_intr(DecodeExecState *s, uint32_t NO, vaddr_t ret_addr);
+void restore_intr(DecodeExecState *s);
 void query_intr(DecodeExecState *s);
 
 static inline def_EHelper(lidt) {
@@ -38,7 +39,7 @@ static inline def_EHelper(int) {
 }
 
 static inline def_EHelper(iret) {
-  query_intr(s);
+  restore_intr(s);
 
   print_asm("iret");
 
