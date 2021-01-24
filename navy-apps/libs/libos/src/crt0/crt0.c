@@ -9,7 +9,7 @@ void call_main(uintptr_t *args) {
   printf("Hello world\n");
   char *empty[] =  {NULL };
   environ = empty;
-  printf("args addr: 0x%08x\n", args);
+  printf("args addr: 0x%08x value %d\n", args, *args);
   exit(main(*args, (char**)(args + 1), empty));
   assert(0);
 }
