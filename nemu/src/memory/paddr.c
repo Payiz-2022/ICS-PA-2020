@@ -67,8 +67,10 @@ word_t vaddr_mmu_read(vaddr_t addr, int len, int type) {
   } else {
     printf("Handling cross-page read (addr = 0x%08x)\n", addr);
     uint32_t ans = 0;
-    for (int i = 0; i < len; i++)
+    for (int i = 0; i < len; i++) {
       ans |= (vaddr_mmu_read(addr + i, 1, type) & 0xff) << 8 * i;
+      printf("Part #%d answer: 0x%x, ans = 0x%08x\n", i, vaddr_mmu_read(addr + i, 1, type), ans);
+    }
     return ans;
   }
 }
