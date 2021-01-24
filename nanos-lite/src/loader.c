@@ -104,7 +104,8 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 
   void* mem_top = new_page(8);
 #ifdef HAS_VME
-  map(&pcb->as, pcb->as.area.end - 8 * PGSIZE, mem_top, 0);
+  for (int i = 8; i > 0; i--)
+    map(&pcb->as, pcb->as.area.end - i * PGSIZE, mem_top + i * PGSIZE, 0);
 #endif
 
   int argc = 0;
