@@ -29,6 +29,8 @@ void init_proc() {
   char* args[] = {"/bin/pal", NULL};
   context_uload(&pcb[0], "/bin/pal", args, NULL);
   switch_boot_pcb();
+
+  printf("40038e6a: 0x%08x\n", *(uint32_t*)0x40038e6a);
 }
 
 int pcb_id = 0;
