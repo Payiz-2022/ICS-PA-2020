@@ -3,6 +3,18 @@
 
 #define IRQ_TIMER 0x20
 
+vaddr_t get_ksp() {
+  vaddr_t gdtr_gate = cpu.gdtr.base + 5 * 8; // TODO: turn 5 to TR register
+  vaddr_t gdtr_addr = (vaddr_read(gdtr_gate + 2, 4) & 0xffffff) | (vaddr_read(gdtr_gate + 7, 1) << 24); // Address of TSS32
+  return vaddr_read(gdtr_addr + 4, 4); // tss.esp0
+}
+
+void set_ksp(uint32_t val) {
+  vaddr_t gdtr_gate = cpu.gdtr.base + 5 * 8; // TODO: turn 5 to TR register
+  vaddr_t gdtr_addr = (vaddr_read(gdtr_gate + 2, 4) & 0xffffff) | (vaddr_read(gdtr_gate + 7, 1) << 24); // Address of TSS32
+  vaddr_write(gdtr_addr + 4, val, 4); // tss.esp0
+}
+
 void raise_intr(DecodeExecState *s, uint32_t NO, vaddr_t ret_addr) {
   vaddr_t idtr_gate = cpu.idtr.base + NO * 8;
 
@@ -12,16 +24,16 @@ void raise_intr(DecodeExecState *s, uint32_t NO, vaddr_t ret_addr) {
 
   // Push ss, esp into TSS.esp0 if in user privilege
   if ((cpu.cs & 0x3) == 0x3) {
-    vaddr_t gdtr_gate = cpu.gdtr.base + 5 * 8; // TODO: turn 5 to TR register
-    vaddr_t gdtr_addr = (vaddr_read(gdtr_gate + 2, 4) & 0xffffff) | (vaddr_read(gdtr_gate + 7, 1) << 24); // Address of TSS32
-    vaddr_t ksp = vaddr_read(gdtr_addr + 4, 4); // tss.esp0
-    printf("Read ksp 0x%08x from tss\n", ksp);
     // Push ss and esp
+    vaddr_t ksp = get_ksp();
+    printf("Read ksp 0x%08x from tss\n", ksp);
     rtl_mv(s, s0, &cpu.esp);
-    rtl_li(s, &cpu.esp, ksp);
+    if (ksp != 0)
+      rtl_li(s, &cpu.esp, ksp);
     rtl_li(s, s1, cpu.ss);
     rtl_push(s, s1);
     rtl_push(s, s0);
+    set_ksp(0);
   }
 
   // Push eflags, cs, eip
@@ -54,9 +66,7 @@ void restore_intr(DecodeExecState *s) {
     rtl_pop(s, s1); // ss
     cpu.ss = *s1;
 
-    vaddr_t gdtr_gate = cpu.gdtr.base + 5 * 8; // TODO: turn 5 to TR register
-    vaddr_t gdtr_addr = (vaddr_read(gdtr_gate + 2, 4) & 0xffffff) | (vaddr_read(gdtr_gate + 7, 1) << 24); // Address of TSS32
-    vaddr_write(gdtr_addr + 4, cpu.esp, 4); // tss.esp0
+    set_ksp(cpu.esp);
     printf("Write ksp 0x%08x to tss\n", cpu.esp);
 
     rtl_mv(s, &cpu.esp, s0);
