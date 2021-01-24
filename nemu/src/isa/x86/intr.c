@@ -26,7 +26,7 @@ void raise_intr(DecodeExecState *s, uint32_t NO, vaddr_t ret_addr) {
   if ((cpu.cs & 0x3) == 0x3) {
     // Push ss and esp
     vaddr_t ksp = get_ksp();
-    printf("Read ksp 0x%08x from tss, saved usp 0x%08x\n", ksp, cpu.esp);
+    printf("Read ksp 0x%08x from tss, saved usp 0x%08x, cr3 0x%08x\n", ksp, cpu.esp, cpu.cr3);
     rtl_mv(s, s0, &cpu.esp);
     if (ksp != 0)
       rtl_li(s, &cpu.esp, ksp);
