@@ -14,6 +14,7 @@ void raise_intr(DecodeExecState *s, uint32_t NO, vaddr_t ret_addr) {
   if ((cpu.cs & 0x3) == 0x3) {
     vaddr_t gdtr_gate = cpu.gdtr.base + 5 * 8; // TODO: turn 5 to TR register
     vaddr_t gdtr_addr = (vaddr_read(gdtr_gate + 2, 4) << 8) | vaddr_read(gdtr_gate + 7, 1); // Address of TSS32
+    printf("gdtr address: 0x%08x\n", gdtr_addr);
     vaddr_t ksp = vaddr_read(gdtr_addr + 4, 4); // tss.esp0
     printf("Read ksp 0x%08x from tss 0x%08x\n", ksp, gdtr_addr);
     // Push ss and esp
