@@ -78,7 +78,7 @@ Context* ucontext(AddrSpace *as, Area kstack, void *entry) {
   c->eip = (uintptr_t)entry;
   c->eflags.IF = 1;
   c->cr3 = as->ptr;
-  // c->cs = USEL(3);
+  c->cs = USEL(3);
   c->ss3 = USEL(4);
   return c;
 }
